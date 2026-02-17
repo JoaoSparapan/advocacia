@@ -1,7 +1,7 @@
 /* Horizontal Navbar Styles */
 
 #navbar {
-  background: linear-gradient(135deg, #3e64ff 0%, #375eff 100%);
+  background: linear-gradient(135deg, #2c3e50 0%, #162433 100%);
   color: #fff;
   position: fixed;
   top: 0;
@@ -27,10 +27,20 @@
   font-weight: 900;
   text-decoration: none;
   transition: 0.3s;
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 .navbar-logo a:hover {
-  color: #e8eeff;
+  opacity: 0.9;
+}
+
+.logo-img {
+  height: 45px;
+  width: auto;
+  display: block;
+  max-width: 150px;
 }
 
 .navbar-menu {
@@ -41,6 +51,7 @@
   align-items: center;
   gap: 0;
   flex: 1;
+  margin-left: 30px;
 }
 
 .navbar-item {
@@ -77,6 +88,81 @@
 
 .navbar-link span {
   font-size: 18px;
+}
+
+/* Dropdown styles */
+.navbar-item.dropdown {
+  position: relative;
+}
+
+.dropdown-arrow {
+  font-size: 12px !important;
+  margin-left: 5px;
+  transition: transform 0.3s ease;
+}
+
+.navbar-item.dropdown:hover .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.navbar-item.dropdown > .dropdown-menu {
+  list-style: none;
+  margin: 0;
+  padding: 10px 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #34495e;
+  min-width: 200px;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: block !important;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1100;
+  pointer-events: none;
+}
+
+.navbar-item.dropdown:hover > .dropdown-menu,
+.navbar-item.dropdown > .dropdown-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.navbar-item.dropdown > .dropdown-menu li {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-item.dropdown > .dropdown-menu .dropdown-link {
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  border-left: 3px solid transparent;
+}
+
+.dropdown-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-left-color: #fff;
+}
+
+.dropdown-link.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-left-color: #fff;
+}
+
+.dropdown-link span {
+  font-size: 14px;
 }
 
 .navbar-right {

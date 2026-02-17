@@ -4,8 +4,26 @@ $(document).ready(function () {
     $(".navbar-menu").toggleClass("active");
   });
 
-  // Close menu when clicking on a link
-  $(".navbar-link").on("click", function () {
+  $(document).on("click", function (e) {
+    if (!$(e.target).closest(".navbar-item.dropdown").length) {
+      $(".dropdown-menu").removeClass("active");
+    }
+  });
+
+  $(".navbar-item.dropdown > .navbar-link").on("click", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    $(this).siblings(".dropdown-menu").toggleClass("active");
+  });
+
+  $(".dropdown-link").on("click", function () {
+    $(".dropdown-menu").removeClass("active");
+    if (window.innerWidth <= 768) {
+      $(".navbar-menu").removeClass("active");
+    }
+  });
+
+  $(".navbar-item:not(.dropdown) > .navbar-link").on("click", function () {
     if (window.innerWidth <= 768) {
       $(".navbar-menu").removeClass("active");
     }

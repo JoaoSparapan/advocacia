@@ -34,7 +34,9 @@ $u = $userController->getAdminAndColaboradorAll();
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../styles/css/providences.css">
-    <link rel="shortcut icon" href="../logotipo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../styles/css/navbar.css">
+    <link rel="stylesheet" href="../styles/css/sidebar-hide.css">
+    <link rel="shortcut icon" href="../images/logotipo.ico" type="image/x-icon">
     <link rel="stylesheet" href="../styles/css/modelMaterialize.css" />
     <link rel="stylesheet" href="../styles/fontawesome-free-6.1.1-web/css/all.css" />
 
@@ -128,7 +130,6 @@ $u = $userController->getAdminAndColaboradorAll();
                         ?>
 
                         </select>
-                        <!-- <label>Materialize Select</label> -->
 
 
                     </div>
@@ -326,37 +327,18 @@ $u = $userController->getAdminAndColaboradorAll();
         </div>
     </div>
 
-    <div class="wrapper d-flex align-items-stretch">
-        <?php
-        include_once $_SERVER['DOCUMENT_ROOT']."/advocacia/components/menu.php";
+    <?php
+        include_once $_SERVER['DOCUMENT_ROOT']."/advocacia/components/navbar.php";
         include_once '../services/Models/Pagination.php';
         include_once '../services/Controller/PetitionController.php';
         
         $pController = new PetitionController();
         $petitions = $pController->getPetitionInProgress();
-                           // var_dump($petitions[0]);exit;
-        //  $arr = Array();
-
-        // for($i=9;$i<50;$i++){
-        //     array_push($arr, $providences[0]);
-        // }
-
-        //  $providences = $arr;
 
       ?>
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
-
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                    <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                        <i class="fa fa-bars"></i>
-                        <span class="sr-only">Toggle Menu</span>
-                    </button>
-                    Petições Iniciais
-                </div>
-            </nav>
 
             <form method="GET" action="#" class="filter">
                 <div>
@@ -396,7 +378,6 @@ $u = $userController->getAdminAndColaboradorAll();
                         <option value="search_period">Período</option>
                         <option value="type-action">Natureza da ação</option>
                         <option value="responsible-user">Responsável</option>
-                        <!-- <option value="days-to-trial">Dias p/ ajuizamento</option> -->
 
                     </select>
                 </div>
@@ -720,8 +701,6 @@ $u = $userController->getAdminAndColaboradorAll();
             ?>
 
         </div>
-    </div>
-
 
     <script src="../js/jquery.min.js"></script>
     <script src="../js/popper.js"></script>

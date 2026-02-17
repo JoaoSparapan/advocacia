@@ -32,31 +32,22 @@ if(isset($_GET['id'])){
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../styles/css/profile.css">
+    <link rel="stylesheet" href="../styles/css/navbar.css">
+    <link rel="stylesheet" href="../styles/css/sidebar-hide.css">
     <link rel="stylesheet" href="../styles/fontawesome-free-6.1.1-web/css/all.css" />
-    <link rel="shortcut icon" href="../logotipo.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../images/logotipo.ico" type="image/x-icon">
     <title>Editar usuário</title>
 </head>
 
 <body>
-    <div class="wrapper d-flex align-items-stretch">
-        <?php
-            include_once $_SERVER['DOCUMENT_ROOT']."/advocacia/components/menu.php";
+<?php
+            include_once $_SERVER['DOCUMENT_ROOT']."/advocacia/components/navbar.php";
             
             // var_dump($user_info);
         ?>
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
-
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                    <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                        <i class="fa fa-bars"></i>
-                        <span class="sr-only">Toggle Menu</span>
-                    </button>
-                    Alterar informações de <?= $userSelected['name'] ?>
-                </div>
-            </nav>
             <div class="content-info-user">
 
                 <form class="col s12" method="POST" action="../services/Controller/UpdateUser.php">
@@ -110,7 +101,6 @@ if(isset($_GET['id'])){
             </div>
 
         </div>
-    </div>
 
     <script src="../js/jqueryAjax.min.js"></script>
     <script src="../js/popper.js"></script>
