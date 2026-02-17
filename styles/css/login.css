@@ -1,0 +1,179 @@
+@import "./materialize/materialize.css";
+@import "./swal/sweetalert2.min.css";
+body {
+  background-color: whitesmoke;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+}
+.logo {
+  display: block;
+  color: #3e64ff;
+  font-weight: 900;
+  margin: 20px 0px;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  text-align: center;
+}
+.input-field {
+  margin-bottom: 10px !important;
+}
+.input-field input {
+  background-color: white !important;
+}
+.input-field input.form-control,
+.input-field input.validate {
+  margin-bottom: 3px;
+}
+.input-field input.validate:focus,
+.input-field input.form-control:focus {
+  border-bottom: 1px solid #3e64ff !important;
+}
+.input-field input.invalid:focus {
+  border-bottom: 1px solid #f44336 !important;
+}
+.input-field label {
+  margin-left: 10px;
+}
+.input-field label.active {
+  /* margin-left: 20px; */
+  color: #3e64ff !important;
+}
+.logIn {
+  position: relative;
+
+  min-width: 350px;
+  min-height: 400px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  height: auto;
+  margin-top: 15px;
+}
+.extra {
+  width: auto;
+  z-index: 1;
+  opacity: 0;
+  display: none;
+}
+.log,
+.register,
+.forg {
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  display: none;
+  width: 100%;
+}
+.log.active,
+.register.active,
+.forg.active,
+.extra.active {
+  z-index: 2;
+  opacity: 1;
+  display: block;
+  animation: anim_toggle 0.3s ease-in backwards;
+}
+
+@keyframes anim_toggle {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.forg .row form .row .row div {
+  color: rgb(141, 141, 141);
+  font-size: 1.1em;
+}
+.toggleForm {
+  position: relative;
+  color: #3e64ff !important;
+  background-color: transparent;
+  border: none;
+  font-size: 0.9em;
+  cursor: pointer;
+  margin-top: 20px;
+}
+.toggleForm:focus {
+  background-color: transparent;
+}
+.input-field .prefix {
+  color: rgb(132, 132, 132);
+}
+.input-field .prefix.active {
+  color: #3e64ff !important;
+}
+.row .col.s10 {
+  margin: 0;
+}
+.logIn div .row {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.logIn div .row form {
+  padding: 0;
+}
+.logIn div .row form .row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+}
+.logIn div .row form .row:first-child {
+  margin-bottom: 20px;
+}
+.logIn div .row form .row:last-child {
+  display: flex;
+  justify-content: center;
+}
+.logIn div .row form .row:last-child .btn {
+  background-color: #3e64ff !important;
+  width: 80%;
+  border-radius: 20px !important;
+}
+.logIn div .row form .row:last-child button.forgot {
+  color: rgb(179, 179, 179);
+  background-color: transparent;
+  margin-top: 10px;
+  border: 0;
+  cursor: pointer;
+  font-size: 0.8em;
+}
+
+@media (max-width: 440px) {
+  .logIn {
+    min-width: none !important;
+    min-width: 80vw;
+  }
+  .input-field {
+    width: 100% !important;
+  }
+}
+.dev {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 15px;
+  color: #bebebe;
+  background-color: white;
+  border-top-left-radius: 34px;
+  display: flex;
+}
+.dev span {
+  margin-right: 10px;
+}
+.dev p {
+  margin: 0;
+}
