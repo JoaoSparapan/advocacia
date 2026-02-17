@@ -1,3 +1,1 @@
-# Petition Project - 2023
-
-DB variables
+# Legal System Project - 2026
