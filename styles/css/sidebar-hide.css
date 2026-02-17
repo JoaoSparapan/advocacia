@@ -1,0 +1,24 @@
+/* Hide sidebar styles - sidebar is no longer used */
+#sidebar,
+#sidebar.active,
+.wrapper,
+#sidebarCollapse {
+  display: none !important;
+}
+
+/* Adjust body and content layout */
+body {
+  margin: 0;
+  padding-top: 70px;
+}
+
+#content {
+  width: 100%;
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 60px;
+  }
+}

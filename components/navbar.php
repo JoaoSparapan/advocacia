@@ -11,36 +11,56 @@ if(AuthController::getUser()['idRole']=="2"){
     $role="Colaborador";
 }
 
+$current_page = basename($_SERVER['PHP_SELF']);
+$current_path = isset($_GET['page']) ? $_GET['page'] : '';
+
+function isActive($page_name, $current_page) {
+    return ($current_page === $page_name) ? 'active' : '';
+}
+
+$home_active = ($current_page === 'index.php') ? 'active' : '';
+$petitions_active = ($current_page === 'petition.php') ? 'active' : '';
+$distributed_active = ($current_page === 'distributed.php') ? 'active' : '';
+$users_active = ($current_page === 'users.php') ? 'active' : '';
+$profile_active = ($current_page === 'profile.php' || $current_page === 'updateUser.php') ? 'active' : '';
+$update_petition_active = ($current_page === 'updatePetition.php') ? 'active' : '';
+
 ?>
 
 <nav id="navbar" class="navbar-horizontal">
     <div class="navbar-container">
         <div class="navbar-logo">
-            <a href="<?= $router->run('/'); ?>">SGPI</a>
+            <a href="<?= $router->run('/'); ?>">
+                <img src="/advocacia/images/logotipo.png" alt="SGA" class="logo-img">
+            </a>
         </div>
 
         <ul class="navbar-menu">
             <li class="navbar-item">
-                <a href="<?= $router->run('/'); ?>" class="navbar-link active">
+                <a href="<?= $router->run('/'); ?>" class="navbar-link <?= $home_active ?>">
                     <span class="fa fa-house-chimney"></span> Home
                 </a>
             </li>
-            <li class="navbar-item">
-                <a href="<?= $router->run('/petitions');?>" class="navbar-link">
+            <li class="navbar-item dropdown">
+                <a href="#" class="navbar-link <?= ($petitions_active || $distributed_active) ? 'active' : '' ?>">
                     <span class="fa fa-file-pen"></span> Petições
+                    <span class="dropdown-arrow fa fa-chevron-down"></span>
                 </a>
-            </li>
-            <li class="navbar-item">
-                <a href="<?= $router->run('/distributed');?>" class="navbar-link">
-                    <span class="fa fa-archive"></span> Petições Distribuídas
-                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="<?= $router->run('/petitions');?>" class="dropdown-link <?= $petitions_active ?>">
+                        <span class="fa fa-file-pen"></span> Em Andamento
+                    </a></li>
+                    <li><a href="<?= $router->run('/distributed');?>" class="dropdown-link <?= $distributed_active ?>">
+                        <span class="fa fa-archive"></span> Distribuídas
+                    </a></li>
+                </ul>
             </li>
 
             <?php
                 if(AuthController::getUser()['idRole']==1){
             ?>
             <li class="navbar-item">
-                <a href="<?= $router->run('/users');?>" class="navbar-link">
+                <a href="<?= $router->run('/users');?>" class="navbar-link <?= $users_active ?>">
                     <span class="fa-solid fa-users"></span> Usuários
                 </a>
             </li>
@@ -49,7 +69,7 @@ if(AuthController::getUser()['idRole']=="2"){
             ?>
 
             <li class="navbar-item">
-                <a href="<?= $router->run('/profile');?>" class="navbar-link">
+                <a href="<?= $router->run('/profile');?>" class="navbar-link <?= $profile_active ?>">
                     <span class="fa fa-user"></span> Perfil
                 </a>
             </li>
