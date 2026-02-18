@@ -622,7 +622,7 @@ if ($index . "" == "0") {
             if ($fronts != null && isMobile()) {
                 ?>
 
-                <a href="<?php echo "../services/Controller/GeneratePDFController.php?id=0&" . $params; ?>">
+                <a href="<?php echo "../services/Controller/GeneratePDFControllerAI.php?id=0&" . $params; ?>">
                     <button style="margin-left: 10px;background-color: #27c494; color:white;"
                         class="btn waves-effect waves-light" type="button" id="back">
                         Exportar PDF
@@ -633,7 +633,7 @@ if ($index . "" == "0") {
             } else if ($fronts != null && !isMobile()) {
                 ?>
 
-                    <a target="_blank" href="<?php echo "../services/Controller/GeneratePDFController.php?id=0&" . $params; ?>">
+                    <a target="_blank" href="<?php echo "../services/Controller/GeneratePDFControllerAI.php?id=0&" . $params; ?>">
                         <button style="margin-left: 10px;background-color: #27c494; color:white;"
                             class="btn waves-effect waves-light" type="button" id="back">
                             Exportar PDF
