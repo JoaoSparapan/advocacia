@@ -23,6 +23,11 @@ abstract class RouteSwitch
         
     }
 
+    protected function recepcao()
+    {
+        return $this->indexPath.'pages/frontdesk.php';
+    }
+
     protected function login()
     {
         return $this->indexPath.'pages/login.php';

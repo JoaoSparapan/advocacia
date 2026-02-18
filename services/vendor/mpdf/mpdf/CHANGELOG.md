@@ -1,3 +1,20 @@
+mPDF 8.2.x
+===========================
+
+New features
+------------
+* Watermark text can now be colored using \Mpdf\Watermark DTO. \Mpdf\WatermarkImage DTO for images. (#1876)
+* Added support for `psr/http-message` v2 without dropping v1. (@markdorison, @apotek, @greg-1-anderson, @NigelCunningham #1907)
+* PHP 8.3 support in mPDF 8.2.1
+* Add support for `page-break-before: avoid;` and `page-break-after: avoid;` for tr elements inside tables
+
+Bugfixes
+--------
+
+* Replace character entities with characters when processing the `code` attribute in the `<barcode />` tag
+* Escape XML predefined entities in XMP metadata (Fix for #2090)
+* Enable Font Subsetting by Default (Fix for #1315)
+
 mPDF 8.1.x
 ===========================
 
@@ -9,6 +26,7 @@ New features
 * More verbose helper methods for `Output`: `OutputBinaryData`, `OutputHttpInline`, `OutputHttpDownload`, `OutputFile` (since v8.1.2)
 * Set font-size to `auto` in textarea and input in active forms to resize the font-size (@ChrisB9, #1721)
 * PHP 8.2 support in mPDF 8.1.3
+* Added support for `psr/log` v3 without dropping v2. (@markdorison, @apotek, @greg-1-anderson, #1857)
 
 Bugfixes
 --------
