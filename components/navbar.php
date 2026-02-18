@@ -22,6 +22,7 @@ $home_active = ($current_page === 'index.php') ? 'active' : '';
 $petitions_active = ($current_page === 'petition.php') ? 'active' : '';
 $distributed_active = ($current_page === 'distributed.php') ? 'active' : '';
 $users_active = ($current_page === 'users.php') ? 'active' : '';
+$frontdesk_active = ($current_page === 'frontdesk.php') ? 'active' : '';
 $profile_active = ($current_page === 'profile.php' || $current_page === 'updateUser.php') ? 'active' : '';
 $update_petition_active = ($current_page === 'updatePetition.php') ? 'active' : '';
 
@@ -54,6 +55,12 @@ $update_petition_active = ($current_page === 'updatePetition.php') ? 'active' : 
                         <span class="fa fa-archive"></span> Distribuídas
                     </a></li>
                 </ul>
+            </li>
+
+            <li class="navbar-item">
+                <a href="<?= $router->run('/recepcao');?>" class="navbar-link <?= $frontdesk_active ?>">
+                    <span class="fas fa-clipboard-list"></span> Atendimentos
+                </a>
             </li>
 
             <?php

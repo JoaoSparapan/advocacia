@@ -1,3 +1,27 @@
+$(document).delegate(".loading", "click", function () {
+  var count = 0;
+  loadingElement = $(this);
+  if (isLoad) {
+    intervalLoading = setInterval(function () {
+      count += 1;
+      if (count == 1) {
+        loadingElement.html("PROCESSANDO.");
+      }
+      if (count == 2) {
+        loadingElement.html("PROCESSANDO..");
+      }
+      if (count == 3) {
+        loadingElement.html("PROCESSANDO...");
+        count = 0;
+      }
+    }, 500);
+  } else {
+    if (intervalLoading) {
+      clearInterval(intervalLoading);
+    }
+  }
+});
+
 document.addEventListener("DOMContentLoaded", function () {
 
     const loginForm = document.getElementById("loginForm");

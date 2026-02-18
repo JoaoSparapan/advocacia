@@ -414,6 +414,14 @@ th {
   }
 }
 
+.hiddendiv {
+    position: absolute !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+
+
 /* materialize.css */
 .z-depth-1 .card-panel,
 .card,

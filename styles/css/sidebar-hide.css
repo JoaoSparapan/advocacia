@@ -1,7 +1,6 @@
 /* Hide sidebar styles - sidebar is no longer used */
 #sidebar,
 #sidebar.active,
-.wrapper,
 #sidebarCollapse {
   display: none !important;
 }
