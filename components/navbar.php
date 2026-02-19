@@ -23,6 +23,7 @@ $petitions_active = ($current_page === 'petition.php') ? 'active' : '';
 $distributed_active = ($current_page === 'distributed.php') ? 'active' : '';
 $users_active = ($current_page === 'users.php') ? 'active' : '';
 $frontdesk_active = ($current_page === 'frontdesk.php') ? 'active' : '';
+$recepcao_active = ($current_page === 'recepcao.php') ? 'active' : '';
 $profile_active = ($current_page === 'profile.php' || $current_page === 'updateUser.php') ? 'active' : '';
 $update_petition_active = ($current_page === 'updatePetition.php') ? 'active' : '';
 
@@ -42,6 +43,33 @@ $update_petition_active = ($current_page === 'updatePetition.php') ? 'active' : 
                     <span class="fa fa-house-chimney"></span> Home
                 </a>
             </li>
+            <li class="navbar-item">
+                <a href="<?= $router->run('/recepcao');?>" class="navbar-link <?= $recepcao_active ?>">
+                    <span class="fa-solid fa-calendar-days"></span> Recepção
+                </a>
+            </li>
+            <li class="navbar-item">
+                <a href="<?= $router->run('/atendimento');?>" class="navbar-link <?= $frontdesk_active ?>">
+                    <span class="fas fa-clipboard-list"></span> Atendimentos
+                </a>
+            </li>
+            <li class="navbar-item dropdown">
+                <a href="#" class="navbar-link <?= ($petitions_active || $distributed_active) ? 'active' : '' ?>">
+                    <span class="fa fa-folder"></span> Providências
+                    <span class="dropdown-arrow fa fa-chevron-down"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="<?= $router->run('/petitions');?>" class="dropdown-link <?= $petitions_active ?>">
+                        <span class="fa fa-folder"></span> Em Andamento
+                    </a></li>
+                    <li><a href="<?= $router->run('/distributed');?>" class="dropdown-link <?= $distributed_active ?>">
+                        <span class="fa fa-archive"></span> Concluídas
+                    </a></li>
+                    <li><a href="<?= $router->run('/distributed');?>" class="dropdown-link <?= $distributed_active ?>">
+                        <span class="fa fa-file-text-o"></span> Processos
+                    </a></li>
+                </ul>
+            </li>
             <li class="navbar-item dropdown">
                 <a href="#" class="navbar-link <?= ($petitions_active || $distributed_active) ? 'active' : '' ?>">
                     <span class="fa fa-file-pen"></span> Petições
@@ -58,31 +86,25 @@ $update_petition_active = ($current_page === 'updatePetition.php') ? 'active' : 
             </li>
 
             <li class="navbar-item">
-                <a href="<?= $router->run('/recepcao');?>" class="navbar-link <?= $frontdesk_active ?>">
-                    <span class="fas fa-clipboard-list"></span> Atendimentos
-                </a>
-            </li>
-
-            <?php
-                if(AuthController::getUser()['idRole']==1){
-            ?>
-            <li class="navbar-item">
-                <a href="<?= $router->run('/users');?>" class="navbar-link <?= $users_active ?>">
-                    <span class="fa-solid fa-users"></span> Usuários
-                </a>
-            </li>
-            <?php
-                }
-            ?>
-
-            <li class="navbar-item">
-                <a href="<?= $router->run('/profile');?>" class="navbar-link <?= $profile_active ?>">
-                    <span class="fa fa-user"></span> Perfil
+                <a href="<?= $router->run('/atendimento');?>" class="navbar-link <?= $frontdesk_active ?>">
+                    <span class="fa-solid fa-people-group"></span> Clientes
                 </a>
             </li>
         </ul>
 
         <div class="navbar-right">
+            <?php
+                if(AuthController::getUser()['idRole']==1){
+            ?>
+            <a href="<?= $router->run('/users');?>" class="navbar-link <?= $users_active ?>">
+                <span class="fa-solid fa-users"></span> Usuários
+            </a>
+            <?php
+                }
+            ?>
+            <a href="<?= $router->run('/profile');?>" class="navbar-link <?= $profile_active ?>">
+                <span class="fa fa-user"></span> Perfil
+            </a>
             <div class="navbar-user">
                 <p class="user-name"><?=AuthController::getUser()['name']?></p>
                 <p class="user-role"><?=$role?></p>

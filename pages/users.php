@@ -30,11 +30,11 @@ if($index.""=="0"){
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../styles/css/profile.css">
-    <link rel="stylesheet" href="../styles/css/navbar.css">
+    <link rel="stylesheet" href="../styles/css/member.css">
     <link rel="stylesheet" href="../styles/css/sidebar-hide.css">
+    <link rel="stylesheet" href="../styles/css/navbar.css">
     <link rel="stylesheet" href="../styles/fontawesome-free-6.1.1-web/css/all.css" />
     <link rel="shortcut icon" href="../images/logotipo.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../styles/css/member.css">
     <link rel="stylesheet" href="../styles/css/modelMaterialize.css" />
     <link rel="stylesheet" href="./styles/css/swal/sweetalert2.min.css">
 
@@ -103,7 +103,7 @@ if($index.""=="0"){
 
 
                 <div class="row">
-                    <button class="btn waves-effect waves-light createUser loading" type="submit" name="action"
+                    <button class="btn waves-effect waves-light createUser loading" type="submit" name="action" style="background-color:#27c494;"
                         id="reg-user">
                         Cadastrar
                     </button>
@@ -128,6 +128,12 @@ if($index.""=="0"){
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light"
+                style="background-color: transparent !important;">
+                <div class="container-fluid">
+                    Usuários
+                </div>
+            </nav>
 
             <form method="GET" action="#" class="filter">
                 <div>

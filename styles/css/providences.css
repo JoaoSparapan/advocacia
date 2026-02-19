@@ -127,7 +127,7 @@ textarea.materialize-textarea:focus.invalid ~ .helper-text[data-error],
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  //pointer-events: none;
+  /* pointer-events: none; */
 }
 
 input:not([type]).invalid ~ .helper-text:after,

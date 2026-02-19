@@ -44,7 +44,7 @@ if(AuthController::getUser()==null){
     <div id="content" class="p-4 p-md-5">
 
         <h2 class="mb-4" style="margin-left: 1rem;">Bem-vindo, <?=AuthController::getUser()["name"]?>!</h2>
-        <p style="margin-left: 1rem;">Sistema de gerenciamento de petições da Advocacia Bertoldi</p>
+        <p style="margin-left: 1rem;">Sistemas de gerenciamento da Advocacia Bertoldi</p>
         <div class="tables-content">
             <div class="proj-table">
                 <a href="./pages/petition.php">

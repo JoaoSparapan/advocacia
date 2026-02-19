@@ -32,7 +32,7 @@ if ($user != null) {
     $phpmailer->CharSet = 'UTF-8';
     $phpmailer->Username = 'sendemail@advbertoldi.com.br';
     $phpmailer->Password = 'Email@123';
-    $phpmailer->setFrom('sendemail@advbertoldi.com.br', 'Sistema de Petições Iniciais - Advocacia Bertoldi');
+    $phpmailer->setFrom('sendemail@advbertoldi.com.br', 'Sistema de Gerenciamento - Advocacia Bertoldi');
     $phpmailer->addAddress($user['email'], $user['name']);
     $phpmailer->isHTML(true);
     $phpmailer->Subject = 'Seu código de verificação';

@@ -33,9 +33,9 @@ $u = $userController->getAdminAndColaboradorAll();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../styles/css/sidebar-hide.css">
     <link rel="stylesheet" href="../styles/css/providences.css">
     <link rel="stylesheet" href="../styles/css/navbar.css">
-    <link rel="stylesheet" href="../styles/css/sidebar-hide.css">
     <link rel="shortcut icon" href="../images/logotipo.ico" type="image/x-icon">
     <link rel="stylesheet" href="../styles/css/modelMaterialize.css" />
     <link rel="stylesheet" href="../styles/fontawesome-free-6.1.1-web/css/all.css" />
@@ -246,7 +246,7 @@ $u = $userController->getAdminAndColaboradorAll();
 
                 <div class="row computer">
                     <button class="btn waves-effect waves-light createPetition loading" type="submit" name="action"
-                        id="reg-user">
+                        id="reg-user" style="background-color:#27c494;">
                         Cadastrar
                     </button>
                     <a href="#!" class="modal-close waves-effect waves-red btn-flat">Fechar</a>
