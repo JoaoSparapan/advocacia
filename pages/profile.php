@@ -15,9 +15,10 @@ if(AuthController::getUser()==null){
     <link rel="shortcut icon" href="../images/logotipo.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../styles/css/profile.css">
-    <link rel="stylesheet" href="../styles/css/navbar.css">
     <link rel="stylesheet" href="../styles/css/sidebar-hide.css">
+    <link rel="stylesheet" href="../styles/css/profile.css">
+    <link rel="stylesheet" href="../styles/css/providences.css">
+    <link rel="stylesheet" href="../styles/css/navbar.css">
     <link rel="stylesheet" href="../styles/fontawesome-free-6.1.1-web/css/all.css" />
     <title>Perfil</title>
 </head>
@@ -31,7 +32,12 @@ if(AuthController::getUser()==null){
 
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
-
+            <nav class="navbar navbar-expand-lg navbar-light bg-light"
+                style="background-color: transparent !important;">
+                <div class="container-fluid">
+                    Perfil
+                </div>
+            </nav>
             <div class="content-files">
                 <div class="row">
                     <!-- <button class="btn-large toggleUpdate"><i class="fa-solid fa-pen"></i></button> -->
@@ -92,7 +98,7 @@ if(AuthController::getUser()==null){
 
                         <div>
 
-                            <button class="btn sub invisible in updateProfile" type="submit">
+                            <button class="btn sub invisible in updateProfile" type="submit" style="background-color:#27c494;">
                                 <i class="fa-solid fa-floppy-disk"></i> &nbsp;&nbsp;Salvar Alterações
 
                             </button>

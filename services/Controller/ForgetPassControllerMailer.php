@@ -44,7 +44,7 @@ if($user==null)
         $phpmailer->Username = "sendemail@advbertoldi.com.br";
         $phpmailer->Password = 'Email@123';
 
-        $orig='Sistema de Petições - Advocacia Bertoldi';
+        $orig='Sistema de Gerenciamento - Advocacia Bertoldi';
         $phpmailer->setFrom('sendemail@advbertoldi.com.br', $orig); //Origem
         $phpmailer->addAddress($user[0]['email'], $user[0]['name']);     //Destinatario      
 

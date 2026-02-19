@@ -9555,10 +9555,6 @@ button.bg-dark:focus {
   padding-left: 1rem !important;
 }
 
-.p-4 {
-  padding: 3rem 0rem !important;
-}
-
 .pt-4,
 .py-4 {
   padding-top: 1.5rem !important;
@@ -12191,29 +12187,6 @@ a[data-toggle="collapse"] {
 #sidebar ul li:last-child{
   padding: 0;
 } */
-#sidebar .logout {
-  position: relative;
-  width: 100%;
-  border: 0;
-  background-color: transparent;
-  padding: 10px;
-  color: white;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  justify-content: center;
-}
-#sidebar .logout i {
-  margin-right: 0;
-  font-size: 24px;
-  transition: all 0.3s;
-  padding: 10px;
-  border-radius: 50%;
-}
-#sidebar .logout:hover > i {
-  background: #fefefe;
-  color: #3e64ff;
-}
 
 .input-field .prefix ~ input,
 .input-field .prefix ~ textarea,
@@ -12243,42 +12216,4 @@ a[data-toggle="collapse"] {
   text-align: initial;
   -webkit-transform: translateY(12px);
   transform: translateY(12px);
-}
-.logout-div {
-  position: absolute;
-  right: 0;
-
-  display: flex;
-  align-items: center;
-  z-index: 10;
-  width: 100%;
-  background-color: #3e64ff;
-  display: flex;
-  justify-content: flex-end;
-  padding: 7px;
-}
-.logout-div div {
-  display: flex;
-  flex-direction: column;
-}
-.logout-div div p {
-  margin: 0;
-  color: #fff;
-  text-align: end;
-}
-.logout-div div p:nth-child(2) {
-  font-size: 10px;
-}
-.logout {
-  background-color: #3e64ff;
-  color: #fff;
-  width: 40px;
-  height: 30px;
-  border: none;
-  border-radius: 4px;
-  margin-left: 15px;
-  width: 70px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
 }

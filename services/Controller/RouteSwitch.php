@@ -23,7 +23,17 @@ abstract class RouteSwitch
         
     }
 
+    protected function clientes()
+    {
+        return $this->indexPath.'pages/clients.php';
+    }
+
     protected function recepcao()
+    {
+        return $this->indexPath.'pages/recepcao.php';
+    }
+
+    protected function atendimento()
     {
         return $this->indexPath.'pages/frontdesk.php';
     }
