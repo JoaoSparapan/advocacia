@@ -36,6 +36,23 @@ function validarCPF(cpf) {
 }
 
 $(document).ready(function(){
+	$("#sel-type").on("change", function () {
+		let a = $("#start");
+		let b = $("#title");
+		let dc = $("#end");
+		let n = $("#new");
+		a.addClass("invisible");
+		a.removeClass("visible");
+		n.addClass("invisible");
+		n.removeClass("visible");
+		b.addClass("invisible");
+		b.removeClass("visible");
+		dc.addClass("invisible");
+		dc.removeClass("visible");
+		$("#" + $(this).val()).removeClass("invisible");
+		$("#" + $(this).val()).addClass("visible");
+	  });
+	  $("select").formSelect();
 
     const swalWithBootstrapButtons = Swal.mixin({
 		customClass: {
@@ -93,28 +110,6 @@ $(document).ready(function(){
             
         }
     );
-
-
-$(".createUser").click(function(event){
-    
-    const nome = $("#name").val();
-    const cpf = $("#cpf").val();
-    
-    if(!validarCPF(cpf))
-    {
-      alert("Insira um CPF válido!");
-      event.preventDefault();
-      return;
-    }
-    
-    if (nome.trim()==="" || 
-    cpf.trim()===""){
-        alert("Por favor informe todos os campos!")
-        event.preventDefault();
-        return ;
-    }
-
-});
 
 // M.textareaAutoResize($('#textarea1'));
 $("#modal2").modal();
