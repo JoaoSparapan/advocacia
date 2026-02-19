@@ -43,7 +43,6 @@ if(isset($_GET['id'])){
     <link rel="stylesheet" href="../styles/css/sidebar-hide.css"/>
     <link rel="stylesheet" href="../styles/css/providences.css"/>
     <link rel="stylesheet" href="../styles/css/selectStyle.css" />
-    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="../styles/fontawesome-free-6.1.1-web/css/all.css" />
     <link rel="shortcut icon" href="../logotipo.ico" type="image/x-icon">
     <title>Editar atendimento</title>

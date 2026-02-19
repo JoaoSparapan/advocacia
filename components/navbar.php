@@ -26,6 +26,7 @@ $frontdesk_active = ($current_page === 'frontdesk.php') ? 'active' : '';
 $recepcao_active = ($current_page === 'recepcao.php') ? 'active' : '';
 $profile_active = ($current_page === 'profile.php' || $current_page === 'updateUser.php') ? 'active' : '';
 $update_petition_active = ($current_page === 'updatePetition.php') ? 'active' : '';
+$clients_active = ($current_page === 'clients.php') ? 'active' : '';
 
 ?>
 
@@ -86,7 +87,7 @@ $update_petition_active = ($current_page === 'updatePetition.php') ? 'active' : 
             </li>
 
             <li class="navbar-item">
-                <a href="<?= $router->run('/atendimento');?>" class="navbar-link <?= $frontdesk_active ?>">
+                <a href="<?= $router->run('/clientes');?>" class="navbar-link <?= $clients_active ?>">
                     <span class="fa-solid fa-people-group"></span> Clientes
                 </a>
             </li>
