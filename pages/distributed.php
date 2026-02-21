@@ -121,6 +121,11 @@ if($index.""=="0"){
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    Petições Distribuídas
+                </div>
+            </nav>
 
             <form method="GET" action="#" class="filter">
                 <div>
