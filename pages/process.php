@@ -38,7 +38,7 @@ $court = $c->getAll();
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../styles/css/sidebar-hide.css">
     <link rel="stylesheet" href="../styles/fontawesome-free-6.1.1-web/css/all.css" />
-    <link rel="shortcut icon" href="../logotipo.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../images/logotipo.ico" type="image/x-icon">
     <link rel="stylesheet" href="../styles/css/profile.css">
     <link rel="stylesheet" href="../styles/css/processo.css">
     <link rel="stylesheet" href="../styles/css/member.css">

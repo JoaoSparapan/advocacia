@@ -718,8 +718,7 @@ $u = $userController->getAdminAndColaboradorAll();
     <script src="../js/materialize/materialize.min.js"></script>
     <script type="text/javascript" src="../js/swal/sweetalert2.all.min.js"></script>
 
-    <script src="../js/process.js"></script>
-    <script src="../js/providences.js"></script>
+    <script src="../js/petition_new.js"></script>
 
 </body>
 
