@@ -92,7 +92,7 @@ if(!isset($_SESSION['isOpenModal'])){
                             $proj = $pAnalise[$i];
                             echo "<tr>
                                     <td>" . date('d-m-Y', strtotime($proj[1])) . "</td>
-                                    <td>{$proj[5]}</td>
+                                    <td>{$proj[9]}</td>
                                     <td>{$proj[2]}</td>
                                 </tr>";
                         }

@@ -55,7 +55,7 @@ $d = date('d-m-Y',strtotime($end[0]));
     <link rel="stylesheet" href="../styles/css/providences.css">
     <link rel="stylesheet" href="../styles/css/profile.css">
     <link rel="stylesheet" href="../styles/css/navbar.css">
-    <link rel="shortcut icon" href="../logotipo.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../images/logotipo.ico" type="image/x-icon">
     <link rel="stylesheet" href="../styles/css/modelMaterialize.css" />
     <link rel="stylesheet" href="../styles/fontawesome-free-6.1.1-web/css/all.css" />
     <title>Editar providência</title>
