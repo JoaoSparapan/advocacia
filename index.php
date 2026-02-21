@@ -84,11 +84,26 @@ if(!isset($_SESSION['isOpenModal'])){
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td colspan="3" class="empty-message">
-                                Nenhuma petição em andamento
-                            </td>
-                        </tr>
+                    <?php
+                    $len = min(3, sizeof($pAnalise));
+
+                    if ($len > 0) {
+                        for ($i = 0; $i < $len; $i++) {
+                            $proj = $pAnalise[$i];
+                            echo "<tr>
+                                    <td>" . date('d-m-Y', strtotime($proj[1])) . "</td>
+                                    <td>{$proj[5]}</td>
+                                    <td>{$proj[2]}</td>
+                                </tr>";
+                        }
+                    } else {
+                        echo "<tr>
+                                <td colspan='3' class='empty-message'>
+                                    Nenhuma petição em andamento
+                                </td>
+                            </tr>";
+                    }
+                    ?>
                     </tbody>
                 </table>
             </div>
@@ -107,11 +122,26 @@ if(!isset($_SESSION['isOpenModal'])){
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>16-02-2026</td>
-                            <td>1</td>
-                            <td>aa</td>
-                        </tr>
+                    <?php
+                    $len = min(3, sizeof($pConc));
+
+                    if ($len > 0) {
+                        for ($i = 0; $i < $len; $i++) {
+                            $proj = $pConc[$i];
+                            echo "<tr>
+                                    <td>" . date('d-m-Y', strtotime($proj[1])) . "</td>
+                                    <td>{$proj[9]}</td>
+                                    <td>{$proj[2]}</td>
+                                </tr>";
+                        }
+                    } else {
+                        echo "<tr>
+                                <td colspan='3' class='empty-message'>
+                                    Nenhuma petição concluída
+                                </td>
+                            </tr>";
+                    }
+                    ?>
                     </tbody>
                 </table>
             </div>
@@ -130,11 +160,26 @@ if(!isset($_SESSION['isOpenModal'])){
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>20-02-2026</td>
-                            <td>21-02-2026</td>
-                            <td>providencia2</td>
-                        </tr>
+                    <?php
+                    $len = min(3, sizeof($providencesInprogressCurrentDay));
+
+                    if ($len > 0) {
+                        for ($i = 0; $i < $len; $i++) {
+                            $prov = $providencesInprogressCurrentDay[$i];
+                            echo "<tr>
+                                    <td>" . date('d-m-Y', strtotime($prov[7])) . "</td>
+                                    <td>" . date('d-m-Y', strtotime($prov[8])) . "</td>
+                                    <td>{$prov[9]}</td>
+                                </tr>";
+                        }
+                    } else {
+                        echo "<tr>
+                                <td colspan='3' class='empty-message'>
+                                    Nenhuma providência em andamento
+                                </td>
+                            </tr>";
+                    }
+                    ?>
                     </tbody>
                 </table>
             </div>
@@ -153,11 +198,26 @@ if(!isset($_SESSION['isOpenModal'])){
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td colspan="3" class="empty-message">
-                                Nenhuma providência concluída
-                            </td>
-                        </tr>
+                    <?php
+                    $len = min(3, sizeof($provsConc));
+
+                    if ($len > 0) {
+                        for ($i = 0; $i < $len; $i++) {
+                            $prov = $provsConc[$i];
+                            echo "<tr>
+                                    <td>" . date('d-m-Y', strtotime($prov[7])) . "</td>
+                                    <td>" . date('d-m-Y', strtotime($prov[8])) . "</td>
+                                    <td>{$prov[9]}</td>
+                                </tr>";
+                        }
+                    } else {
+                        echo "<tr>
+                                <td colspan='3' class='empty-message'>
+                                    Nenhuma providência concluída
+                                </td>
+                            </tr>";
+                    }
+                    ?>
                     </tbody>
                 </table>
             </div>
