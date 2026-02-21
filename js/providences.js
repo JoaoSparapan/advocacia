@@ -44,18 +44,18 @@ $(document).delegate(".deleteProvicendeBtn", "click", async function (event) {
   swalWithBootstrapButtons
     .fire({
       title: "Você tem certeza?",
-      text: "A exclusão desta petição não poderá ser revertida!",
+      text: "A exclusão desta providência não poderá ser revertida!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Sim, Deletar esta petição!",
+      confirmButtonText: "Sim, Deletar esta providência!",
       cancelButtonText: "Não, Cancelar!",
       reverseButtons: true,
     })
     .then((result) => {
       if (result.isConfirmed) {
         swalWithBootstrapButtons.fire(
-          "Deletando petição!",
-          "Petição esta sendo deletada, aguarde...",
+          "Deletando providência!",
+          "Providencia esta sendo deletada, aguarde...",
           "success"
         );
         window.location.href = destination;
@@ -63,32 +63,108 @@ $(document).delegate(".deleteProvicendeBtn", "click", async function (event) {
     });
 });
 
+function requestEstimateTerm() {
+  let dtaIntm = $("#data-publi").val();
+  let qteDays = $("#qte-dias").val();
+  let selDays = $("#sel-days").val();
+  $("#sel-days-value").val(selDays);
+  let stateHoliday = $("#state-holiday").is(":checked");
+  let nationalHoliday = $("#national-holiday").is(":checked");
+
+  if (idTimeOutTerm) clearTimeout(idTimeOutTerm);
+  $("#prazo").val("Carregando dados...");
+
+  idTimeOutTerm = setTimeout(() => {
+    $.post(
+      "../services/Controller/EstimateTerm.php",
+      {
+        "data-publi": dtaIntm,
+        "sel-days": selDays,
+        "qte-dias": qteDays,
+        "state-holiday": stateHoliday ? 1 : 0,
+        "national-holiday": nationalHoliday ? 1 : 0,
+      },
+      function (data, status) {
+        $("#prazo").val(data);
+      }
+    );
+  }, 500);
+  M.updateTextFields();
+}
+
+function requestEstimateTermMobile() {
+  let dtaIntm = $("#data-publi_mobile").val();
+  let qteDays = $("#qte-dias_mobile").val();
+  let selDays = $("#sel-days_mobile").val();
+  let stateHoliday = $("#state-holiday").is(":checked");
+  let nationalHoliday = $("#national-holiday").is(":checked");
+
+  if (idTimeOutTerm) clearTimeout(idTimeOutTerm);
+  $("#prazo").val("Carregando dados...");
+
+  idTimeOutTerm = setTimeout(() => {
+    $.post(
+      "../services/Controller/EstimateTerm.php",
+      {
+        "data-publi": dtaIntm,
+        "sel-days": selDays,
+        "qte-dias": qteDays,
+        "state-holiday": stateHoliday ? 1 : 0,
+        "national-holiday": nationalHoliday ? 1 : 0,
+      },
+      function (data, status) {
+        $("#prazo").val(data);
+      }
+    );
+  }, 500);
+  M.updateTextFields();
+}
+
+$("#data-publi").on("change", () => {
+  requestEstimateTerm();
+});
+$("#state-holiday").on("change", () => {
+  requestEstimateTerm();
+});
+$("#national-holiday").on("change", () => {
+  requestEstimateTerm();
+});
+$("#qte-dias_mobile").on("change", () => {
+  requestEstimateTermMobile();
+});
+$("#qte-dias").on("change", () => {
+  requestEstimateTerm();
+});
+$("#sel-days_mobile").on("change", () => {
+  requestEstimateTermMobile();
+});
+$("#sel-days").on("change", () => {
+  requestEstimateTerm();
+});
+
 $(document).ready(function () {
+  $("#date-start").mask("00/00/0000");
+  $("#date-end").mask("00/00/0000");
+
   $("#sel-type").on("change", function () {
-    let nc = $("#ncli");
-    let a = $("#adverso");
-    let dc = $("#dta-contract");
-    let tc = $("#type-action");
-    let ru = $("#responsible-user");
+    let s = $("#ncli");
+    let t = $("#vara-sel");
+    let anid = $("#nproc");
     let per = $("#search_period");
-    let dtt = $("#days-to-trial");
-    $("#dta-contract").mask("00/00/0000");
-    $("#date-start").mask("00/00/0000");
-    $("#date-end").mask("00/00/0000");
-    nc.addClass("invisible");
-    nc.removeClass("visible");
+    let ru = $("#responsible-user");
+
+    // d.addClass('invisible')
+    // d.removeClass('visible')
+    s.addClass("invisible");
+    s.removeClass("visible");
     per.addClass("invisible");
     per.removeClass("visible");
-    a.addClass("invisible");
-    a.removeClass("visible");
-    dc.addClass("invisible");
-    dc.removeClass("visible");
-    tc.addClass("invisible");
-    tc.removeClass("visible");
+    t.addClass("invisible");
+    t.removeClass("visible");
     ru.addClass("invisible");
     ru.removeClass("visible");
-    dtt.addClass("invisible");
-    dtt.removeClass("visible");
+    anid.addClass("invisible");
+    anid.removeClass("visible");
     $("#" + $(this).val()).removeClass("invisible");
     $("#" + $(this).val()).addClass("visible");
   });
@@ -166,79 +242,68 @@ $(document).ready(function () {
     $("#data-publi").removeClass("valid");
     $("#data-publi").removeClass("invalid");
   });
-  function getDifferenceInDays(date1, date2) {
-    const diffInMs = Math.abs(date2 - date1);
-    return diffInMs / (1000 * 60 * 60 * 24);
-  }
   $(".createProvidenceMobile").on("click", (event) => {
-    if ($("#data-intim_mobile").val() == "") {
-      isLoad = false;
-      return;
-    }
-    if ($("#client_name_mobile").val() == "") {
-      isLoad = false;
-      return;
-    }
-    if ($("#adverse_mobile").val() == "") {
-      isLoad = false;
-      return;
-    }
 
-    if ($("#select-adv_mobile").val() == null) {
-      alert("Selecione um advogado");
-      isLoad = false;
-      return;
-    }
-    if ($("#typeAction_mobile").val() == "") {
-      isLoad = false;
-      return;
-    }
-    var dataInformada = $("#data-intim_mobile").val() + " 00:00:00";
+    document.getElementById('myform').addEventListener('submit', function(event) {
+      var selectElement = document.getElementById('sel-days_mobile');
+      var selectedValue = selectElement.value;
+      
+      if (selectedValue === '-1') {
+          alert('Por favor, selecione o tipo da contagem de dias.');
+          event.preventDefault(); // Impede o envio do formulário
+      }
+    });
+    let dataInformada = new Date($("#data-intim_mobile").val()).toLocaleString(
+      "pt-BR",
+      {
+        timeZoneName: "longOffset",
+        timeZone: "America/Sao_Paulo",
+      }
+    );
+    let dtaAtual = new Date().toLocaleString("pt-BR", {
+      timeZoneName: "longOffset",
+      timeZone: "America/Sao_Paulo",
+    });
 
-    var dataAtual = new Date();
-    dataAtual.setHours(0, 0, 0);
-    dataInformada = new Date(dataInformada);
-    if (dataInformada.getTime() > dataAtual.getTime()) {
-      isLoad = false;
-    }
+    dtaAtual = dtaAtual.split(" ")[0];
+    console.log("aquiii " + dataInformada);
+    dataInformada = dataInformada.split(" ")[0];
+    console.log("aquiii " + dataInformada.length);
 
     if (dataInformada.length < 10) {
       isLoad = false;
       alert("Data da intimação está em formato incorreto");
       event.preventDefault();
     }
+    console.log("---");
   });
-  $(".createPetition").on("click", (event) => {
-    if ($("#data-intim").val() == "") {
-      isLoad = false;
-      return;
-    }
-    if ($("#client").val() == "") {
-      isLoad = false;
-      return;
-    }
-    if ($("#adverse").val() == "") {
-      isLoad = false;
-      return;
-    }
+  $(".createProvidence").on("click", (event) => {
 
-    if ($("#select-adv").val() == null) {
-      alert("Selecione um advogado");
-      isLoad = false;
-      return;
-    }
-    if ($("#typeAction").val() == "") {
-      isLoad = false;
-      return;
-    }
-    var dataInformada = $("#data-intim_mobile").val() + " 00:00:00";
+      document.getElementById('myform').addEventListener('submit', function(event){
+        var selectElement = document.getElementById('sel-days');
+        var selectedValue = selectElement.value;
+        
+        if (selectedValue === '-1') {
+            alert('Por favor, selecione o tipo da contagem de dias.');
+            event.preventDefault(); // Impede o envio do formulário
+        }
+      });
+    let dataInformada = new Date($("#data-intim").val()).toLocaleString(
+      "pt-BR",
+      {
+        timeZoneName: "longOffset",
+        timeZone: "America/Sao_Paulo",
+      }
+    );
+    let dtaAtual = new Date().toLocaleString("pt-BR", {
+      timeZoneName: "longOffset",
+      timeZone: "America/Sao_Paulo",
+    });
 
-    var dataAtual = new Date();
-    dataAtual.setHours(0, 0, 0);
-    dataInformada = new Date(dataInformada);
-    if (dataInformada.getTime() > dataAtual.getTime()) {
-      isLoad = false;
-    }
+    dtaAtual = dtaAtual.split(" ")[0];
+    console.log("aquiii " + dataInformada);
+    dataInformada = dataInformada.split(" ")[0];
+    console.log("aquiii " + dataInformada.length);
 
     if (dataInformada.length < 10) {
       isLoad = false;
@@ -262,6 +327,7 @@ $(document).ready(function () {
     var bodyData = {
       "num-proc": $("input#num-proc").val(),
       client: $("input#client").val(),
+      adv: $("#select-adv").val()
     };
     var vara = "";
     if ($("#select-vara").val()) {
@@ -283,12 +349,17 @@ $(document).ready(function () {
         if (response.trim() === "Sucesso ao cadastrar processo!") {
           $("#vara").removeClass("invalid");
           $("#cliente").removeClass("invalid");
-          console.log(vara);
+          $("#adv").removeClass("invalid");
+          let teste = $("#select-adv option:selected").text();
+          let teste_mobile = $("#select-adv_mobile option:selected").text();
           $("#search_numProcess_inp").val(bodyData["num-proc"]);
           $("#search_numProcess_inp_mobile").val(bodyData["num-proc"]);
           $("#vara").val(vara);
           $("#cliente").val(bodyData["client"]);
+          $("#adv").val(teste);
+          $("#adv_mobile").val(teste_mobile);
           $("#vara_mobile").val(vara);
+          $("#adv_mobile").val(teste);
           $("#cliente_mobile").val(bodyData["client"]);
           var listOp = $("#search_numProcess_inp").data("listnproc").split(",");
 
@@ -338,9 +409,7 @@ $(document).ready(function () {
     if (idTimeOut) clearTimeout(idTimeOut);
     $("#vara_mobile").val("Carregando dados...");
     $("#cliente_mobile").val("Carregando dados...");
-    // $("#addprov").hasClass("invisible")
-    //   ? ""
-    //   : $("#addprov").addClass("invisible");
+    $("#adv_mobile").val("Carregando dados...");
     idTimeOut = setTimeout(() => {
       $.post(
         "../services/Controller/GetProcessByNum.php",
@@ -350,24 +419,26 @@ $(document).ready(function () {
           if (dados.length != 0) {
             $("#vara_mobile").val(dados[0].sigla);
             $("#cliente_mobile").val(dados[0].clientName);
+            $("#adv_mobile").val(dados[0].name);
             $("#vara_mobile").removeClass("invalid");
             $("#cliente_mobile").removeClass("invalid");
+            $("#adv_mobile").removeClass("invalid");
             $("#search_numProcess_inp_mobile").removeClass("invalid");
             $("#vara_mobile").addClass("valid");
             $("#cliente_mobile").addClass("valid");
+            $("#adv_mobile").addClass("valid");
             $("#search_numProcess_inp_mobile").addClass("valid");
           } else {
             $("#vara_mobile").removeClass("valid");
             $("#cliente_mobile").removeClass("valid");
+            $("#adv_mobile").removeClass("valid");
             $("#search_numProcess_inp_mobile").removeClass("valid");
             $("#vara_mobile").val("");
             $("#vara_mobile").addClass("invalid");
+            $("#adv_mobile").val("");
+            $("#adv_mobile").addClass("invalid");
             $("#cliente_mobile").val("");
             $("#cliente_mobile").addClass("invalid");
-
-            // $("#addprov").removeClass("invisible");
-            //$("#search_numProcess_inp").addClass("invalid");
-
             M.updateTextFields();
           }
         }
@@ -375,14 +446,11 @@ $(document).ready(function () {
     }, 500);
     M.updateTextFields();
   });
-
   $("#search_numProcess_inp").on("change", () => {
     if (idTimeOut) clearTimeout(idTimeOut);
     $("#vara").val("Carregando dados...");
     $("#cliente").val("Carregando dados...");
-    // $("#addprov").hasClass("invisible")
-    //   ? ""
-    //   : $("#addprov").addClass("invisible");
+    $("#adv").val("Carregando dados...");
     idTimeOut = setTimeout(() => {
       $.post(
         "../services/Controller/GetProcessByNum.php",
@@ -392,24 +460,26 @@ $(document).ready(function () {
           if (dados.length != 0) {
             $("#vara").val(dados[0].sigla);
             $("#cliente").val(dados[0].clientName);
+            $("#adv").val(dados[0].name);
             $("#vara").removeClass("invalid");
             $("#cliente").removeClass("invalid");
+            $("#adv").removeClass("invalid");
             $("#search_numProcess_inp").removeClass("invalid");
             $("#vara").addClass("valid");
             $("#cliente").addClass("valid");
+            $("#adv").addClass("valid");
             $("#search_numProcess_inp").addClass("valid");
           } else {
             $("#vara").removeClass("valid");
             $("#cliente").removeClass("valid");
+            $("#adv").removeClass("valid");
             $("#search_numProcess_inp").removeClass("valid");
             $("#vara").val("");
             $("#vara").addClass("invalid");
+            $("#adv").val("");
+            $("#adv").addClass("invalid");
             $("#cliente").val("");
             $("#cliente").addClass("invalid");
-
-            // $("#addprov").removeClass("invisible");
-            //$("#search_numProcess_inp").addClass("invalid");
-
             M.updateTextFields();
           }
         }
@@ -428,9 +498,11 @@ $(document).ready(function () {
 
   $(document).delegate(".openModalStatus", "click", function (event) {
     let idProvSelected = $(this).data("prov");
+    let doneProv = $(this).data("done");
     let providedProv = $(this).data("provided");
 
     $("#idProvidenceModal").val(idProvSelected);
+    $("#provDoneModal")[0].checked = doneProv ? true : false;
     $("#provProvidedModal")[0].checked = providedProv ? true : false;
   });
 
@@ -442,18 +514,18 @@ $(document).ready(function () {
     swalWithBootstrapButtons
       .fire({
         title: "Você tem certeza?",
-        text: "Todas as petições serão apagadas!",
+        text: "Todas as providências serão apagadas!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "Sim, deletar esta petição!",
+        confirmButtonText: "Sim, deletar esta providência!",
         cancelButtonText: "Não, cancelar!",
         reverseButtons: true,
       })
       .then((result) => {
         if (result.isConfirmed) {
           swalWithBootstrapButtons.fire(
-            "Deletando petição!",
-            "A petição está sendo deletada, aguarde...",
+            "Deletando providência!",
+            "A providência está sendo deletada, aguarde...",
             "success"
           );
           window.location.href = destination;
@@ -462,6 +534,21 @@ $(document).ready(function () {
   });
 
   $("select").formSelect();
+  var elems = document.querySelectorAll("select");
+  var listOp = $("#search_numProcess_inp").data("listnproc").split(",");
+  //console.log("teste " + listOp);
+  var obj = {};
+
+  for (let i = 0; i < listOp.length; i++) {
+    obj[listOp[i]] = null;
+  }
+
+  $("#search_numProcess_inp.autocomplete").autocomplete({
+    data: obj,
+  });
+  $("#search_numProcess_inp_mobile.autocomplete").autocomplete({
+    data: obj,
+  });
 
   function changeMobile() {
     const inputsComputer = $(".row.computer .input-field input");
@@ -472,11 +559,6 @@ $(document).ready(function () {
       inputsMobile[i].setAttribute("required", "");
       inputsMobile[i].disabled = false;
     }
-
-    $(".row.computer .input-field select")[0].removeAttribute("required");
-    $(".row.computer .input-field select").disabled = true;
-    $(".row.mobile .input-field select")[0].setAttribute("required", "");
-    $(".row.mobile .input-field select").disabled = false;
   }
   function changeComputer() {
     const inputsMobile = $(".row.mobile .input-field input");
@@ -488,10 +570,6 @@ $(document).ready(function () {
       inputsComputer[i].setAttribute("required", "");
       inputsComputer[i].disabled = false;
     }
-    $(".row.mobile .input-field select")[0].removeAttribute("required");
-    $(".row.mobile .input-field select").disabled = true;
-    $(".row.computer .input-field select")[0].setAttribute("required", "");
-    $(".row.computer .input-field select").disabled = false;
   }
   window.addEventListener("resize", () => {
     if (window.innerWidth <= 750) {

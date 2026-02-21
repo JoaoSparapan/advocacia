@@ -490,7 +490,7 @@ if($index.""=="0"){
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../js/materialize/materialize.min.js"></script>
     <script type="text/javascript" src="../js/swal/sweetalert2.all.min.js"></script>
-    <script src="../js/providenced.js"></script>
+    <script src="../js/petition.js"></script>
 
 </body>
 
