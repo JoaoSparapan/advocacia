@@ -27,6 +27,9 @@ $recepcao_active = ($current_page === 'recepcao.php') ? 'active' : '';
 $profile_active = ($current_page === 'profile.php' || $current_page === 'updateUser.php') ? 'active' : '';
 $update_petition_active = ($current_page === 'updatePetition.php') ? 'active' : '';
 $clients_active = ($current_page === 'clients.php') ? 'active' : '';
+$providences_active = ($current_page === 'providences.php') ? 'active' : '';
+$providenced_active = ($current_page === 'providenced.php') ? 'active' : '';
+$process_active = ($current_page === 'process.php') ? 'active' : '';
 
 ?>
 
@@ -50,7 +53,7 @@ $clients_active = ($current_page === 'clients.php') ? 'active' : '';
                     <span class="dropdown-arrow fa fa-chevron-down"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="<?= $router->run('/recepcao');?>" class="dropdown-link <?= $petitions_active ?>">
+                    <li><a href="<?= $router->run('/recepcao');?>" class="dropdown-link <?= $recepcao_active ?>">
                         <span class="fa-solid fa-calendar-days"></span> Recepção
                     </a></li>
                     <li><a href="<?= $router->run('/clientes');?>" class="dropdown-link <?= $clients_active ?>">
@@ -64,18 +67,18 @@ $clients_active = ($current_page === 'clients.php') ? 'active' : '';
                 </a>
             </li>
             <li class="navbar-item dropdown">
-                <a href="#" class="navbar-link <?= ($petitions_active || $distributed_active) ? 'active' : '' ?>">
+                <a href="#" class="navbar-link <?= ($providences_active || $providenced_active || $process_active) ? 'active' : '' ?>">
                     <span class="fa fa-folder"></span> Providências
                     <span class="dropdown-arrow fa fa-chevron-down"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="<?= $router->run('/petitions');?>" class="dropdown-link <?= $petitions_active ?>">
+                    <li><a href="<?= $router->run('/providences');?>" class="dropdown-link <?= $providences_active ?>">
                         <span class="fa fa-folder"></span> Em Andamento
                     </a></li>
-                    <li><a href="<?= $router->run('/distributed');?>" class="dropdown-link <?= $distributed_active ?>">
+                    <li><a href="<?= $router->run('/providenced');?>" class="dropdown-link <?= $providenced_active ?>">
                         <span class="fa fa-archive"></span> Concluídas
                     </a></li>
-                    <li><a href="<?= $router->run('/distributed');?>" class="dropdown-link <?= $distributed_active ?>">
+                    <li><a href="<?= $router->run('/process');?>" class="dropdown-link <?= $process_active ?>">
                         <span class="fa fa-file-text-o"></span> Processos
                     </a></li>
                 </ul>

@@ -57,6 +57,98 @@ th {
   border-radius: 2px;
 }
 
+/* ===== CONTAINER PRINCIPAL ===== */
+.dashboard-container {
+    padding: 40px 60px;
+    background-color: #f4f6f9;
+    min-height: 100vh;
+}
+
+/* ===== TÍTULO ===== */
+.dashboard-title {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+.dashboard-subtitle {
+    color: #7f8c8d;
+    margin-bottom: 40px;
+}
+
+/* ===== GRID DOS CARDS ===== */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+/* ===== CARD ===== */
+.dashboard-card {
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    padding: 25px;
+    transition: 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-card h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #34495e;
+}
+
+/* ===== TABELAS ===== */
+.dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.dashboard-table thead {
+    background-color: #f1f3f6;
+}
+
+.dashboard-table th {
+    text-align: left;
+    padding: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #5c6b77;
+    border-bottom: 2px solid #eaecef;
+}
+
+.dashboard-table td {
+    padding: 14px;
+    border-bottom: 1px solid #eef1f4;
+    color: #2c3e50;
+    font-size: 14px;
+}
+
+.dashboard-table tbody tr:hover {
+    background-color: #f9fbfd;
+}
+
+.empty-message {
+    text-align: center;
+    padding: 20px;
+    color: #95a5a6;
+    font-style: italic;
+}
+
+/* RESPONSIVO */
+@media (max-width: 1000px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media only screen and (max-width: 992px) {
   table.responsive-table {
     width: 100%;

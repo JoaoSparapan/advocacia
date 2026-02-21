@@ -8,7 +8,7 @@ if (!isset($GLOBALS['AUTH_INIT'])) {
         session_start();
     }
 
-    $inactivityLimit = 15 * 60;
+    $inactivityLimit = 40 * 60;
 
     if (
         isset($_SESSION['LAST_ACTIVITY']) &&
