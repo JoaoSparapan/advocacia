@@ -1,0 +1,41 @@
+@import "./index.css";
+
+.new-vara {
+  border-radius: 50%;
+  font-size: 16px;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  cursor: pointer;
+  background-color: #27c494;
+  color: white;
+  transition: all 0.1s linear;
+}
+.new-vara.active {
+  background-color: #c43127;
+  color: white;
+  transform: rotate(45deg);
+}
+.deleteVara {
+  background-color: #c43127;
+  border-radius: 50%;
+  font-size: 16px;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  cursor: pointer;
+  color: white;
+  display: none;
+}
+.deleteVara.visible {
+  display: flex !important;
+}
+.invisible {
+  display: none;
+}

@@ -23,6 +23,25 @@ abstract class RouteSwitch
         
     }
 
+     protected function providences(string $params='')
+    {
+        if($params==''){
+            return $this->indexPath.'pages/providences.php';
+        }else{
+            return $this->indexPath.'pages/providences.php?'.$params;
+        }
+        
+    }
+
+    protected function process(){
+        return $this->indexPath.'pages/process.php';
+    }
+
+    protected function providenced()
+    {
+        return $this->indexPath.'pages/providenced.php';
+    }
+
     protected function clientes()
     {
         return $this->indexPath.'pages/clients.php';
