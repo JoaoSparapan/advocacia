@@ -44,10 +44,19 @@ $clients_active = ($current_page === 'clients.php') ? 'active' : '';
                     <span class="fa fa-house-chimney"></span> Home
                 </a>
             </li>
-            <li class="navbar-item">
-                <a href="<?= $router->run('/recepcao');?>" class="navbar-link <?= $recepcao_active ?>">
+            <li class="navbar-item dropdown">
+                <a href="#" class="navbar-link <?= ($recepcao_active || $clients_active) ? 'active' : '' ?>">
                     <span class="fa-solid fa-calendar-days"></span> Recepção
+                    <span class="dropdown-arrow fa fa-chevron-down"></span>
                 </a>
+                <ul class="dropdown-menu">
+                    <li><a href="<?= $router->run('/recepcao');?>" class="dropdown-link <?= $petitions_active ?>">
+                        <span class="fa-solid fa-calendar-days"></span> Recepção
+                    </a></li>
+                    <li><a href="<?= $router->run('/clientes');?>" class="dropdown-link <?= $clients_active ?>">
+                        <span class="fa-solid fa-people-group"></span> Clientes
+                    </a></li>
+                </ul>
             </li>
             <li class="navbar-item">
                 <a href="<?= $router->run('/atendimento');?>" class="navbar-link <?= $frontdesk_active ?>">
@@ -84,12 +93,6 @@ $clients_active = ($current_page === 'clients.php') ? 'active' : '';
                         <span class="fa fa-archive"></span> Distribuídas
                     </a></li>
                 </ul>
-            </li>
-
-            <li class="navbar-item">
-                <a href="<?= $router->run('/clientes');?>" class="navbar-link <?= $clients_active ?>">
-                    <span class="fa-solid fa-people-group"></span> Clientes
-                </a>
             </li>
         </ul>
 
