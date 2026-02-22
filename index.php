@@ -161,11 +161,11 @@ if(!isset($_SESSION['isOpenModal'])){
                     </thead>
                     <tbody>
                     <?php
-                    $len = min(3, sizeof($providencesInprogressCurrentDay));
+                    $len = min(3, sizeof($provsAnalise));
 
                     if ($len > 0) {
                         for ($i = 0; $i < $len; $i++) {
-                            $prov = $providencesInprogressCurrentDay[$i];
+                            $prov = $provsAnalise[$i];
                             echo "<tr>
                                     <td>" . date('d-m-Y', strtotime($prov[7])) . "</td>
                                     <td>" . date('d-m-Y', strtotime($prov[8])) . "</td>

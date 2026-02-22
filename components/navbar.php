@@ -21,10 +21,10 @@ function isActive($page_name, $current_page) {
 $home_active = ($current_page === 'index.php') ? 'active' : '';
 $petitions_active = ($current_page === 'petition.php') ? 'active' : '';
 $distributed_active = ($current_page === 'distributed.php') ? 'active' : '';
-$users_active = ($current_page === 'users.php') ? 'active' : '';
+$users_active = ($current_page === 'users.php' || $current_page === 'updateUser.php') ? 'active' : '';
 $frontdesk_active = ($current_page === 'frontdesk.php') ? 'active' : '';
 $recepcao_active = ($current_page === 'recepcao.php') ? 'active' : '';
-$profile_active = ($current_page === 'profile.php' || $current_page === 'updateUser.php') ? 'active' : '';
+$profile_active = ($current_page === 'profile.php') ? 'active' : '';
 $update_petition_active = ($current_page === 'updatePetition.php') ? 'active' : '';
 $clients_active = ($current_page === 'clients.php') ? 'active' : '';
 $providences_active = ($current_page === 'providences.php') ? 'active' : '';
