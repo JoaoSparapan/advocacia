@@ -9,7 +9,7 @@
     if(isset($_POST['idProvidence'])){
         $idProv = addslashes($_POST['idProvidence']);
     }else{
-        header("Refresh: 3, url=../../pages/providences.php");
+        header("Refresh: 3, url=../../pages/petition.php");
         $exc = new ExceptionAlert('Erro inesperado');
         echo $exc->alerts('error','Erro');
         exit;
