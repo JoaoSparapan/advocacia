@@ -340,7 +340,7 @@ class PetitionController extends GlobalController{
         $vrf=($this->getPetitionById($idPetition));
         
         if($vrf){
-            $query = "UPDATE petition SET distributed=$dis, unfounded=$sf WHERE idPetition=$idPetition";            
+            $query = "UPDATE petition SET distributed=$dis, unfounded=$sf WHERE idPetition=$idPetition";
             $r = mysqli_query($conn, $query);
             if($r){
                 $result=['success', 'Sucesso ao alterar informações!'];

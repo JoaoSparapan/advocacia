@@ -91,9 +91,10 @@ $(document).delegate(".openModalStatus", "click", function (event) {
   let providedProv = $(this).data("provided");
   let sf = $(this).data("sf");
   console.log(sf);
-  let logs = $(this).data("logs");
-  logs = logs.replaceAll("'", '"');
+  let logs = $(this).attr("data-logs");
   logs = JSON.parse(logs);
+  console.log(typeof logs);
+  console.log(logs);
   let result = "";
   let phrase = "";
   let data = "";

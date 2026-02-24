@@ -337,7 +337,7 @@ if($index.""=="0"){
                 }
                 $l = $logController->getLastLogByPetition($p[0]);
                 $allLogs = $logController->getLogByPetition($p[0]);
-                $allLogs_str = str_replace('"', "'", json_encode($allLogs));
+                $allLogs_str = htmlspecialchars(json_encode($allLogs), ENT_QUOTES, 'UTF-8');
                 $day = explode(" ", $l['edited_by']);
                 $target = date_create(date('Y-m-d', strtotime($p[1])));
                 $date = date_create(date('Y-m-d', strtotime($day[0])));
