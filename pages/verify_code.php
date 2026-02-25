@@ -32,6 +32,16 @@
         <i class="fa-solid fa-key"></i>
       </div>
 
+      <div class="trust-device">
+          <label class="custom-checkbox">
+              <input type="checkbox" name="trust_device" value="1">
+              <span class="checkmark"></span>
+              <span class="checkbox-text">
+                  Confiar neste navegador
+              </span>
+          </label>
+      </div>
+
       <button class="btn-primary" type="submit" id="verify">
         Verificar
       </button>

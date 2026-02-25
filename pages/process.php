@@ -236,7 +236,12 @@ $court = $c->getAll();
                         <th>Vara</th>
                         <th>Cliente</th>
                         <th>Adv. Responsável</th>
-                        <th>Operações</th>
+                            ';
+                        if(AuthController::getUser()['idRole']==1){
+                        $table.=
+                        '
+                        <th>Operações</th>';}
+                        $table.='
                     </tr>
                 </thead>
 
@@ -287,12 +292,12 @@ $court = $c->getAll();
                                 <td>'.$vara["sigla"].'</td>
                                 <td>'.$u["clientName"].'</td>
                                 <td>'.$user["name"].'</td>';
-                    
+                    if(AuthController::getUser()['idRole']==1){
                     $button_action='
                             <a class="btn-floating btn-small blue" title="Editar processo" href="./updateProcess.php?id='.$u['idProcess'].'"><i class="fa-solid fa-pencil"></i></a>
                             <a class="btn-floating btn-small red deleteUserBtn" title="Excluir processo" href="../services/Controller/DeleteProcess.php?id='.$u['idProcess'].'"><i class="fa-solid fa-trash"></i></a>
                             ';
-                   
+                    }
 
                            
                             
@@ -331,7 +336,13 @@ $court = $c->getAll();
                         <th>Vara</th>
                         <th>Cliente</th>
                         <th>Adv. Responsável</th>
-                        <th>Operações</th>
+                            ';
+                        if(AuthController::getUser()['idRole']==1){
+                        $table.=
+                        '
+                        <th>Operações</th>';}
+                        $table.='
+                    </tr>
                     </tr>
                 </thead>
                 </table>

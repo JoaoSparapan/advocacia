@@ -5,20 +5,34 @@ include_once '../Models/Exceptions.php';
 include_once '../Models/TwoFactorMail.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 
 require '../Mailer/PHPMailer/src/PHPMailer.php';
 require '../Mailer/PHPMailer/src/SMTP.php';
 
-$email = addslashes($_POST['email']);
-$senha = addslashes($_POST['senha']);
+$email = trim($_POST['email'] ?? '');
+$senha = trim($_POST['senha'] ?? '');
 
 $auth = new AuthController();
+$auth->cleanupExpiredTrustedDevices();
 $user = $auth->verifyUser($email, $senha);
 
 if ($user != null) {
+
+    $user_id = $user['idUser'];
+
+    if (isset($_COOKIE['trusted_device'])) {
+
+        $token = $_COOKIE['trusted_device'];
+
+        if ($auth->isTrustedDevice($user_id, $token)) {
+            AuthController::setUser($user);
+            header("Location: ../../");
+            exit;
+        }
+    }
+
     $codigo = rand(100000, 999999);
-    $auth->createVerificationSession($user['idUser'], $codigo);
+    $auth->createVerificationSession($user_id, $codigo);
 
     $mailTemplate = new TwoFactorMail($codigo, $user['name']);
     $body = $mailTemplate->content();
@@ -40,15 +54,15 @@ if ($user != null) {
 
     if ($phpmailer->send()) {
 
-        $_SESSION['pending_user_id'] = $user['idUser'];
+        $_SESSION['pending_user_id'] = $user_id;
 
         header("Refresh: 1, url=../../pages/verify_code.php");
         $exc = new ExceptionAlert("Enviamos um código de verificação para o seu e-mail.", 3000);
         echo $exc->alerts("success", "Código enviado");
     } else {
         header("Refresh: 2, url=../../pages/login.php");
-        $exc = new ExceptionAlert("Erro ao enviar o código de verificação.", 2000);
-        echo $exc->alerts("error", "Erro no envio de e-mail");
+        $exc = new ExceptionAlert("Erro ao enviar o código.", 2000);
+        echo $exc->alerts("error", "Erro");
     }
 } else {
     header("Refresh: 2, url=../../pages/login.php");
