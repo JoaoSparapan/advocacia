@@ -124,6 +124,56 @@ if (!class_exists('AuthController')) {
             $this->disconnectDB($conn);
         }
 
+        public function createTrustedDevice($user_id, $token)
+        {
+            $hashedToken = hash('sha256', $token);
+            $expires = date('Y-m-d H:i:s', strtotime('+30 days'));
+
+            $conn = $this->connectDB();
+
+            mysqli_query($conn, "
+                INSERT INTO trusted_devices (idUser, token, expires_at)
+                VALUES ('$user_id', '$hashedToken', '$expires')
+            ");
+
+            $this->disconnectDB($conn);
+        }
+
+        public function isTrustedDevice($user_id, $token)
+        {
+            $hashedToken = hash('sha256', $token);
+            $now = date('Y-m-d H:i:s');
+
+            $conn = $this->connectDB();
+
+            $query = mysqli_query($conn, "
+                SELECT idTrustedDevices FROM trusted_devices
+                WHERE idUser = '$user_id'
+                AND token = '$hashedToken'
+                AND expires_at > '$now'
+                LIMIT 1
+            ");
+
+            $trusted = mysqli_fetch_assoc($query);
+
+            $this->disconnectDB($conn);
+
+            return $trusted ? true : false;
+        }
+
+        public function cleanupExpiredTrustedDevices()
+        {
+            $conn = $this->connectDB();
+            $now = date('Y-m-d H:i:s');
+
+            mysqli_query($conn, "
+                DELETE FROM trusted_devices
+                WHERE expires_at < '$now'
+            ");
+
+            $this->disconnectDB($conn);
+        }
+
         public function getUserById($user_id)
         {
             $conn = $this->connectDB();

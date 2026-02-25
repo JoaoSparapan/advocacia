@@ -11,6 +11,10 @@ if(AuthController::getUser()['idRole']=="2"){
     $role="Colaborador";
 }
 
+if(AuthController::getUser()['idRole']=="3"){
+    $role="Supervisor";
+}
+
 $current_page = basename($_SERVER['PHP_SELF']);
 $current_path = isset($_GET['page']) ? $_GET['page'] : '';
 

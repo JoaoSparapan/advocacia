@@ -1,82 +1,70 @@
 <?php
-  include_once './ProcessController.php';
-  include_once './VaraController.php';
-  include_once '../Models/Exceptions.php';
+include_once './ProcessController.php';
+include_once './VaraController.php';
+include_once '../Models/Exceptions.php';
 
-  $num_proc = addslashes($_POST['num-proc']);
-  $vara='';
-  if(!isset($_POST['adv']))
-  {
-    $adv=1;
-  }else{
-    $adv = addslashes($_POST['adv']);
-  }
-  $client= addslashes($_POST['client']);
-  $vara_obj = new VaraController();
-
-  if($num_proc==""){
-    header("Refresh: 2, url=../../pages/process.php");
-    $exc = new ExceptionAlert('Informe o número do processo');
-    echo $exc->alerts('error', 'Erro');
-    return;
-  }
-  if($client==""){
-    header("Refresh: 2, url=../../pages/process.php");
-    $exc = new ExceptionAlert('Informe o cliente do processo');
-    echo $exc->alerts('error', 'Erro');
-    return;
-  }
-
-  if(isset($_POST['court'])){
-    
-    $vara=addslashes($_POST['court']);
-
-  }else{
-  if(isset($_POST['new-vara'])){
-    if($_POST['new-vara']==""){
-      header("Refresh: 2, url=../../pages/process.php");
-      $exc = new ExceptionAlert('Informe a vara');
-      echo $exc->alerts('error', 'Erro');
-      exit;
-    }
-    if($vara_obj->getVaraBySigla($_POST['new-vara'])){
-      header("Refresh: 2, url=../../pages/process.php");
-      $exc = new ExceptionAlert('Vara já cadastrada no sistema!');
-      echo $exc->alerts('error', 'Erro');
-      exit;
-    }
-    $vara.=addslashes($_POST['new-vara']);
-    
-    
-    $result = $vara_obj->insertVara($vara);
-    if($result[0]=="error"){
-      header("Refresh: 2, url=../../pages/process.php");
-      $exc = new ExceptionAlert($r[1]);
-      echo $exc->alerts('error', 'Erro inesperado');
-      exit;
-    }
-    $result = $vara_obj->getLastVara();
-    
-    $vara = $result['idCourt'];
-  }else{
-    header("Refresh: 2, url=../../pages/process.php");
-    $exc = new ExceptionAlert('Selecione a vara');
-    echo $exc->alerts('error', 'Erro');
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    echo "Requisição inválida";
     exit;
-  }
 }
- 
 
-  $obj_proc = new ProcessController();
-  $result = $obj_proc->insertProcess($num_proc,$client,$vara,$adv);
+$num_proc = trim($_POST['num-proc'] ?? '');
+$adv = isset($_POST['adv']) ? addslashes($_POST['adv']) : 1;
+$client = trim($_POST['client'] ?? '');
+$vara = '';
 
-  if($result[0]=="error"){
-    header("Refresh: 2, url=../../pages/process.php");
-    $exc = new ExceptionAlert($result[1]);
-    echo $exc->alerts('error', 'Erro inesperado');
-    
-  }else{
-    header("Refresh: 2, url=../../pages/process.php");
-    $exc = new ExceptionAlert($result[1]);
-    echo $exc->alerts('success', 'Sucesso');
-  }
+$vara_obj = new VaraController();
+
+if ($num_proc == "") {
+    echo "Informe o número do processo";
+    exit;
+}
+
+if ($client == "") {
+    echo "Informe o cliente do processo";
+    exit;
+}
+
+if (isset($_POST['court'])) {
+
+    $vara = addslashes($_POST['court']);
+
+} elseif (isset($_POST['new-vara'])) {
+
+    if ($_POST['new-vara'] == "") {
+        echo "Informe a vara";
+        exit;
+    }
+
+    if ($vara_obj->getVaraBySigla($_POST['new-vara'])) {
+        echo "Vara já cadastrada no sistema!";
+        exit;
+    }
+
+    $vara = addslashes($_POST['new-vara']);
+
+    $result = $vara_obj->insertVara($vara);
+
+    if ($result[0] == "error") {
+        echo $result[1];
+        exit;
+    }
+
+    $result = $vara_obj->getLastVara();
+    $vara = $result['idCourt'];
+
+} else {
+    echo "Selecione a vara";
+    exit;
+}
+
+$obj_proc = new ProcessController();
+$result = $obj_proc->insertProcess($num_proc, $client, $vara, $adv);
+
+if ($result[0] == "error") {
+    echo $result[1];
+} else {
+    echo "Sucesso ao cadastrar processo!";
+}
+
+exit;
