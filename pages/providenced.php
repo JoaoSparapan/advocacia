@@ -287,7 +287,7 @@ if($index.""=="0"){
                   $id = $i+1;
                   $proc = $processController->getById($p[1]);
                   $vara = $c->getById($proc['idCourt']);
-                  $user = $userController->getById($p[17]);
+                  $user = $userController->getById($p[12]);
                   $button_action='';
                   $table.='<tr>
                               <td>'.$id.'</td>

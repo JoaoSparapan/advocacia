@@ -49,9 +49,8 @@ class ProvidenceController extends GlobalController{
         
         $conn = $this->connectDB();
         $query = "SELECT *
-        from providence 
-        inner join process on (process.idProcess = providence.idProcess) 
-        inner join user on (user.idUser = process.idUser) 
+        from providence
+        inner join user on (user.idUser = providence.idUser) 
         where user.name LIKE '%$name_user%' AND providence.providenced=$providenced order by endDate ASC";
         // echo $query;exit;
         $result=null;
@@ -402,6 +401,24 @@ class ProvidenceController extends GlobalController{
              $result = ['error', 'Providência não encontrada'];
         }
             
+        $this->disconnectDB($conn);
+
+        return $result;
+    }
+
+    public function updateProvidenceUser($idProvidence='', $idUser=''){
+        $result=0;
+        
+        $conn = $this->connectDB();
+        
+        $query = "UPDATE providence SET idUser=$idUser WHERE idProvidence=$idProvidence";          
+        $r = mysqli_query($conn, $query);
+        if($r){
+            $result=['success', 'Responsável alterado com sucesso!'];
+        }else{
+            $result = ['error', 'Erro ao alterar responsável!'];
+        }   
+
         $this->disconnectDB($conn);
 
         return $result;

@@ -146,7 +146,7 @@
 		
 		
         $proc = $processController->getById($p[1]);
-		$user = $userController->getById($p[17]);
+		$user = $userController->getById($p[12]);
         $vara = $c->getById($proc['idCourt']);
 		$html .= '<tr style="border: none;border-bottom: 1px solid rgb(209,209,209);"><td style="'.$style.'">'.$id.'</td>';
         $html .= '<td style="'.$style.'">'.date("d-m-Y", strtotime($p[6])).'</td>';

@@ -798,9 +798,23 @@ $court = $c->getAll();
                   
                   $id = $i+1;  
                   $proc = $processController->getById($p[1]);
-                  $user = $userController->getById($p[17]);
+                  $user = $userController->getById($p[12]);
                   $vara = $c->getById($proc['idCourt']);
                   $button_action='';
+                  $responsibleColumn = '';
+                  if(AuthController::getUser()['idRole']==1 || AuthController::getUser()['idRole']==3){
+                      $responsibleColumn = '<td class="responsibleSelectCell align-middle"><select class="updateResponsible" data-providence="'.$p[0].'">';
+                      for($j=0; $j<sizeof($u); $j++){
+                          $selected = ($u[$j]['idUser'] == $p[12]) ? 'selected' : '';
+                          $responsibleColumn .= '<option value="'.$u[$j]['idUser'].'" '.$selected.'>'.$u[$j]['name'].'</option>';
+                      }
+                      $responsibleColumn .= '</select></td>';
+                  }else if(AuthController::getUser()['idRole']==2){
+                      $responsibleColumn = '<td style="text-align: center;">'.$user["name"].'</td>';
+                  }else{
+                      $responsibleColumn = '<td>'.$user["name"].'</td>';
+                  }
+                  
                   $table.='<tr style=" color:'.$color_style.';">
                               <td>'.$id.'</td>
                               <td>'.date("d-m-Y", strtotime($p[6])).'</td>
@@ -808,7 +822,7 @@ $court = $c->getAll();
                               <td>'.date("d-m-Y", strtotime($p[8])).'</td>
                               <td>'.$proc["numProcess"].'</td>
                               <td>'.$vara["sigla"].'</td>
-                              <td>'.$user["name"].'</td>
+                              '.$responsibleColumn.'
                               <td>'.$proc["clientName"].'</td>
                               <td>'.$p[9].'</td>
                               <td title="'.$title.'" style="color: '.$color_style.'">'.$style_status." ".$status.'</td>';

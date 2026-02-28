@@ -1554,3 +1554,47 @@ textarea.materialize-textarea {
 .input-field:has(.select-wrapper) label {
   top: -2rem !important;
 }
+/* ===============================
+   SELECT RESPONSÁVEL - ESTILO CLEAN
+================================= */
+
+.responsibleSelectCell {
+  vertical-align: middle;
+}
+
+.responsibleSelectCell .select-wrapper {
+  margin: 0;
+}
+
+.responsibleSelectCell .select-wrapper input.select-dropdown {
+  height: auto !important;
+  line-height: normal !important;
+  padding: 0 18px 0 0 !important;
+  margin: 0 !important;
+
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+.responsibleSelectCell .select-wrapper {
+  display: inline-block;
+  width: auto !important;
+}
+
+.responsibleSelectCell .select-wrapper input.select-dropdown {
+  width: auto !important;
+  min-width: unset !important;
+  display: inline-block;
+  padding-right: 18px !important;
+}
+
+/* Ajusta posição da seta */
+.responsibleSelectCell .select-wrapper .caret {
+  position: relative;
+  right: auto;
+  margin-left: 4px;
+}
