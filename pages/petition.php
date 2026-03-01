@@ -493,12 +493,7 @@ $u = $userController->getAdminAndColaboradorAll();
                 <th>Dias p/ Ajuizamento</th>
                 <th>Prescrição</th>
                 <th>Decadência</th>
-                  ';
-                  if(AuthController::getUser()['idRole']==1 || AuthController::getUser()['idRole']==2){
-                  $table.=
-                  '
-                  <th>Operações</th>';}
-                  $table.='
+                <th>Operações</th>
                 </tr>
               </thead>
 

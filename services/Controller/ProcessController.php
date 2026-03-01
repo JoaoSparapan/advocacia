@@ -163,7 +163,23 @@ class ProcessController extends GlobalController{
         return parent::getAllForTable($table);
     }
 
-    
+    public function updateUserResponsible($idProcess='', $idUser=''){
+        $result=0;
+        
+        $conn = $this->connectDB();
+        
+        $query = "UPDATE process SET idUser=$idUser WHERE idProcess=$idProcess";          
+        $r = mysqli_query($conn, $query);
+        if($r){
+            $result=['success', 'Responsável alterado com sucesso!'];
+        }else{
+            $result = ['error', 'Erro ao alterar responsável!'];
+        }   
+
+        $this->disconnectDB($conn);
+
+        return $result;
+    }
 
 }
 

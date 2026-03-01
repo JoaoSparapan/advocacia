@@ -49,7 +49,7 @@ class ProvidenceController extends GlobalController{
         
         $conn = $this->connectDB();
         $query = "SELECT *
-        from providence 
+        from providence
         inner join process on (process.idProcess = providence.idProcess) 
         inner join user on (user.idUser = process.idUser) 
         where user.name LIKE '%$name_user%' AND providence.providenced=$providenced order by endDate ASC";
@@ -406,6 +406,7 @@ class ProvidenceController extends GlobalController{
 
         return $result;
     }
+
 
 }
 

@@ -259,10 +259,23 @@ if($index.""=="0"){
                                 <td>'.$cpf.'</td>
                                 <td>'.$phone.'</td>';               
 
-                    $button_action='
-                            <a class="btn-floating btn-small blue" title="Editar cliente" href="./updateClient.php?id='.$u['idClient'].'"><i class="fa-solid fa-pencil"></i></a>
-                            <a class="btn-floating btn-small red deleteUserBtn" title="Excluir cliente" href="../services/Controller/DeleteClient.php?id='.$u['idClient'].'"><i class="fa-solid fa-trash"></i></a>
-                                ';
+                    $button_action = '
+                        <a class="btn-floating btn-small blue" 
+                        title="Editar cliente" 
+                        href="./updateClient.php?id='.$u['idClient'].'">
+                        <i class="fa-solid fa-pencil"></i>
+                        </a>
+                    ';
+
+                    if($user['idRole'] == 1){
+                        $button_action .= '
+                            <a class="btn-floating btn-small red deleteUserBtn" 
+                            title="Excluir cliente" 
+                            href="../services/Controller/DeleteClient.php?id='.$u['idClient'].'">
+                            <i class="fa-solid fa-trash"></i>
+                            </a>
+                        ';
+                    }
 
 
                     $table.='<td style="

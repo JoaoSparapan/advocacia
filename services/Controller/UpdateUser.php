@@ -6,9 +6,10 @@
     $email = addslashes($_POST['email']);
     $cpf = addslashes($_POST['cpf']);
     $id = addslashes($_POST['id']);
+    $idRole = addslashes($_POST['idRole']);
 
     $contUser = new UserController();
-    $r = $contUser->updateUser($name,$cpf,$email,$id);
+    $r = $contUser->updateUser($name,$cpf,$email,$idRole,$id);
 
     if($r[0]=='success'){
         header("Refresh: 2, url=../../pages/users.php");

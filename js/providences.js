@@ -586,6 +586,67 @@ $(document).ready(function () {
   }
 });
 
+// Handle responsible person change
+$(document).delegate(".updateResponsible", "change", function() {
+  const selectedUserId = $(this).val();
+  const processId = $(this).data("process");
+  const $select = $(this);
+  
+  // Show loading state
+  $select.prop("disabled", true);
+  $select.css("opacity", "0.6");
+  
+  $.ajax({
+    url: "../services/Controller/UpdateProvidenceResponsible.php",
+    type: "POST",
+    dataType: "json",
+    data: {
+      idProcess: processId,
+      newUserId: selectedUserId
+    },
+    success: function(response) {
+      $select.css("opacity", "1");
+      if(response.status === 'success') {
+        // Show success message
+        Swal.fire({
+          icon: 'success',
+          title: 'Sucesso!',
+          text: response.message,
+          timer: 2000,
+          showConfirmButton: false
+        });
+      } else {
+        // Show error message and revert
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro!',
+          text: response.message
+        });
+        location.reload();
+      }
+      $select.prop("disabled", false);
+    },
+    error: function(xhr, status, error) {
+      $select.css("opacity", "1");
+      let errorMessage = 'Erro ao atualizar responsável';
+      try {
+        const response = JSON.parse(xhr.responseText);
+        errorMessage = response.message || errorMessage;
+      } catch(e) {
+        errorMessage = xhr.status + ': ' + error;
+      }
+      
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro!',
+        text: errorMessage
+      });
+      $select.prop("disabled", false);
+      // location.reload();
+    }
+  });
+});
+// M.FormSelect.init(document.querySelectorAll('#modalcreateProvidence select'));
 $("#modalcreateProvidence").modal();
 $("#modal3").modal();
 $("#modalproc").modal();

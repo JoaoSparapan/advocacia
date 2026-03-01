@@ -261,11 +261,6 @@ if($index.""=="0"){
             
                 
             if($petition!=null){
-                $th="";
-                if(AuthController::getUser()['idRole']==1){
-                    $th="<th>Operações</th>";
-                }
-
               $table='
               <table class="centered responsive-table highlight">
               <thead>
@@ -280,8 +275,7 @@ if($index.""=="0"){
                     <th>Prescrição</th>
                     <th>Decadência</th>
                     <th>Status</th>
-                  '.$th.'
-                  
+                    <th>Operações</th>
                 </tr>
               </thead>
 
@@ -436,25 +430,20 @@ if($index.""=="0"){
               </ul>
               ';
           }else{
-                $th="";
-                if(AuthController::getUser()['idRole']==1 || AuthController::getUser()['idRole']==2){
-                    $th="<th>Operações</th>";
-                }
                 $table='
                 <table class="centered responsive-table highlight">
                 <thead>
                   <tr>
-                        <th>#</th>
-                        <th>Cliente</th>
-                        <th>Adverso</th>
-                        <th>Contratação</th>
-                        <th>Natureza da ação</th>
-                        <th>Responsável</th>
-                        <th>Dias p/ Ajuizamento</th>
-                        <th>Prescrição</th>
-                        <th>Decadência</th>
-                    '.$th.'
-                    
+                    <th>#</th>
+                    <th>Cliente</th>
+                    <th>Adverso</th>
+                    <th>Contratação</th>
+                    <th>Natureza da ação</th>
+                    <th>Responsável</th>
+                    <th>Dias p/ Ajuizamento</th>
+                    <th>Prescrição</th>
+                    <th>Decadência</th>
+                    <th>Operações</th>
                   </tr>
                 </thead>
               </table>

@@ -7,7 +7,7 @@ class UserController extends GlobalController{
         parent::__construct();
     }
 
-    public function insertUser($name='', $cpf='', $password='', $email='', $idRole=3){
+    public function insertUser($name='', $cpf='', $password='', $email='', $idRole=2){
         $conn = $this->connectDB();
         $encrypt_pass = crypt($password, '$1$rasmusle$');
         $query = "INSERT INTO user(name,cpf,password,email,idRole) VALUES('$name', '$cpf','$encrypt_pass','$email', $idRole)";
@@ -50,7 +50,7 @@ class UserController extends GlobalController{
         return $r[0]['description'];
     }
 
-    public function getByRole($role=3){
+    public function getByRole($role=4){
         $conn = $this->connectDB();
         $query = "SELECT * FROM user WHERE idRole=$role";
         $result = mysqli_query($conn, $query);
@@ -62,7 +62,7 @@ class UserController extends GlobalController{
         return $r;
     }
 
-    public function getAdminAndColaboradorAll($role=3){
+    public function getAdminAndColaboradorAll($role=4){
         $conn = $this->connectDB();
         $query = "SELECT * FROM user WHERE idRole!=$role";
         $result = mysqli_query($conn, $query);
@@ -74,7 +74,7 @@ class UserController extends GlobalController{
         return $r;
     }
 
-    public function getAdminAndColaboradorByEmail($email,$role=3){
+    public function getAdminAndColaboradorByEmail($email,$role=4){
         $conn = $this->connectDB();
         $query = "SELECT * FROM user WHERE email='$email' and idRole!=$role";
         $result = mysqli_query($conn, $query);
@@ -188,32 +188,25 @@ class UserController extends GlobalController{
         return $result;
     }
 
-    public function updateUser($name='',$cpf='',$email='', $idUser=''){
-        $result=0;
-        
+    public function updateUser($name='',$cpf='',$email='', $idRole='', $idUser=''){
         $conn = $this->connectDB();
-        
-        // echo "diff"."<br>";
-        $vrfEmail=($this->getByEmail($email));
-        
-        if($vrfEmail==NULL){
-            // echo "nao encontramos esse emaul na base";
-            $query = "UPDATE user SET cpf='$cpf',name='$name', email='$email' WHERE idUser=$idUser";            
+
+        $vrfEmail = $this->getByEmail($email);
+
+        if($vrfEmail == NULL){
+            $query = "UPDATE user SET cpf='$cpf',name='$name', email='$email', idRole='$idRole' WHERE idUser=$idUser";            
             $r = mysqli_query($conn, $query);
             if($r){
-                $new_user = $this->getById($idUser);
-                AuthController::setUser($new_user);
                 $result=['success', 'Sucesso ao alterar informações!'];
             }else{
                 $result = ['error', 'Erro ao alterar informações!'];
             }
         }else{
-            if($vrfEmail[0]['idUser']==$idUser){
-                $query = "UPDATE user SET cpf='$cpf',name='$name', email='$email' WHERE idUser=$idUser";            
+            if($vrfEmail[0]['idUser'] == $idUser){
+                $query = "UPDATE user SET cpf='$cpf',name='$name', email='$email', idRole='$idRole' WHERE idUser=$idUser";            
                 $r = mysqli_query($conn, $query);
+
                 if($r){
-                    $new_user = $this->getById($idUser);
-                    AuthController::setUser($new_user);
                     $result=['success', 'Sucesso ao alterar informações!'];
                 }else{
                     $result = ['error', 'Erro ao alterar informações!'];
@@ -221,11 +214,9 @@ class UserController extends GlobalController{
             }else{
                 $result = ['error', 'Já existe um usuário com esse email!'];
             }
-            
         }
-        
-        $this->disconnectDB($conn);
 
+        $this->disconnectDB($conn);
         return $result;
     }
 
