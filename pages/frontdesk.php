@@ -557,10 +557,22 @@ if ($index . "" == "0") {
                                 <td>' . $docsDisplayString . '</td>';
 
                     $button_action = '
-                        <a class="btn-floating btn-small green" title="Baixar documentos" href="../services/Controller/DownloadFrontdesk.php?id=' . $u['idFrontdesk'] . '"><i class="fa-solid fa-download"></i></a>
-                        <a class="btn-floating btn-small blue" title="Editar atendimento" href="./updateFrontDesk.php?id=' . $u['idFrontdesk'] . '"><i class="fa-solid fa-pencil"></i></a>
-                        <a class="btn-floating btn-small red deleteUserBtn" title="Excluir atendimento" href="../services/Controller/DeleteFront.php?id=' . $u['idFrontdesk'] . '"><i class="fa-solid fa-trash"></i></a>
+                        <a class="btn-floating btn-small green" title="Baixar documentos" href="../services/Controller/DownloadFrontdesk.php?id='.$u['idFrontdesk'].'">
+                            <i class="fa-solid fa-download"></i>
+                        </a>
+
+                        <a class="btn-floating btn-small blue" title="Editar atendimento" href="./updateFrontDesk.php?id='.$u['idFrontdesk'].'">
+                            <i class="fa-solid fa-pencil"></i>
+                        </a>
+                    ';
+
+                    if($_SESSION['user']['idRole'] == 1){
+                        $button_action .= '
+                            <a class="btn-floating btn-small red deleteUserBtn" title="Excluir atendimento" href="../services/Controller/DeleteFront.php?id='.$u['idFrontdesk'].'">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
                         ';
+                    }
 
                     $table .= '<td style="
                         display: flex;

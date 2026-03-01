@@ -2,11 +2,14 @@
 session_start(); 
 include_once $_SERVER['DOCUMENT_ROOT']."/advocacia/services/Controller/AuthController.php";
 include_once $_SERVER['DOCUMENT_ROOT']."/advocacia/services/Controller/UserController.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/advocacia/services/Controller/RoleController.php";
 if(AuthController::getUser()==null){
     header("location:./login.php");
     exit;
 }
 $contUser = new UserController();
+$roles = new RoleController();
+$allRoles = $roles->getAllForTable();
 $userSelected=NULL;
 if(isset($_GET['id'])){
     if(AuthController::getUser()['idRole']==1){
@@ -31,20 +34,24 @@ if(isset($_GET['id'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../styles/css/profile.css">
-    <link rel="stylesheet" href="../styles/css/navbar.css">
     <link rel="stylesheet" href="../styles/css/sidebar-hide.css">
+    <link rel="stylesheet" href="../styles/css/navbar.css">
+    <link rel="stylesheet" href="../styles/css/providences.css">
     <link rel="stylesheet" href="../styles/fontawesome-free-6.1.1-web/css/all.css" />
     <link rel="shortcut icon" href="../images/logotipo.ico" type="image/x-icon">
     <title>Editar usuário</title>
 </head>
 
 <body>
-<?php
+        <?php
             include_once $_SERVER['DOCUMENT_ROOT']."/advocacia/components/navbar.php";
-            
-            // var_dump($user_info);
         ?>
+        
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          Alterar informações do usuário: <?= $userSelected['name'] ?>
+        </div>
+      </nav>
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
@@ -81,6 +88,43 @@ if(isset($_GET['id'])){
                                 value="<?=$userSelected['cpf']?>">
                             <label for="cpf">CPF</label>
                             <span class="helper-text" data-error="CPF incorreto!" data-success="Correto!"></span>
+                        </div>
+                    </div>
+                    <?php
+                        $usuarioLogado = AuthController::getUser();
+                        $isOwnProfile = ($usuarioLogado['idUser'] == $userSelected['idUser']);
+                    ?>
+
+                    <div class="row">        
+                        <div class="input-field col s3">
+                            <i class="fa-solid fa-address-book prefix"></i>
+
+                            <select name="idRole" id="select-role"
+                                <?= $isOwnProfile ? 'disabled' : 'required' ?>>
+
+                                <option value="" disabled>Perfil do Usuário</option>
+
+                                <?php
+                                    for($i=0; $i < sizeof($allRoles); $i++)
+                                    {
+                                        $selected = "";
+
+                                        if($userSelected['idRole'] == $allRoles[$i]['idRole']){
+                                            $selected = "selected";
+                                        }
+
+                                        echo '<option '.$selected.' value="'.$allRoles[$i]['idRole'].'">'
+                                            .$allRoles[$i]['description'].
+                                            '</option>';
+                                    }
+                                ?>
+                            </select>
+
+                            <?php if($isOwnProfile): ?>
+                                <input type="hidden" name="idRole" value="<?= $userSelected['idRole'] ?>">
+                            <?php endif; ?>
+
+                            <label>Função do Usuário</label>
                         </div>
                     </div>
                     

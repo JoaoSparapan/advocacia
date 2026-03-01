@@ -1,7 +1,7 @@
 function validarCPF(cpf) {	
 	cpf = cpf.replace(/[^\d]+/g,'');	
 	if(cpf == '') return false;	
-	// Elimina CPFs invalidos conhecidos	
+
 	if (cpf.length != 11 || 
 		cpf == "00000000000" || 
 		cpf == "11111111111" || 
@@ -14,84 +14,84 @@ function validarCPF(cpf) {
 		cpf == "88888888888" || 
 		cpf == "99999999999")
 			return false;		
-	// Valida 1o digito	
-	add = 0;	
-	for (i=0; i < 9; i ++)		
+
+	let add = 0;	
+	for (let i=0; i < 9; i++)		
 		add += parseInt(cpf.charAt(i)) * (10 - i);	
-		rev = 11 - (add % 11);	
-		if (rev == 10 || rev == 11)		
-			rev = 0;	
-		if (rev != parseInt(cpf.charAt(9)))		
-			return false;		
-	// Valida 2o digito	
+
+	let rev = 11 - (add % 11);	
+	if (rev == 10 || rev == 11)		
+		rev = 0;	
+
+	if (rev != parseInt(cpf.charAt(9)))		
+		return false;		
+
 	add = 0;	
-	for (i = 0; i < 10; i ++)		
+	for (let i = 0; i < 10; i++)		
 		add += parseInt(cpf.charAt(i)) * (11 - i);	
+
 	rev = 11 - (add % 11);	
 	if (rev == 10 || rev == 11)	
 		rev = 0;	
+
 	if (rev != parseInt(cpf.charAt(10)))
 		return false;		
+
 	return true;   
 }
+
 function goBack() {
-    window.history.back()
+    window.history.back();
 }
 
 $(document).ready(function(){
 
-    
+    // Inicializa select do Materialize
+    $('select').formSelect();
 
+    // Máscara CPF
     $('#cpf').mask('000.000.000-00', {
-            onChange: function(v){
+        onChange: function(){
 
-                let cpf = $('#cpf').cleanVal();
-                console.log(cpf)
-                if(validarCPF(cpf)){
-                    $('#cpf').removeClass('invalid')
-                    $('#cpf').addClass('valid')
-                }else{
-                    $('#cpf').removeClass('valid')
-                    $('#cpf').addClass('invalid')
-                }
-                if($('#cpf').val().length==0){
-                    $('#cpf').removeClass('invalid')
-                    $('#cpf').removeClass('valid')
-                }
-                
+            let cpf = $('#cpf').cleanVal();
+
+            if(validarCPF(cpf)){
+                $('#cpf').removeClass('invalid').addClass('valid');
+            }else{
+                $('#cpf').removeClass('valid').addClass('invalid');
             }
-            
+
+            if($('#cpf').val().length == 0){
+                $('#cpf').removeClass('invalid valid');
+            }
         }
-    );
+    });
 
+    $(".updateInfoUser").click(function(event){
+        
+        const nome = $("#name").val();
+        const cpfMask = $("#cpf").val();
+        const cpf = cpfMask.replace(/[^\d]+/g,'');
+        const email = $("#email-reg").val();
+        const role = $("#select-role").val();
 
-$(".updateInfoUser").click(function(event){
-    
-    const nome = $("#name").val();
-    const cpf = $("#cpf").val();
-    const email = $("#email-reg").val();
-    
-    if(!validarCPF(cpf))
-    {
-      alert("Insira um CPF válido!");
-      event.preventDefault();
-      return;
-    }
-    
-    if (nome.trim()==="" || 
-    cpf.trim()==="" || 
-    email.trim()===""){
-        alert("Por favor informe todos os campos!")
-        event.preventDefault();
-        return ;
-    }
+        if(!validarCPF(cpf)){
+            alert("Insira um CPF válido!");
+            event.preventDefault();
+            return;
+        }
+        
+        if (nome.trim()==="" || 
+            cpf.trim()==="" || 
+            email.trim()==="" ||
+            role === null || role === "-1"){
 
-   
-    $(this).text("Alterando usuário...")
+            alert("Por favor informe todos os campos!");
+            event.preventDefault();
+            return;
+        }
 
-    //event.preventDefault();
-})
+        $(this).html('<i class="fa-solid fa-spinner fa-spin"></i> Alterando...');
+    });
 
-// M.textareaAutoResize($('#textarea1'));
-
-})
+});

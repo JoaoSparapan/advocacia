@@ -94,6 +94,7 @@ if($index.""=="0"){
                             <option value="" disabled selected>Função</option>
                             <option value="1">Administrador</option>
                             <option value="2">Colaborador</option>
+                            <option value="3">Supervisor</option>
 
                         </select>
 

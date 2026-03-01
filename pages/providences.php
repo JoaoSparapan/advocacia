@@ -798,14 +798,14 @@ $court = $c->getAll();
                   
                   $id = $i+1;  
                   $proc = $processController->getById($p[1]);
-                  $user = $userController->getById($p[12]);
+                  $user = $userController->getById($p[17]);
                   $vara = $c->getById($proc['idCourt']);
                   $button_action='';
                   $responsibleColumn = '';
                   if(AuthController::getUser()['idRole']==1 || AuthController::getUser()['idRole']==3){
-                      $responsibleColumn = '<td class="responsibleSelectCell align-middle"><select class="updateResponsible" data-providence="'.$p[0].'">';
+                      $responsibleColumn = '<td class="responsibleSelectCell align-middle"><select class="updateResponsible" data-process="'.$proc["idProcess"].'">';
                       for($j=0; $j<sizeof($u); $j++){
-                          $selected = ($u[$j]['idUser'] == $p[12]) ? 'selected' : '';
+                          $selected = ($u[$j]['idUser'] == $p[17]) ? 'selected' : '';
                           $responsibleColumn .= '<option value="'.$u[$j]['idUser'].'" '.$selected.'>'.$u[$j]['name'].'</option>';
                       }
                       $responsibleColumn .= '</select></td>';

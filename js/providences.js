@@ -589,7 +589,7 @@ $(document).ready(function () {
 // Handle responsible person change
 $(document).delegate(".updateResponsible", "change", function() {
   const selectedUserId = $(this).val();
-  const providenceId = $(this).data("providence");
+  const processId = $(this).data("process");
   const $select = $(this);
   
   // Show loading state
@@ -601,7 +601,7 @@ $(document).delegate(".updateResponsible", "change", function() {
     type: "POST",
     dataType: "json",
     data: {
-      idProvidence: providenceId,
+      idProcess: processId,
       newUserId: selectedUserId
     },
     success: function(response) {
@@ -642,11 +642,11 @@ $(document).delegate(".updateResponsible", "change", function() {
         text: errorMessage
       });
       $select.prop("disabled", false);
-      location.reload();
+      // location.reload();
     }
   });
 });
-M.FormSelect.init(document.querySelectorAll('#modalcreateProvidence select'));
+// M.FormSelect.init(document.querySelectorAll('#modalcreateProvidence select'));
 $("#modalcreateProvidence").modal();
 $("#modal3").modal();
 $("#modalproc").modal();

@@ -315,7 +315,17 @@ if($index.""=="0"){
             }
                           
                 if($receptions!=null){
-
+                $showOperationsColumn = false;
+                if($user['idRole'] == 1){
+                    $showOperationsColumn = true;
+                } else {
+                    foreach($receptions as $rec){
+                        if($rec['leave'] == null){
+                            $showOperationsColumn = true;
+                            break;
+                        }
+                    }
+                }
                 $table='
                 <table class="centered responsive-table highlight">
                 <thead>
@@ -328,7 +338,7 @@ if($index.""=="0"){
                         <th>Responsável</th>
                         <th>Assunto</th>
                         <th>Providência</th>
-                        <th>Operações</th>
+                        '.($showOperationsColumn ? '<th>Operações</th>' : '').'
                     </tr>
                 </thead>
 
@@ -409,18 +419,31 @@ if($index.""=="0"){
                                 <td>'.$n.'</td>';
                     
                     
-                    if($u["leave"]==null)
-                    {
-                        $button_action='
-                            <a class="btn-floating btn-small green" title="Finalizar atendimento" href="../services/Controller/RecepcaoFinalized.php?id='.$u['idReception'].'"><i class="fa-solid fa-check"></i></a>
-                            <a class="btn-floating btn-small blue" title="Editar recepção" href="./updateRecepcao.php?id='.$u['idReception'].'"><i class="fa-solid fa-pencil"></i></a>
-                            <a class="btn-floating btn-small red deleteUserBtn" title="Excluir recepção" href="../services/Controller/DeleteRecepcao.php?id='.$u['idReception'].'"><i class="fa-solid fa-trash"></i></a>
-                            ';
-                    }else{
-                        $button_action='
-                            <a class="btn-floating btn-small blue" title="Editar recepção" href="./updateRecepcao.php?id='.$u['idReception'].'"><i class="fa-solid fa-pencil"></i></a>
-                            <a class="btn-floating btn-small red deleteUserBtn" title="Excluir recepção" href="../services/Controller/DeleteRecepcao.php?id='.$u['idReception'].'"><i class="fa-solid fa-trash"></i></a>
-                            ';
+                    $button_action = '';
+                    if($u["leave"] == null){
+                        $button_action .= '
+                            <a class="btn-floating btn-small green" 
+                            title="Finalizar atendimento" 
+                            href="../services/Controller/RecepcaoFinalized.php?id='.$u['idReception'].'">
+                            <i class="fa-solid fa-check"></i>
+                            </a>
+                        ';
+                    }
+                    if($user['idRole'] == 1){
+
+                        $button_action .= '
+                            <a class="btn-floating btn-small blue" 
+                            title="Editar recepção" 
+                            href="./updateRecepcao.php?id='.$u['idReception'].'">
+                            <i class="fa-solid fa-pencil"></i>
+                            </a>
+
+                            <a class="btn-floating btn-small red deleteUserBtn" 
+                            title="Excluir recepção" 
+                            href="../services/Controller/DeleteRecepcao.php?id='.$u['idReception'].'">
+                            <i class="fa-solid fa-trash"></i>
+                            </a>
+                        ';
                     }
 
                     $table.='<td style="
