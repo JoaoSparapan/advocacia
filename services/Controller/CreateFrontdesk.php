@@ -16,6 +16,14 @@ $controller = new FrontdeskController();
 
 $nome = isset($_POST['nome']) ? trim($_POST['nome']) : '';
 $documentosSelecionados = isset($_POST['documentos']) ? $_POST['documentos'] : [];
+$empresa = $_POST['empresa'] ?? '';
+$cnpj = $_POST['cnpj'] ?? '';
+$cargo = $_POST['cargo'] ?? '';
+$enderecoPJ = $_POST['endereco_pj'] ?? '';
+$cidadePJ = $_POST['cidade_pj'] ?? '';
+$bairroPJ = $_POST['bairro_pj'] ?? '';
+$estadoPJ = $_POST['estado_pj'] ?? '';
+$cepPJ = $_POST['cep_pj'] ?? '';
 
 if ($nome === '' || empty($documentosSelecionados)) {
     http_response_code(400);
@@ -50,7 +58,15 @@ $dataInsert = [
     'dataAtual' => $_POST['dataReferencia'] ?? '',
     'pastaHibrida' => $_POST['pastaHibrida'] ?? '',
     'indicacao' => $_POST['indicacao'] ?? '',
-    'indicacaoNome' => $_POST['indicacaoNome'] ?? ''
+    'indicacaoNome' => $_POST['indicacaoNome'] ?? '',
+    'empresa' => $empresa,
+    'cnpj' => $cnpj,
+    'cargo' => $cargo,
+    'endereco_pj' => $enderecoPJ,
+    'cidade_pj' => $cidadePJ,
+    'bairro_pj' => $bairroPJ,
+    'estado_pj' => $estadoPJ,
+    'cep_pj' => $cepPJ
 ];
 
 $resultInsert = $controller->insertFrontdesk($dataInsert);
@@ -128,8 +144,47 @@ foreach ($documentosSelecionados as $docId) {
     $nomeDependente = '';
     $situacao = trim($_POST['situacao']) ?? '';
     $relacao = trim($_POST['relacaoResponsavel']) ?? '';
+    if ($situacao === 'pj') {
+        $empresa    = trim($_POST['empresa'] ?? '');
+        $cnpj       = trim($_POST['cnpj'] ?? '');
+        $endereco   = trim($_POST['endereco_pj'] ?? '');
+        $cidade     = trim($_POST['cidade_pj'] ?? '');
+        $estado     = trim($_POST['estado_pj'] ?? '');
+        $cep        = trim($_POST['cep_pj'] ?? '');
+        $cargo      = trim($_POST['cargo'] ?? '');
 
-    if ($situacao !== 'maior') {
+        $partes = [];
+
+        if ($empresa !== '') {
+            $partes[] = ", pessoa jurídica de direito privado";
+        }
+
+        if ($cnpj !== '') {
+            $partes[] = "inscrita no CNPJ sob nº {$cnpj}";
+        }
+
+        if ($endereco !== '') {
+            $local = $endereco;
+
+            if ($cidade !== '' && $estado !== '') {
+                $local .= ", {$cidade}/{$estado}";
+            }
+
+            if ($cep !== '') {
+                $local .= ", CEP: {$cep}";
+            }
+
+            $partes[] = "situada na {$local}";
+        }
+
+        if ($cargo !== '') {
+            $partes[] = "neste ato representada por seu/sua {$cargo}";
+        }
+
+        $descricao = implode(', ', $partes);
+        $nomeDependente = trim(strtoupper($_POST['empresa'] ?? ''));
+    }
+    else if ($situacao !== 'maior') {
         $descricao .= ', ' . (trim($_POST['nacionalidadeDependente']) ?? '') . ', solteiro(a)';
 
         $identidade = [];

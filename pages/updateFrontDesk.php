@@ -53,27 +53,31 @@ document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('select');
     M.FormSelect.init(elems);
 
-    const situacaoSelect = document.getElementById('situacao');
-    const nomeDep = document.getElementById('nomeDependente').closest('.row').parentNode;
-    const dependenteRows = nomeDep.querySelectorAll('.row');
+    const situacao = document.getElementById("situacao");
+    const responsavel = document.getElementById("responsavel-fields");
+    const pj = document.getElementById("pj-fields");
 
-    function toggleResponsavelFields() {
-        const valor = situacaoSelect.value;
-        if (valor === 'menor_pubere' || valor === 'menor_impubere') {
-            dependenteRows.forEach(row => row.style.display = 'flex');
-            dependenteRows.forEach(row => {
-                row.querySelectorAll('input').forEach(input => input.required = true);
-            });
-        } else {
-            dependenteRows.forEach(row => row.style.display = 'none');
-            dependenteRows.forEach(row => {
-                row.querySelectorAll('input').forEach(input => input.required = false);
-            });
+    function atualizarCampos(){
+
+        const valor = situacao.value;
+
+        responsavel.style.display = "none";
+        pj.style.display = "none";
+
+        if(valor === "menor_pubere" || valor === "menor_impubere"){
+            responsavel.style.display = "block";
         }
+
+        if(valor === "pj"){
+            pj.style.display = "block";
+        }
+
     }
 
-    situacaoSelect.addEventListener('change', toggleResponsavelFields);
-    toggleResponsavelFields();
+    situacao.addEventListener("change", atualizarCampos);
+
+    atualizarCampos();
+
 });
 </script>
 
@@ -147,6 +151,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     <div class="row">
                         <div class="input-field col l4 m6 s12">
+                            <i class="fa-solid fa-envelope prefix"></i>
+                            <input name="email" id="email" type="email" value="<?= $frontdeskSelected['email'] ?>">
+                            <label for="email">E-mail (Opcional)</label>
+                        </div>
+                        <div class="input-field col l4 m6 s12">
+                            <i class="fa-solid fa-phone prefix"></i>
+                            <input name="telefone1" id="telefone1" type="text" value="<?= $frontdeskSelected['telefone1'] ?>">
+                            <label for="telefone1">Telefone 1 (Opcional)</label>
+                        </div>
+                        <div class="input-field col l4 m6 s12">
+                            <i class="fa-solid fa-phone-alt prefix"></i>
+                            <input name="telefone2" id="telefone2" type="text" value="<?= $frontdeskSelected['telefone2'] ?>">
+                            <label for="telefone2">Telefone 2 (Opcional)</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col l4 m6 s12">
                             <i class="fa-solid fa-location-dot prefix"></i>
                             <input name="endereco" id="endereco" type="text" required value="<?= $frontdeskSelected['endereco'] ?>">
                             <label for="endereco">Endereço</label>
@@ -188,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <option value="Sim" <?= ($frontdeskSelected['pastaHibrida'] ?? '') == 'Sim' ? 'selected' : '' ?>>Sim</option>
                                 <option value="Não" <?= ($frontdeskSelected['pastaHibrida'] ?? '') == 'Não' ? 'selected' : '' ?>>Não</option>
                             </select>
-                            <label for="pastaHibrida" class="active">Pasta híbrida</label>
+                            <label for="pastaHibrida" class="active" style="transform: translateY(10px);">Pasta híbrida</label>
                         </div>
 
                         <div class="input-field col s12 m6">
@@ -205,6 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <label for="indicacao" class="active">Contato Indicação</label>
                         </div>
                     </div>
+                    <br>
 
                     <div class="row">
                         <div class="input-field col s12 m6">
@@ -214,11 +237,12 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <option value="maior" <?= $frontdeskSelected['situacao'] == 'maior' ? 'selected' : '' ?>>Maior de idade</option>
                                 <option value="menor_pubere" <?= $frontdeskSelected['situacao'] == 'menor_pubere' ? 'selected' : '' ?>>Menor púbere</option>
                                 <option value="menor_impubere" <?= $frontdeskSelected['situacao'] == 'menor_impubere' ? 'selected' : '' ?>>Menor impúbere</option>
+                                <option value="pj" <?= $frontdeskSelected['situacao'] == 'pj' ? 'selected' : '' ?>>Pessoa Jurídica (PJ)</option>
                             </select>
-                            <label for="situacao">Tipo do cliente</label>
+                            <label for="situacao" class="active" style="transform: translateY(10px);">Tipo do cliente</label>
                         </div>
                     </div>
-                    <div id="responsavel-fields">
+                    <div id="responsavel-fields" style="display:none;">
                         <div class="row" >
                             <div class="input-field col s6">
                                 <input type="text" id="nomeDependente" name="nomeDependente"
@@ -250,23 +274,62 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="input-field col l4 m6 s12">
-                            <i class="fa-solid fa-envelope prefix"></i>
-                            <input name="email" id="email" type="email" value="<?= $frontdeskSelected['email'] ?>">
-                            <label for="email">E-mail (Opcional)</label>
+                     <div id="pj-fields" style="display:none;">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <i class="fa-solid fa-building prefix"></i>
+                                <input type="text" id="empresa" name="empresa" value="<?= $frontdeskSelected['empresa'] ?>">
+                                <label for="empresa">Nome empresa</label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <i class="fa-solid fa-id-card prefix"></i>
+                                <input type="text" id="cnpj" name="cnpj" value="<?= $frontdeskSelected['cnpj'] ?>">
+                                <label for="cnpj">CNPJ</label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <i class="fa-solid fa-briefcase prefix"></i>
+                                <input type="text" id="cargo" name="cargo" value="<?= $frontdeskSelected['cargo'] ?>">
+                                <label for="cargo">Cargo do representante</label>
+                            </div>
                         </div>
-                        <div class="input-field col l4 m6 s12">
-                            <i class="fa-solid fa-phone prefix"></i>
-                            <input name="telefone1" id="telefone1" type="text" value="<?= $frontdeskSelected['telefone1'] ?>">
-                            <label for="telefone1">Telefone 1 (Opcional)</label>
+
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <i class="fa-solid fa-location-dot prefix"></i>
+                                <input type="text" id="endereco_pj" name="endereco_pj" value="<?= $frontdeskSelected['endereco_pj'] ?>">
+                                <label for="endereco_pj">Endereço</label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <i class="fa-solid fa-map-pin prefix"></i>
+                                <input type="text" id="bairro_pj" name="bairro_pj" value="<?= $frontdeskSelected['bairro_pj'] ?>">
+                                <label for="bairro_pj">Bairro</label>
+                            </div>
                         </div>
-                        <div class="input-field col l4 m6 s12">
-                            <i class="fa-solid fa-phone-alt prefix"></i>
-                            <input name="telefone2" id="telefone2" type="text" value="<?= $frontdeskSelected['telefone2'] ?>">
-                            <label for="telefone2">Telefone 2 (Opcional)</label>
+
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <i class="fa-solid fa-city prefix"></i>
+                                <input type="text" id="cidade_pj" name="cidade_pj" value="<?= $frontdeskSelected['cidade_pj'] ?>">
+                                <label for="cidade_pj">Cidade</label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <i class="fa-solid fa-flag prefix"></i>
+                                <input type="text" id="estado_pj" name="estado_pj" value="<?= $frontdeskSelected['estado_pj'] ?>">
+                                <label for="cidade_pj">Estado</label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <i class="fa-solid fa-mail-bulk prefix"></i>
+                                <input type="text" id="cep_pj" name="cep_pj" value="<?= $frontdeskSelected['cep_pj'] ?>">
+                                <label for="cep_pj">CEP</label>
+                            </div>
                         </div>
                     </div>
+                    <br>
 
                     <div class="row">
                         <div class="input-field col s12" style="padding-top: 10px;">

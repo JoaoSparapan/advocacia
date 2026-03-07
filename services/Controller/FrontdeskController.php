@@ -19,16 +19,24 @@ class FrontdeskController extends GlobalController
         $conn = $this->connectDB();
         
         $nome = addslashes($data['nome']);
+        $empresa = addslashes($data['empresa']);
         $nacionalidade = addslashes($data['nacionalidade']);
         $estadoCivil = addslashes($data['estadoCivil']);
         $profissao = addslashes($data['profissao']);
         $rg = addslashes($data['rg']);
         $cpf = addslashes($data['cpf']);
+        $cnpj = isset($data['cnpj']) ? addslashes($data['cnpj']) : '';
+        $cargo = isset($data['cargo']) ? addslashes($data['cargo']) : '';
         $endereco = addslashes($data['endereco']);
         $cidade = addslashes($data['cidade']);
         $bairro = addslashes($data['bairro']);
         $estado = addslashes($data['estado']);
         $cep = addslashes($data['cep']);
+        $endereco_pj = isset($data['endereco_pj']) ? addslashes($data['endereco_pj']) : '';
+        $cidade_pj = isset($data['cidade_pj']) ? addslashes($data['cidade_pj']) : '';
+        $bairro_pj = isset($data['bairro_pj']) ? addslashes($data['bairro_pj']) : '';
+        $estado_pj = isset($data['estado_pj']) ? addslashes($data['estado_pj']) : '';
+        $cep_pj = isset($data['cep_pj']) ? addslashes($data['cep_pj']) : '';
         $email = addslashes($data['email']);
         $telefone1 = isset($data['telefone1']) ? addslashes($data['telefone1']) : '';
         $telefone2 = isset($data['telefone2']) ? addslashes($data['telefone2']) : '';
@@ -48,12 +56,28 @@ class FrontdeskController extends GlobalController
         $indicacaoNome = addslashes($data['indicacaoNome']);
 
         $query = "INSERT INTO frontdesk 
-            (nome,nacionalidade,estadoCivil,profissao,rg,cpf,endereco,cidade,bairro,estado,cep,email,telefone1,telefone2,documentos,parteadversa,fatos,data_referencia,usuario,
-            situacao,nomeDependente,nacionalidadeDependente,rgDependente,cpfDependente,relacaoResponsavel,pastaHibrida,indicacao,indicacaoNome) 
+            (
+            nome,empresa,nacionalidade,estadoCivil,profissao,rg,cpf,cnpj,cargo,
+            endereco,cidade,bairro,estado,cep,
+            endereco_pj,cidade_pj,bairro_pj,estado_pj,cep_pj,
+            email,telefone1,telefone2,
+            documentos,parteadversa,fatos,data_referencia,usuario,
+            situacao,nomeDependente,nacionalidadeDependente,
+            rgDependente,cpfDependente,relacaoResponsavel,
+            pastaHibrida,indicacao,indicacaoNome
+            ) 
             VALUES 
-            ('$nome','$nacionalidade','$estadoCivil','$profissao','$rg','$cpf','$endereco','$cidade','$bairro','$estado','$cep','$email',
-            '$telefone1','$telefone2','$documentos','$parteadversa','$fatos','$data_referencia','$usuario','$situacao','$nomeDependente','$nacionalidadeDependente',
-            '$rgDependente','$cpfDependente','$relacaoResponsavel', '$pastaHibrida', '$indicacao', '$indicacaoNome')";
+            (
+            '$nome','$empresa','$nacionalidade','$estadoCivil','$profissao','$rg','$cpf','$cnpj','$cargo',
+            '$endereco','$cidade','$bairro','$estado','$cep',
+            '$endereco_pj','$cidade_pj','$bairro_pj','$estado_pj','$cep_pj',
+            '$email','$telefone1','$telefone2',
+            '$documentos','$parteadversa','$fatos','$data_referencia','$usuario',
+            '$situacao','$nomeDependente','$nacionalidadeDependente',
+            '$rgDependente','$cpfDependente','$relacaoResponsavel',
+            '$pastaHibrida','$indicacao','$indicacaoNome'
+            )";
+
         $result = mysqli_query($conn, $query);
         $id = mysqli_insert_id($conn);
         $this->disconnectDB($conn);
@@ -215,7 +239,15 @@ class FrontdeskController extends GlobalController
         $relacaoResponsavel = NULL,
         $pastaHibrida = NULL,
         $indicacao = NULL,
-        $indicacaoNome = NULL
+        $indicacaoNome = NULL,
+        $empresa = NULL,
+        $cnpj = NULL,
+        $cargo = NULL,
+        $endereco_pj = NULL,
+        $cidade_pj = NULL,
+        $bairro_pj = NULL,
+        $estado_pj = NULL,
+        $cep_pj = NULL
     ) {
         if ($id == NULL) {
             return ['error', 'Erro ao atualizar registro de atendimento'];
@@ -253,7 +285,15 @@ class FrontdeskController extends GlobalController
                 relacaoResponsavel = '$relacaoResponsavel',
                 pastaHibrida = '$pastaHibrida',
                 indicacao = '$indicacao',
-                indicacaoNome = '$indicacaoNome'
+                indicacaoNome = '$indicacaoNome',
+                empresa = '$empresa',
+                cnpj = '$cnpj',
+                cargo = '$cargo',
+                endereco_pj = '$endereco_pj',
+                cidade_pj = '$cidade_pj',
+                bairro_pj = '$bairro_pj',
+                estado_pj = '$estado_pj',
+                cep_pj= '$cep_pj'
             WHERE idFrontdesk = $id
         ";
 
