@@ -34,6 +34,7 @@ $clients_active = ($current_page === 'clients.php') ? 'active' : '';
 $providences_active = ($current_page === 'providences.php') ? 'active' : '';
 $providenced_active = ($current_page === 'providenced.php') ? 'active' : '';
 $process_active = ($current_page === 'process.php') ? 'active' : '';
+$consulta_active = ($current_page === 'consulta.php') ? 'active' : '';
 
 ?>
 

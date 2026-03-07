@@ -59,7 +59,7 @@ abstract class RouteSwitch
 
     protected function consultaprocessual()
     {
-        return $this->indexPath.'pages/consulta-processual.php';
+        return $this->indexPath.'pages/consulta.php';
     }
 
     protected function login()

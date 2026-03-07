@@ -120,7 +120,7 @@ if (AuthController::getUser() == null) {
         <div id="toast"></div>
     </main>
 
-    <script src="../js/consulta-processual.js" defer></script>
+    <script src="../js/consulta.js" defer></script>
 </body>
 
 </html>
