@@ -57,6 +57,11 @@ abstract class RouteSwitch
         return $this->indexPath.'pages/frontdesk.php';
     }
 
+    protected function consultaprocessual()
+    {
+        return $this->indexPath.'pages/consulta-processual.php';
+    }
+
     protected function login()
     {
         return $this->indexPath.'pages/login.php';
