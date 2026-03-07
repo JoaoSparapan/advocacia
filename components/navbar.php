@@ -101,6 +101,11 @@ $process_active = ($current_page === 'process.php') ? 'active' : '';
                     </a></li>
                 </ul>
             </li>
+            <li class="navbar-item">
+                <a href="<?= $router->run('/consultaprocessual');?>" class="navbar-link <?= $consulta_active ?>">
+                    <span class="fa-solid fa-gavel"></span> Consulta
+                </a>
+            </li>
         </ul>
 
         <div class="navbar-right">
