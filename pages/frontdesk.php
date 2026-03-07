@@ -175,6 +175,7 @@ if ($index . "" == "0") {
                         <option value="maior">Maior de idade</option>
                         <option value="menor_pubere">Menor púbere</option>
                         <option value="menor_impubere">Menor impúbere</option>
+                        <option value="pj">Pessoa Jurídica (PJ)</option>
                     </select>
                 </div>
             </div>
@@ -206,6 +207,54 @@ if ($index . "" == "0") {
                 </div>
             </div>
 
+            <div id="pj-fields" style="display:none;">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input type="text" id="empresa" name="empresa">
+                        <label for="empresa">Nome empresa</label>
+                    </div>
+
+                    <div class="input-field col s6">
+                        <input type="text" id="cnpj" name="cnpj">
+                        <label for="cnpj">CNPJ</label>
+                    </div>
+
+                    <div class="input-field col s6">
+                        <input type="text" id="cargo" name="cargo">
+                        <label for="cargo">Cargo do representante</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input type="text" id="endereco_pj" name="endereco_pj">
+                        <label for="endereco_pj">Endereço</label>
+                    </div>
+
+                    <div class="input-field col s6">
+                        <input type="text" id="bairro_pj" name="bairro_pj">
+                        <label for="bairro_pj">Bairro</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input type="text" id="cidade_pj" name="cidade_pj">
+                        <label for="cidade_pj">Cidade</label>
+                    </div>
+
+                    <div class="input-field col s6">
+                        <input type="text" id="estado_pj" name="estado_pj">
+                        <label for="cidade_pj">Estado</label>
+                    </div>
+
+                    <div class="input-field col s6">
+                        <input type="text" id="cep_pj" name="cep_pj">
+                        <label for="cep_pj">CEP</label>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="input-field col s12 m6">
                     <input type="date" id="dataReferencia" name="dataReferencia" value="<?= date('Y-m-d'); ?>"
@@ -228,22 +277,39 @@ if ($index . "" == "0") {
 
             <script>
                 document.addEventListener('DOMContentLoaded', function () {
+
                     const situacaoSelect = document.getElementById('situacao');
+
                     const responsavelFields = document.getElementById('responsavel-fields');
                     const dependenteInputs = responsavelFields.querySelectorAll('input');
 
+                    const pjFields = document.getElementById('pj-fields');
+                    const pjInputs = pjFields.querySelectorAll('input');
+
                     situacaoSelect.addEventListener('change', function () {
+
                         const valor = this.value;
+
+                        responsavelFields.style.display = 'none';
+                        pjFields.style.display = 'none';
+
+                        dependenteInputs.forEach(input => input.removeAttribute('required'));
+                        pjInputs.forEach(input => input.removeAttribute('required'));
 
                         if (valor === 'menor_pubere' || valor === 'menor_impubere') {
                             responsavelFields.style.display = 'block';
                             dependenteInputs.forEach(input => input.setAttribute('required', 'required'));
-                        } else {
-                            responsavelFields.style.display = 'none';
-                            dependenteInputs.forEach(input => input.removeAttribute('required'));
                         }
-                    });
+
+                        if (valor === 'pj') {
+                            pjFields.style.display = 'block';
+                            pjInputs.forEach(input => input.setAttribute('required', 'required'));
+
+                        }
+
                 });
+
+            });
             </script>
 
 

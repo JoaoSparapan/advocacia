@@ -40,6 +40,14 @@ $relacaoResponsavel = trim($_POST['relacaoResponsavel'] ?? '');
 $pastaHibrida = trim($_POST['pastaHibrida'] ?? '');
 $indicacao = trim($_POST['indicacao'] ?? '');
 $indicacaoNome = trim($_POST['indicacaoNome'] ?? '');
+$empresa = trim($_POST['empresa'] ?? '');
+$cnpj = trim($_POST['cnpj'] ?? '');
+$cargo = trim($_POST['cargo'] ?? '');
+$endereco_pj = trim($_POST['endereco_pj'] ?? '');
+$cidade_pj = trim($_POST['cidade_pj'] ?? '');
+$bairro_pj = trim($_POST['bairro_pj'] ?? '');
+$estado_pj = trim($_POST['estado_pj'] ?? '');
+$cep_pj = trim($_POST['cep_pj'] ?? '');
 $docs = !empty($documentosSelecionados) ? implode(',', $documentosSelecionados) : '';
 
 $nomeUsuario = isset($_SESSION['user']['name']) ? $_SESSION['user']['name'] : 'Desconhecido';
@@ -80,7 +88,15 @@ $result = $controller->updateFrontdesk(
     $relacaoResponsavel,
     $pastaHibrida,
     $indicacao,
-    $indicacaoNome
+    $indicacaoNome,
+    $empresa,
+    $cnpj,
+    $cargo,
+    $endereco_pj,
+    $cidade_pj,
+    $bairro_pj,
+    $estado_pj,
+    $cep_pj
 );
 
 // Mensagem de retorno

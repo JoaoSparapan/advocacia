@@ -100,7 +100,47 @@ foreach ($docsIdsInt as $docId) {
     // --- Monta descrição ---
     $descricao = '';
     $nomeDependente='';
-    if(trim($record['situacao']) != 'maior')
+    if (trim($record['situacao']) === 'pj') {
+        $empresa    = trim($record['empresa'] ?? '');
+        $cnpj       = trim($record['cnpj'] ?? '');
+        $endereco   = trim($record['endereco_pj'] ?? '');
+        $cidade     = trim($record['cidade_pj'] ?? '');
+        $estado     = trim($record['estado_pj'] ?? '');
+        $cep        = trim($record['cep_pj'] ?? '');
+        $cargo      = trim($record['cargo'] ?? '');
+
+        $partes = [];
+
+        if ($empresa !== '') {
+            $partes[] = ", pessoa jurídica de direito privado";
+        }
+
+        if ($cnpj !== '') {
+            $partes[] = "inscrita no CNPJ sob nº {$cnpj}";
+        }
+
+        if ($endereco !== '') {
+            $local = $endereco;
+
+            if ($cidade !== '' && $estado !== '') {
+                $local .= ", {$cidade}/{$estado}";
+            }
+
+            if ($cep !== '') {
+                $local .= ", CEP: {$cep}";
+            }
+
+            $partes[] = "situada na {$local}";
+        }
+
+        if ($cargo !== '') {
+            $partes[] = "neste ato representada por seu/sua {$cargo}";
+        }
+
+        $descricao = implode(', ', $partes);
+        $nomeDependente = trim(strtoupper($empresa));
+    }
+    else if(trim($record['situacao']) != 'maior')
     {
         $descricao .= ', ' . trim($record['nacionalidadeDependente']) . ', solteiro(a)';
 
