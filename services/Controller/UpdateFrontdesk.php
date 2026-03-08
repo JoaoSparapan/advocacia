@@ -49,6 +49,17 @@ $bairro_pj = trim($_POST['bairro_pj'] ?? '');
 $estado_pj = trim($_POST['estado_pj'] ?? '');
 $cep_pj = trim($_POST['cep_pj'] ?? '');
 $docs = !empty($documentosSelecionados) ? implode(',', $documentosSelecionados) : '';
+$nome_litis = trim($_POST['nome_litis'] ?? '');
+$nacionalidade_litis = trim($_POST['nacionalidade_litis'] ?? '');
+$estadoCivil_litis = trim($_POST['estadoCivil_litis'] ?? '');
+$rg_litis = trim($_POST['rg_litis'] ?? '');
+$cpf_litis = trim($_POST['cpf_litis'] ?? '');
+$profissao_litis = trim($_POST['profissao_litis'] ?? '');
+$endereco_litis = trim($_POST['endereco_litis'] ?? '');
+$bairro_litis = trim($_POST['bairro_litis'] ?? '');
+$cidade_litis = trim($_POST['cidade_litis'] ?? '');
+$cep_litis = trim($_POST['cep_litis'] ?? '');
+$estado_litis = trim($_POST['estado_litis'] ?? '');
 
 $nomeUsuario = isset($_SESSION['user']['name']) ? $_SESSION['user']['name'] : 'Desconhecido';
 
@@ -96,7 +107,18 @@ $result = $controller->updateFrontdesk(
     $cidade_pj,
     $bairro_pj,
     $estado_pj,
-    $cep_pj
+    $cep_pj,
+    $nome_litis,
+    $nacionalidade_litis,
+    $estadoCivil_litis,
+    $rg_litis,
+    $cpf_litis,
+    $profissao_litis,
+    $endereco_litis,
+    $bairro_litis,
+    $cidade_litis,
+    $cep_litis,
+    $estado_litis
 );
 
 // Mensagem de retorno

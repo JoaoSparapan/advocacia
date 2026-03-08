@@ -6,6 +6,7 @@ require $_SERVER['DOCUMENT_ROOT']."/advocacia/services/vendor/autoload.php";
 include_once $_SERVER['DOCUMENT_ROOT']."/advocacia/services/Controller/FrontdeskController.php";
 
 use PhpOffice\PhpWord\TemplateProcessor;
+use PhpOffice\PhpWord\Element\TextRun;
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['user'])) {
@@ -162,6 +163,67 @@ foreach ($docsIdsInt as $docId) {
         }
         $nomeDependente=strtoupper($record['nomeDependente'] ?? '');
     }
+
+    if (trim($record['situacao']) === 'litis') {
+
+        $textRun = new TextRun();
+
+        $fontNormal = [
+            'name' => 'Bookman Old Style',
+            'size' => 12
+        ];
+
+        $fontBold = [
+            'name' =>'Bookman Old Style',
+            'size' => 12,
+            'bold' => true
+        ];
+
+        $nomeLitis = mb_strtoupper(trim($record['nome_litis'] ?? ''), 'UTF-8');
+        $nacionalidadeLitis = trim($record['nacionalidade_litis'] ?? '');
+        $estadoCivilLitis = trim($record['estadoCivil_litis'] ?? '');
+        $profissaoLitis = trim($record['profissao_litis'] ?? '');
+        $rgLitis = trim($record['rg_litis'] ?? '');
+        $cpfLitis = trim($record['cpf_litis'] ?? '');
+        $enderecoLitis = trim($record['endereco_litis'] ?? '');
+        $bairroLitis = trim($record['bairro_litis'] ?? '');
+        $cidadeLitis = trim($record['cidade_litis'] ?? '');
+        $estadoLitis = trim($record['estado_litis'] ?? '');
+        $cepLitis = trim($record['cep_litis'] ?? '');
+
+        if ($nomeLitis !== '') {
+            $textRun->addText("Em conjunto com, ", $fontNormal);
+            $textRun->addText($nomeLitis, $fontBold);
+        }
+
+        $resto = [];
+
+        if ($nacionalidadeLitis !== '') $resto[] = $nacionalidadeLitis;
+        if ($estadoCivilLitis !== '') $resto[] = $estadoCivilLitis;
+        if ($profissaoLitis !== '') $resto[] = $profissaoLitis;
+        if ($rgLitis !== '') $resto[] = "portador(a) da cédula de identidade RG nº {$rgLitis}";
+        if ($cpfLitis !== '') $resto[] = "inscrito(a) no CPF sob nº {$cpfLitis}";
+
+        if ($enderecoLitis !== '') {
+            $enderecoCompleto = "residente e domiciliado(a) à {$enderecoLitis}";
+            if ($bairroLitis !== '') $enderecoCompleto .= ", Bairro {$bairroLitis}";
+            if ($cidadeLitis !== '' && $estadoLitis !== '') $enderecoCompleto .= ", {$cidadeLitis}/{$estadoLitis}";
+            if ($cepLitis !== '') $enderecoCompleto .= ", CEP: {$cepLitis}";
+            $resto[] = $enderecoCompleto;
+        }
+
+        if (!empty($resto)) {
+            $textRun->addText(', ' . implode(', ', $resto) . '.', $fontNormal);
+        }
+
+       $template->setComplexValue('litis', $textRun);
+        $descricao = '';
+        $nomeDependente='';
+
+    } else {
+        $template->setValue('litis', '');
+    }
+
     $template->setValue('NOMEDEPENDENTE', trim($nomeDependente));
     $template->setValue('descricao', trim($descricao) . ' ');
 
@@ -184,6 +246,13 @@ foreach ($docsIdsInt as $docId) {
         }
         $ASS_LEFT = "\xc2\xa0";
         $ASS_RIGHT = "\xc2\xa0";
+    } elseif ($situacao === 'litis') {
+
+        $nomeLitisAssinatura = mb_strtoupper(trim($record['nome_litis'] ?? ''), 'UTF-8');
+
+        $ASS_LEFT = mb_strtoupper($nomePrincipal, 'UTF-8');
+        $ASS_RIGHT = $nomeLitisAssinatura !== '' ? $nomeLitisAssinatura : "\xc2\xa0";
+        $ASS_CENTER = "\xc2\xa0";
     } else {
         $centralName = $nomePrincipal;
         if ($centralName === '') {

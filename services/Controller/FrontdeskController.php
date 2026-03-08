@@ -54,6 +54,17 @@ class FrontdeskController extends GlobalController
         $pastaHibrida = addslashes($data['pastaHibrida']);
         $indicacao = addslashes($data['indicacao']);
         $indicacaoNome = addslashes($data['indicacaoNome']);
+        $nome_litis = isset($data['nome_litis']) ? addslashes($data['nome_litis']) : '';
+        $nacionalidade_litis = isset($data['nacionalidade_litis']) ? addslashes($data['nacionalidade_litis']) : '';
+        $estadoCivil_litis = isset($data['estadoCivil_litis']) ? addslashes($data['estadoCivil_litis']) : '';
+        $rg_litis = isset($data['rg_litis']) ? addslashes($data['rg_litis']) : '';
+        $cpf_litis = isset($data['cpf_litis']) ? addslashes($data['cpf_litis']) : '';
+        $profissao_litis = isset($data['profissao_litis']) ? addslashes($data['profissao_litis']) : '';
+        $endereco_litis = isset($data['endereco_litis']) ? addslashes($data['endereco_litis']) : '';
+        $bairro_litis = isset($data['bairro_litis']) ? addslashes($data['bairro_litis']) : '';
+        $cidade_litis = isset($data['cidade_litis']) ? addslashes($data['cidade_litis']) : '';
+        $cep_litis = isset($data['cep_litis']) ? addslashes($data['cep_litis']) : '';
+        $estado_litis = isset($data['estado_litis']) ? addslashes($data['estado_litis']) : '';
 
         $query = "INSERT INTO frontdesk 
             (
@@ -64,7 +75,11 @@ class FrontdeskController extends GlobalController
             documentos,parteadversa,fatos,data_referencia,usuario,
             situacao,nomeDependente,nacionalidadeDependente,
             rgDependente,cpfDependente,relacaoResponsavel,
-            pastaHibrida,indicacao,indicacaoNome
+            pastaHibrida,indicacao,indicacaoNome,
+            nome_litis,nacionalidade_litis,estadoCivil_litis,
+            rg_litis,cpf_litis,profissao_litis,
+            endereco_litis,bairro_litis,cidade_litis,
+            cep_litis,estado_litis
             ) 
             VALUES 
             (
@@ -75,7 +90,11 @@ class FrontdeskController extends GlobalController
             '$documentos','$parteadversa','$fatos','$data_referencia','$usuario',
             '$situacao','$nomeDependente','$nacionalidadeDependente',
             '$rgDependente','$cpfDependente','$relacaoResponsavel',
-            '$pastaHibrida','$indicacao','$indicacaoNome'
+            '$pastaHibrida','$indicacao','$indicacaoNome',
+            '$nome_litis','$nacionalidade_litis','$estadoCivil_litis',
+            '$rg_litis','$cpf_litis','$profissao_litis',
+            '$endereco_litis','$bairro_litis','$cidade_litis',
+            '$cep_litis','$estado_litis'
             )";
 
         $result = mysqli_query($conn, $query);
@@ -247,7 +266,18 @@ class FrontdeskController extends GlobalController
         $cidade_pj = NULL,
         $bairro_pj = NULL,
         $estado_pj = NULL,
-        $cep_pj = NULL
+        $cep_pj = NULL,
+        $nome_litis = NULL,
+        $nacionalidade_litis = NULL,
+        $estadoCivil_litis = NULL,
+        $rg_litis = NULL,
+        $cpf_litis = NULL,
+        $profissao_litis = NULL,
+        $endereco_litis = NULL,
+        $bairro_litis = NULL,
+        $cidade_litis = NULL,
+        $cep_litis = NULL,
+        $estado_litis = NULL
     ) {
         if ($id == NULL) {
             return ['error', 'Erro ao atualizar registro de atendimento'];
@@ -293,7 +323,18 @@ class FrontdeskController extends GlobalController
                 cidade_pj = '$cidade_pj',
                 bairro_pj = '$bairro_pj',
                 estado_pj = '$estado_pj',
-                cep_pj= '$cep_pj'
+                cep_pj = '$cep_pj',
+                nome_litis = '$nome_litis',
+                nacionalidade_litis = '$nacionalidade_litis',
+                estadoCivil_litis = '$estadoCivil_litis',
+                rg_litis = '$rg_litis',
+                cpf_litis = '$cpf_litis',
+                profissao_litis = '$profissao_litis',
+                endereco_litis = '$endereco_litis',
+                bairro_litis = '$bairro_litis',
+                cidade_litis = '$cidade_litis',
+                cep_litis = '$cep_litis',
+                estado_litis = '$estado_litis'
             WHERE idFrontdesk = $id
         ";
 

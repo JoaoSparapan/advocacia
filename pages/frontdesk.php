@@ -38,6 +38,7 @@ if ($index . "" == "0") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../styles/css/frontdesk.css">
     <link rel="stylesheet" href="../styles/css/profile.css">
     <link rel="stylesheet" href="../styles/css/providences.css">
     <link rel="stylesheet" href="../styles/css/sidebar-hide.css">
@@ -55,16 +56,15 @@ if ($index . "" == "0") {
 
     <div id="modal2" class="modal" style="padding: 20px; height: auto;">
         <center>
-            <h4>Cadastro de Atendimento</h4>
+            <bold><h4 style="color:#2c3e50;font-weight: 600;">Cadastro de Atendimento</h4></bold>
         </center><br>
 
         <form class="col s12" method="POST" action="../services/Controller/CreateFrontdesk.php">
 
-            <div class="row" style="margin-bottom: 25px;">
-
-                <div class="card"
-                    style="center-align; padding: 15px 25px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-
+            <div class="form-card" style="margin-bottom: 25px;">
+                <div class="form-card-title">
+                    Gerar arquivos
+                </div> 
                     <div class="row">
                         <div class="col s12">
                             <p>
@@ -95,253 +95,307 @@ if ($index . "" == "0") {
                                         name="documentos[]"><span> Termo de revogação de procuração</span></label></p>
                         </div>
                     </div>
-                </div>
-            </div><br>
+            </div>
 
-            <div class="row" style="margin-top: -15px;">
-                <div class="input-field col s12 m6">
-                    <select id="situacao" name="situacao" required>
-                        <option value="" disabled selected>Tipo do cliente</option>
-                        <option value="maior">Maior de idade</option>
-                        <option value="menor_pubere">Menor púbere</option>
-                        <option value="menor_impubere">Menor impúbere</option>
-                        <option value="pj">Pessoa Jurídica (PJ)</option>
-                    </select>
-                    <label>Tipo do cliente</label>
+            <div class="form-card" id="informacoes-tipoCliente-card">
+                <div class="form-card-title" style="margin-bottom: -10px;">
+                    Tipo do cliente
+                </div> 
+                <div class="row">
+                    <div class="input-field col s12 m6">
+                        <select id="situacao" name="situacao" required>
+                            <option value="" disabled selected>Tipo do cliente</option>
+                            <option value="maior">Maior de idade</option>
+                            <option value="menor_pubere">Menor púbere</option>
+                            <option value="menor_impubere">Menor impúbere</option>
+                            <option value="pj">Pessoa Jurídica (PJ)</option>
+                            <option value="litis">Litisconsórcio</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
             <div id="responsavel-fields" style="display:none;">
-                <div class="row">
-                    <div class="input-field col s6">
-                        <input type="text" id="nomeDependente" name="nomeDependente">
-                        <label for="nomeDependente">Nome do dependente</label>
+                <div class="form-card">
+                    <div class="form-card-title" id="menor-card-title">
+                        Dados do Menor
                     </div>
-                    <div class="input-field col s6">
-                        <input type="text" id="nacionalidadeDependente" name="nacionalidadeDependente">
-                        <label for="nacionalidadeDependente">Nacionalidade do dependente</label>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" id="nomeDependente" name="nomeDependente">
+                            <label for="nomeDependente">Nome do dependente</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" id="nacionalidadeDependente" name="nacionalidadeDependente">
+                            <label for="nacionalidadeDependente">Nacionalidade do dependente</label>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s6">
-                        <input type="text" id="rgDependente" name="rgDependente">
-                        <label for="rgDependente">RG dependente</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input type="text" id="cpfDependente" name="cpfDependente">
-                        <label for="cpfDependente">CPF dependente</label>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" id="rgDependente" name="rgDependente">
+                            <label for="rgDependente">RG dependente</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" id="cpfDependente" name="cpfDependente">
+                            <label for="cpfDependente">CPF dependente</label>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div id="pj-fields" style="display:none;">
+                <div class="form-card">
+                    <div class="form-card-title">
+                        Dados PJ
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" id="empresa" name="empresa">
+                            <label for="empresa">Nome da pessoa jurídica</label>
+                        </div>
+
+                        <div class="input-field col s6">
+                            <input type="text" id="cnpj" name="cnpj">
+                            <label for="cnpj">CNPJ</label>
+                        </div>
+
+                        <div class="input-field col s6">
+                            <input type="text" id="cargo" name="cargo">
+                            <label for="cargo">Cargo do representante</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" id="endereco_pj" name="endereco_pj">
+                            <label for="endereco_pj">Endereço da pessoa jurídica</label>
+                        </div>
+
+                        <div class="input-field col s6">
+                            <input type="text" id="bairro_pj" name="bairro_pj">
+                            <label for="bairro_pj">Bairro da pessoa jurídica</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" id="cidade_pj" name="cidade_pj">
+                            <label for="cidade_pj">Cidade da pessoa jurídica</label>
+                        </div>
+
+                        <div class="input-field col s6">
+                            <input type="text" id="estado_pj" name="estado_pj">
+                            <label for="cidade_pj">Estado da pessoa jurídica</label>
+                        </div>
+
+                        <div class="input-field col s6">
+                            <input type="text" id="cep_pj" name="cep_pj">
+                            <label for="cep_pj">CEP da pessoa jurídica</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="dados-cliente-wrapper" style="display:none;">
+                <div class="form-card" id="cliente-card">
+                    <div class="form-card-title" id="cliente-card-title">
+                        Dados do Cliente
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" id="nome" name="nome" required>
+                            <label for="nome">Nome</label>
+                        </div>
+                        <div class="input-field col s6" style="display:none;">
+                                <input type="text" id="relacaoResponsavel" name="relacaoResponsavel">
+                                <label for="relacaoResponsavel">Relação com o dependente</label>
+                            </div>
+                        <div class="input-field col s6">
+                            <input type="text" id="nacionalidade" name="nacionalidade" required>
+                            <label for="nacionalidade">Nacionalidade</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" id="estadoCivil" name="estadoCivil" required>
+                            <label for="estadoCivil">Estado Civil</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" id="rg" name="rg" required>
+                            <label for="rg">RG</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" id="cpf" name="cpf" required>
+                            <label for="cpf">CPF/CNI</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" id="profissao" name="profissao" required>
+                            <label for="profissao">Profissão</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" id="endereco" name="endereco" required>
+                            <label for="endereco">Endereço</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" id="bairro" name="bairro" required>
+                            <label for="bairro">Bairro</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" id="cidade" name="cidade" required>
+                            <label for="cidade">Cidade</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" id="cep" name="cep" required>
+                            <label for="cep">CEP</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input type="text" id="estado" name="estado" required>
+                            <label for="estado">Estado</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="litis-fields" style="display:none;">
+                <div class="card" class="form-card" style="padding:20px; border-radius:12px;">
+                    <div class="form-card-title">
+                        Dados do litisconsorte 2
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" id="nome_litis" name="nome_litis" required>
+                            <label for="nome_litis">Nome</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" id="nacionalidade_litis" name="nacionalidade_litis" required>
+                            <label for="nacionalidade_litis">Nacionalidade</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" id="estadoCivil_litis" name="estadoCivil_litis" required>
+                            <label for="estadoCivil_litis">Estado Civil</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" id="rg_litis" name="rg_litis" required>
+                            <label for="rg_litis">RG</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" id="cpf_litis" name="cpf_litis" required>
+                            <label for="cpf_litis">CPF/CNI</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" id="profissao_litis" name="profissao_litis" required>
+                            <label for="profissao_litis">Profissão</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" id="endereco_litis" name="endereco_litis" required>
+                            <label for="endereco_litis">Endereço</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" id="bairro_litis" name="bairro_litis" required>
+                            <label for="bairro_litis">Bairro</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" id="cidade_litis" name="cidade_litis" required>
+                            <label for="cidade_litis">Cidade</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" id="cep_litis" name="cep_litis" required>
+                            <label for="cep_litis">CEP</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input type="text" id="estado_litis" name="estado_litis" required>
+                            <label for="estado_litis">Estado</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-card" id="informacoes-adicionais-card">
+                <div class="form-card-title">
+                    Informações do Atendimento
+                </div>
                 <div class="row">
-                    <div class="input-field col s6">
-                        <input type="text" id="empresa" name="empresa">
-                        <label for="empresa">Nome da pessoa jurídica</label>
-                    </div>
-
-                    <div class="input-field col s6">
-                        <input type="text" id="cnpj" name="cnpj">
-                        <label for="cnpj">CNPJ</label>
-                    </div>
-
-                    <div class="input-field col s6">
-                        <input type="text" id="cargo" name="cargo">
-                        <label for="cargo">Cargo do representante</label>
+                    <div class="input-field col s12 m6">
+                        <select name="pastaHibrida" id="pastaHibrida" required>
+                            <option value="" disabled selected>Pasta híbrida</option>
+                            <option value="Sim">Sim</option>
+                            <option value="Não">Não</option>
+                        </select>
+                        <label>Pasta híbrida</label>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s6">
-                        <input type="text" id="endereco_pj" name="endereco_pj">
-                        <label for="endereco_pj">Endereço da pessoa jurídica</label>
-                    </div>
-
-                    <div class="input-field col s6">
-                        <input type="text" id="bairro_pj" name="bairro_pj">
-                        <label for="bairro_pj">Bairro da pessoa jurídica</label>
+                    <div class="input-field col s12 m6">
+                        <input type="date" id="dataReferencia" name="dataReferencia" value="<?= date('Y-m-d'); ?>"
+                            class="validate" required>
+                        <label class="active" for="dataReferencia">Data Referência</label>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s6">
-                        <input type="text" id="cidade_pj" name="cidade_pj">
-                        <label for="cidade_pj">Cidade da pessoa jurídica</label>
+                    <div class="input-field col s12 m6">
+                        <input type="text" id="indicacaoNome" name="indicacaoNome">
+                        <label for="indicacaoNome">Nome Indicação</label>
                     </div>
 
-                    <div class="input-field col s6">
-                        <input type="text" id="estado_pj" name="estado_pj">
-                        <label for="cidade_pj">Estado da pessoa jurídica</label>
-                    </div>
-
-                    <div class="input-field col s6">
-                        <input type="text" id="cep_pj" name="cep_pj">
-                        <label for="cep_pj">CEP da pessoa jurídica</label>
+                    <div class="input-field col s12 m6">
+                        <input type="text" id="indicacao" name="indicacao">
+                        <label for="indicacao">Contato Indicação</label>
                     </div>
                 </div>
             </div>
-
-            <br>
-
-            <div class="row">
-                <div class="input-field col s6">
-                    <input type="text" id="nome" name="nome" required>
-                    <label for="nome">Nome</label>
-                </div>
-                <div class="input-field col s6" style="display:none;">
-                        <input type="text" id="relacaoResponsavel" name="relacaoResponsavel">
-                        <label for="relacaoResponsavel">Relação com o dependente</label>
-                    </div>
-                <div class="input-field col s6">
-                    <input type="text" id="nacionalidade" name="nacionalidade" required>
-                    <label for="nacionalidade">Nacionalidade</label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s6">
-                    <input type="text" id="estadoCivil" name="estadoCivil" required>
-                    <label for="estadoCivil">Estado Civil</label>
-                </div>
-                <div class="input-field col s6">
-                    <input type="text" id="rg" name="rg" required>
-                    <label for="rg">RG</label>
-                </div>
-                <div class="input-field col s6">
-                    <input type="text" id="cpf" name="cpf" required>
-                    <label for="cpf">CPF/CNI</label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s6">
-                    <input type="text" id="profissao" name="profissao" required>
-                    <label for="profissao">Profissão</label>
-                </div>
-                <div class="input-field col s6">
-                    <input type="text" id="endereco" name="endereco" required>
-                    <label for="endereco">Endereço</label>
-                </div>
-                <div class="input-field col s6">
-                    <input type="text" id="bairro" name="bairro" required>
-                    <label for="bairro">Bairro</label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s6">
-                    <input type="text" id="cidade" name="cidade" required>
-                    <label for="cidade">Cidade</label>
-                </div>
-                <div class="input-field col s6">
-                    <input type="text" id="cep" name="cep" required>
-                    <label for="cep">CEP</label>
-                </div>
-                <div class="input-field col s4">
-                    <input type="text" id="estado" name="estado" required>
-                    <label for="estado">Estado</label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s12 m6">
-                    <select name="pastaHibrida" id="pastaHibrida" required>
-                        <option value="" disabled selected>Pasta híbrida</option>
-                        <option value="Sim">Sim</option>
-                        <option value="Não">Não</option>
-                    </select>
-                    <label>Pasta híbrida</label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s12 m6">
-                    <input type="date" id="dataReferencia" name="dataReferencia" value="<?= date('Y-m-d'); ?>"
-                        class="validate" required>
-                    <label class="active" for="dataReferencia">Data Referência</label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s12 m6">
-                    <input type="text" id="indicacaoNome" name="indicacaoNome">
-                    <label for="indicacaoNome">Nome Indicação</label>
-                </div>
-
-                <div class="input-field col s12 m6">
-                    <input type="text" id="indicacao" name="indicacao">
-                    <label for="indicacao">Contato Indicação</label>
-                </div>
-            </div>
-
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-
-                    const situacaoSelect = document.getElementById('situacao');
-
-                    const responsavelFields = document.getElementById('responsavel-fields');
-                    const dependenteInputs = responsavelFields.querySelectorAll('input');
-
-                    const pjFields = document.getElementById('pj-fields');
-                    const pjInputs = pjFields.querySelectorAll('input');
-
-                    situacaoSelect.addEventListener('change', function () {
-
-                        const valor = this.value;
-
-                        responsavelFields.style.display = 'none';
-                        pjFields.style.display = 'none';
-
-                        dependenteInputs.forEach(input => input.removeAttribute('required'));
-                        pjInputs.forEach(input => input.removeAttribute('required'));
-
-                        if (valor === 'menor_pubere' || valor === 'menor_impubere') {
-                            responsavelFields.style.display = 'block';
-                            dependenteInputs.forEach(input => input.setAttribute('required', 'required'));
-                        }
-
-                        if (valor === 'pj') {
-                            pjFields.style.display = 'block';
-                            pjInputs.forEach(input => input.setAttribute('required', 'required'));
-
-                        }
-
-                });
-
-            });
-            </script>
-
 
             <div id="extra-fields" style="display: none;">
-                <div class="row">
-                    <div class="input-field col s6">
-                        <input type="email" id="email" name="email">
-                        <label for="email">E-mail</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input type="text" id="telefone1" name="telefone1">
-                        <label for="telefone1">Telefone 01</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input type="text" id="telefone2" name="telefone2">
-                        <label for="telefone2">Telefone 02</label>
-                    </div>
-
+                <div class="form-card" id="informacoes-adicionais-inicial-card">
+                <div class="form-card-title">
+                    Dados do Atendimento Inicial
                 </div>
-
                 <div class="row">
-                    <div class="input-field col s6">
-                        <input type="text" id="parteadversa" name="parteadversa">
-                        <label for="parteadversa">Parte Adversa</label>
+                        <div class="input-field col s6">
+                            <input type="email" id="email" name="email">
+                            <label for="email">E-mail</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" id="telefone1" name="telefone1">
+                            <label for="telefone1">Telefone 01</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" id="telefone2" name="telefone2">
+                            <label for="telefone2">Telefone 02</label>
+                        </div>
+
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="input-field col s12" style="padding-top: 10px;">
-                        <textarea id="fatos" name="fatos" class="materialize-textarea"
-                            style="min-height: 200px;"></textarea>
-                        <label for="fatos">Fatos</label>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" id="parteadversa" name="parteadversa">
+                            <label for="parteadversa">Parte Adversa</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12" style="padding-top: 10px;">
+                            <textarea id="fatos" name="fatos" class="materialize-textarea"
+                                style="min-height: 200px;"></textarea>
+                            <label for="fatos">Fatos</label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -513,7 +567,7 @@ if ($index . "" == "0") {
                     <tr>
                         <th>Cliente</th>
                         <th>CPF</th>
-                        <th>Email</th>
+                        <th>Tipo</th>
                         <th>Celular 1</th>
                         <th>Parte Adversa</th>
                         <th>Pasta Híbrida</th>
@@ -601,9 +655,17 @@ if ($index . "" == "0") {
                     if ($parteAdversa == NULL) {
                         $parteAdversa = 'Não informado';
                     }
-                    $email = $u["email"];
-                    if ($email == NULL) {
-                        $email = 'Não informado';
+                    $situacao = $u["situacao"];
+                    if ($situacao == 'pj') {
+                        $situacao = 'Pessoa Jurídica';
+                    }else if($situacao == 'litis'){
+                        $situacao = 'Litisconsórcio';
+                    }else if($situacao == 'menor_pubere'){
+                        $situacao = 'Menor púbere';
+                    }else if($situacao == 'menor_impubere'){
+                        $situacao = 'Menor impúbere';
+                    }else{
+                        $situacao = 'Maior';
                     }
                     $indicacao = $u["indicacaoNome"];
                     if ($indicacao == NULL) {
@@ -613,7 +675,7 @@ if ($index . "" == "0") {
                     $table .= '<tr>
                                 <td>' . $u["nome"] . '</td>
                                 <td>' . $u["cpf"] . '</td>
-                                <td>' . $email . '</td>
+                                <td>' . $situacao . '</td>
                                 <td>' . $phoneCli1 . '</td>
                                 <td>' . $parteAdversa . '</td>
                                 <td>' . $u["pastaHibrida"] . '</td>
@@ -671,7 +733,7 @@ if ($index . "" == "0") {
                     <tr>
                         <th>Cliente</th>
                         <th>CPF</th>
-                        <th>Celular 1</th>
+                        <th>Tipo</th>
                         <th>Parte Adversa</th>
                         <th>Pasta Híbrida</th>
                         <th>Nome Indicação</th>

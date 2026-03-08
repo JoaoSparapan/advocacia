@@ -82,7 +82,7 @@ $html .= '<tr style="background-color: rgb(209,209,209);">';
 $html .= '<th><b>#</b></th>';
 $html .= '<th><b>Cliente</b></th>';
 $html .= '<th><b>CPF</b></th>';
-$html .= '<th><b>E-mail</b></th>';
+$html .= '<th><b>Tipo</b></th>';
 $html .= '<th><b>Celular 1</b></th>';
 $html .= '<th><b>Parte Adversa</b></th>';
 $html .= '<th><b>Pasta Híbrida</b></th>';
@@ -137,10 +137,18 @@ for ($i = 0; $i < sizeof($fronts); $i++) {
 		$parteAdversa = 'Não informado';
 	}
 
-	$email = $u["email"];
-	if ($email == NULL) {
-		$email = 'Não informado';
-	}
+	$situacao = $u["situacao"];
+    if ($situacao == 'pj') {
+    	$situacao = 'Pessoa Jurídica';
+    }else if($situacao == 'litis'){
+    	$situacao = 'Litisconsórcio';
+    }else if($situacao == 'menor_pubere'){
+    	$situacao = 'Menor púbere';
+    }else if($situacao == 'menor_impubere'){
+    	$situacao = 'Menor impúbere';
+    }else{
+		$situacao = 'Maior';
+    }
 
 	$indicacao = $u["indicacao"];
     if ($indicacao == NULL) {
@@ -155,7 +163,7 @@ for ($i = 0; $i < sizeof($fronts); $i++) {
 	$html .= '<tr style="border: none;border-bottom: 1px solid rgb(209,209,209);"><td style="' . $style . '">' . $idTabela . '</td>';
 	$html .= '<td style="' . $style . '">' . $u["nome"] . '</td>';
 	$html .= '<td style="' . $style . '">' . $u["cpf"] . '</td>';
-	$html .= '<td style="' . $style . '">' . $email . '</td>';
+	$html .= '<td style="' . $style . '">' . $situacao . '</td>';
 	$html .= '<td style="' . $style . '">' . $phoneCli1 . '</td>';
 	$html .= '<td style="' . $style . '">' . $parteAdversa . '</td>';
 	$html .= '<td style="' . $style . '">' . $u["pastaHibrida"] . '</td>';

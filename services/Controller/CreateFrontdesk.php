@@ -6,6 +6,7 @@ require $_SERVER['DOCUMENT_ROOT']."/advocacia/services/vendor/autoload.php";
 include_once $_SERVER['DOCUMENT_ROOT']."/advocacia/services/Controller/FrontdeskController.php";
 
 use PhpOffice\PhpWord\TemplateProcessor;
+use PhpOffice\PhpWord\Element\TextRun;
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -66,7 +67,18 @@ $dataInsert = [
     'cidade_pj' => $cidadePJ,
     'bairro_pj' => $bairroPJ,
     'estado_pj' => $estadoPJ,
-    'cep_pj' => $cepPJ
+    'cep_pj' => $cepPJ,
+    'nome_litis' => $_POST['nome_litis'] ?? '',
+    'nacionalidade_litis' => $_POST['nacionalidade_litis'] ?? '',
+    'estadoCivil_litis' => $_POST['estadoCivil_litis'] ?? '',
+    'rg_litis' => $_POST['rg_litis'] ?? '',
+    'cpf_litis' => $_POST['cpf_litis'] ?? '',
+    'profissao_litis' => $_POST['profissao_litis'] ?? '',
+    'endereco_litis' => $_POST['endereco_litis'] ?? '',
+    'bairro_litis' => $_POST['bairro_litis'] ?? '',
+    'cidade_litis' => $_POST['cidade_litis'] ?? '',
+    'cep_litis' => $_POST['cep_litis'] ?? '',
+    'estado_litis' => $_POST['estado_litis'] ?? '',
 ];
 
 $resultInsert = $controller->insertFrontdesk($dataInsert);
@@ -145,13 +157,13 @@ foreach ($documentosSelecionados as $docId) {
     $situacao = trim($_POST['situacao']) ?? '';
     $relacao = trim($_POST['relacaoResponsavel']) ?? '';
     if ($situacao === 'pj') {
-        $empresa    = trim($_POST['empresa'] ?? '');
-        $cnpj       = trim($_POST['cnpj'] ?? '');
-        $endereco   = trim($_POST['endereco_pj'] ?? '');
-        $cidade     = trim($_POST['cidade_pj'] ?? '');
-        $estado     = trim($_POST['estado_pj'] ?? '');
-        $cep        = trim($_POST['cep_pj'] ?? '');
-        $cargo      = trim($_POST['cargo'] ?? '');
+        $empresa = trim($_POST['empresa'] ?? '');
+        $cnpj = trim($_POST['cnpj'] ?? '');
+        $endereco = trim($_POST['endereco_pj'] ?? '');
+        $cidade = trim($_POST['cidade_pj'] ?? '');
+        $estado = trim($_POST['estado_pj'] ?? '');
+        $cep = trim($_POST['cep_pj'] ?? '');
+        $cargo = trim($_POST['cargo'] ?? '');
 
         $partes = [];
 
@@ -204,6 +216,66 @@ foreach ($documentosSelecionados as $docId) {
 
         $nomeDependente = trim(strtoupper($_POST['nomeDependente'] ?? ''));
     }
+    
+    if (trim($_POST['situacao']) === 'litis') {
+
+        $textRun = new TextRun();
+
+        $fontNormal = [
+            'name' => 'Bookman Old Style',
+            'size' => 12
+        ];
+
+        $fontBold = [
+            'name' =>'Bookman Old Style',
+            'size' => 12,
+            'bold' => true
+        ];
+
+        $nomeLitis = mb_strtoupper(trim($_POST['nome_litis'] ?? ''), 'UTF-8');
+        $nacionalidadeLitis = trim($_POST['nacionalidade_litis'] ?? '');
+        $estadoCivilLitis = trim($_POST['estadoCivil_litis'] ?? '');
+        $profissaoLitis = trim($_POST['profissao_litis'] ?? '');
+        $rgLitis = trim($_POST['rg_litis'] ?? '');
+        $cpfLitis = trim($_POST['cpf_litis'] ?? '');
+        $enderecoLitis = trim($_POST['endereco_litis'] ?? '');
+        $bairroLitis = trim($_POST['bairro_litis'] ?? '');
+        $cidadeLitis = trim($_POST['cidade_litis'] ?? '');
+        $estadoLitis = trim($_POST['estado_litis'] ?? '');
+        $cepLitis = trim($_POST['cep_litis'] ?? '');
+
+        if ($nomeLitis !== '') {
+            $textRun->addText("Em conjunto com, ", $fontNormal);
+            $textRun->addText($nomeLitis, $fontBold);
+        }
+
+        $resto = [];
+
+        if ($nacionalidadeLitis !== '') $resto[] = $nacionalidadeLitis;
+        if ($estadoCivilLitis !== '') $resto[] = $estadoCivilLitis;
+        if ($profissaoLitis !== '') $resto[] = $profissaoLitis;
+        if ($rgLitis !== '') $resto[] = "portador(a) da cédula de identidade RG nº {$rgLitis}";
+        if ($cpfLitis !== '') $resto[] = "inscrito(a) no CPF sob nº {$cpfLitis}";
+
+        if ($enderecoLitis !== '') {
+            $enderecoCompleto = "residente e domiciliado(a) à {$enderecoLitis}";
+            if ($bairroLitis !== '') $enderecoCompleto .= ", Bairro {$bairroLitis}";
+            if ($cidadeLitis !== '' && $estadoLitis !== '') $enderecoCompleto .= ", {$cidadeLitis}/{$estadoLitis}";
+            if ($cepLitis !== '') $enderecoCompleto .= ", CEP: {$cepLitis}";
+            $resto[] = $enderecoCompleto;
+        }
+
+        if (!empty($resto)) {
+            $textRun->addText(', ' . implode(', ', $resto) . '.', $fontNormal);
+        }
+
+       $template->setComplexValue('litis', $textRun);
+        $descricao = '';
+        $nomeDependente='';
+
+    } else {
+        $template->setValue('litis', '');
+    }
 
     $template->setValue('descricao', trim($descricao) . ' ');
     $template->setValue('NOMEDEPENDENTE', trim($nomeDependente));
@@ -222,6 +294,13 @@ foreach ($documentosSelecionados as $docId) {
         $ASS_LEFT = "\xc2\xa0";
         $ASS_RIGHT = "\xc2\xa0";
         $ASS_CENTER = $nomePrincipal ?: "\xc2\xa0";
+    } elseif ($situacao === 'litis') {
+
+        $nomeLitisAssinatura = mb_strtoupper(trim($_POST['nome_litis'] ?? ''), 'UTF-8');
+
+        $ASS_LEFT = mb_strtoupper($nomePrincipal, 'UTF-8');
+        $ASS_RIGHT = $nomeLitisAssinatura !== '' ? $nomeLitisAssinatura : "\xc2\xa0";
+        $ASS_CENTER = "\xc2\xa0";
     } else {
         $ASS_LEFT = "\xc2\xa0";
         $ASS_RIGHT = "\xc2\xa0";
@@ -255,6 +334,74 @@ foreach ($documentosSelecionados as $docId) {
             $complementoContato = 'E-mail ' . $_POST['email'] . '.';
         }
         $template->setValue('complementoContato', $complementoContato);
+
+        $litisTexto = '';
+
+        if ($situacao === 'litis') {
+
+            $nomeLitis = trim($_POST['nome_litis'] ?? '');
+            $nacionalidadeLitis = trim($_POST['nacionalidade_litis'] ?? '');
+            $estadoCivilLitis = trim($_POST['estadoCivil_litis'] ?? '');
+            $profissaoLitis = trim($_POST['profissao_litis'] ?? '');
+            $rgLitis = trim($_POST['rg_litis'] ?? '');
+            $cpfLitis = trim($_POST['cpf_litis'] ?? '');
+            $enderecoLitis = trim($_POST['endereco_litis'] ?? '');
+            $bairroLitis = trim($_POST['bairro_litis'] ?? '');
+            $cidadeLitis = trim($_POST['cidade_litis'] ?? '');
+            $estadoLitis = trim($_POST['estado_litis'] ?? '');
+            $cepLitis = trim($_POST['cep_litis'] ?? '');
+
+            $partes = [];
+
+            if ($nomeLitis !== '') {
+                $partes[] = strtoupper($nomeLitis);
+            }
+
+            if ($nacionalidadeLitis !== '') {
+                $partes[] = $nacionalidadeLitis;
+            }
+
+            if ($estadoCivilLitis !== '') {
+                $partes[] = $estadoCivilLitis;
+            }
+
+            if ($profissaoLitis !== '') {
+                $partes[] = $profissaoLitis;
+            }
+
+            if ($rgLitis !== '') {
+                $partes[] = "portador(a) da cédula de identidade RG nº {$rgLitis}";
+            }
+
+            if ($cpfLitis !== '') {
+                $partes[] = "inscrito(a) no CPF sob nº {$cpfLitis}";
+            }
+
+            if ($enderecoLitis !== '') {
+
+                $enderecoCompleto = "residente e domiciliado(a) à {$enderecoLitis}";
+
+                if ($bairroLitis !== '') {
+                    $enderecoCompleto .= ", Bairro {$bairroLitis}";
+                }
+
+                if ($cidadeLitis !== '' && $estadoLitis !== '') {
+                    $enderecoCompleto .= ", {$cidadeLitis}/{$estadoLitis}";
+                }
+
+                if ($cepLitis !== '') {
+                    $enderecoCompleto .= ", CEP: {$cepLitis}";
+                }
+
+                $partes[] = $enderecoCompleto;
+            }
+
+            if (!empty($partes)) {
+                $litisTexto = ' Em conjunto com ' . implode(', ', $partes) . '.';
+            }
+        }
+
+        $template->setValue('litis', $litisTexto);
 
         $indicacao = trim($_POST['indicacao'] ?? '');
         $indicacaoNome = trim($_POST['indicacaoNome'] ?? '');

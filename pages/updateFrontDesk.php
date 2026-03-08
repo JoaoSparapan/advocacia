@@ -43,43 +43,11 @@ if(isset($_GET['id'])){
     <link rel="stylesheet" href="../styles/css/sidebar-hide.css"/>
     <link rel="stylesheet" href="../styles/css/providences.css"/>
     <link rel="stylesheet" href="../styles/css/selectStyle.css" />
+    <link rel="stylesheet" href="../styles/css/frontdesk.css" />
     <link rel="stylesheet" href="../styles/fontawesome-free-6.1.1-web/css/all.css" />
     <link rel="shortcut icon" href="../logotipo.ico" type="image/x-icon">
     <title>Editar atendimento</title>
 </head>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('select');
-    M.FormSelect.init(elems);
-
-    const situacao = document.getElementById("situacao");
-    const responsavel = document.getElementById("responsavel-fields");
-    const pj = document.getElementById("pj-fields");
-
-    function atualizarCampos(){
-
-        const valor = situacao.value;
-
-        responsavel.style.display = "none";
-        pj.style.display = "none";
-
-        if(valor === "menor_pubere" || valor === "menor_impubere"){
-            responsavel.style.display = "block";
-        }
-
-        if(valor === "pj"){
-            pj.style.display = "block";
-        }
-
-    }
-
-    situacao.addEventListener("change", atualizarCampos);
-
-    atualizarCampos();
-
-});
-</script>
 
 <body>
     <div class="wrapper d-flex align-items-stretch">
@@ -99,282 +67,386 @@ document.addEventListener('DOMContentLoaded', function() {
                     Alterar informações do atendimento
                 </div>
             </nav>
-            <div class="content-info-user">
-                <form class="col s12" method="POST" action="../services/Controller/UpdateFrontdesk.php">
+            <?php
+                $documentOptions = [
+                    1 => "01 - NOVO ATENDIMENTO INICIAL",
+                    2 => "02 - NOVA PROCURAÇÃO",
+                    3 => "03 - NOVA DECLARAÇÃO DE HIPOSSUFICIENCIA",
+                    4 => "04 - NOVA PROCURAÇÃO INSS",
+                    5 => "05 - NOVO CONTRATO DE PRESTAÇÃO DE SERVIÇOS ADVOCATÍCIOS",
+                    6 => "06 - TERMO DE REVOGAÇÃO DE PROCURAÇÃO AD JUDICIA"
+                ];
+
+                $docsSelecionados = [];
+                if (!empty($frontdeskSelected['documentos'])) {
+                    $docsSelecionados = explode(',', $frontdeskSelected['documentos']);
+                }
+            ?>
+                <div class="content-info-user">
+                    <form class="col s12" method="POST" action="../services/Controller/UpdateFrontdesk.php">
                     <input name="id" type="hidden" value="<?= $frontdeskSelected['idFrontdesk'] ?>">
-
-                    <div class="row">
-                        <div class="input-field col s12 m6">
-                            <i class="fa-solid fa-calendar-check prefix"></i>
-                            <input type="date" id="dataReferencia" name="dataReferencia"
-                                value="<?= $frontdeskSelected['data_referencia'] ?>" 
-                                class="validate" required>
-                            <label class="active" for="dataReferencia">Data Referência</label>
+                    <div class="form-card" id="informacoes-tipoCliente-card">
+                        <div class="form-card-title">
+                            Informações gerais
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="input-field col l4 m6 s12">
-                            <i class="fa-solid fa-user prefix"></i>
-                            <input name="nome" id="nome" type="text" class="validate" required value="<?= $frontdeskSelected['nome'] ?>">
-                            <label for="nome">Nome</label>
-                        </div>
-                        <div class="input-field col l4 m6 s12">
-                            <i class="fa-solid fa-globe prefix"></i>
-                            <input name="nacionalidade" id="nacionalidade" type="text" class="validate" required value="<?= $frontdeskSelected['nacionalidade'] ?>">
-                            <label for="nacionalidade">Nacionalidade</label>
-                        </div>
-                        <div class="input-field col l4 m6 s12">
-                            <i class="fa-solid fa fa-user-friends prefix"></i>
-                            <input name="estadoCivil" id="estadoCivil" type="text" class="validate" required value="<?= $frontdeskSelected['estadoCivil'] ?>">
-                            <label for="estadoCivil">Estado Civil</label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="input-field col l4 m6 s12">
-                            <i class="fa-solid fa-briefcase prefix"></i>
-                            <input name="profissao" id="profissao" type="text" class="validate" required value="<?= $frontdeskSelected['profissao'] ?>">
-                            <label for="profissao">Profissão</label>
-                        </div>
-                        <div class="input-field col l6 m6 s12">
-                            <i class="fa-solid fa-id-card prefix"></i>
-                            <input name="rg" id="rg" type="text" class="validate" required value="<?= $frontdeskSelected['rg'] ?>">
-                            <label for="rg">RG</label>
-                        </div>
-                        <div class="input-field col l6 m6 s12">
-                            <i class="fa-solid fa-id-card prefix"></i>
-                            <input name="cpf" id="cpf" type="text" class="validate" required value="<?= $frontdeskSelected['cpf'] ?>">
-                            <label for="cpf">CPF</label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="input-field col l4 m6 s12">
-                            <i class="fa-solid fa-envelope prefix"></i>
-                            <input name="email" id="email" type="email" value="<?= $frontdeskSelected['email'] ?>">
-                            <label for="email">E-mail (Opcional)</label>
-                        </div>
-                        <div class="input-field col l4 m6 s12">
-                            <i class="fa-solid fa-phone prefix"></i>
-                            <input name="telefone1" id="telefone1" type="text" value="<?= $frontdeskSelected['telefone1'] ?>">
-                            <label for="telefone1">Telefone 1 (Opcional)</label>
-                        </div>
-                        <div class="input-field col l4 m6 s12">
-                            <i class="fa-solid fa-phone-alt prefix"></i>
-                            <input name="telefone2" id="telefone2" type="text" value="<?= $frontdeskSelected['telefone2'] ?>">
-                            <label for="telefone2">Telefone 2 (Opcional)</label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="input-field col l4 m6 s12">
-                            <i class="fa-solid fa-location-dot prefix"></i>
-                            <input name="endereco" id="endereco" type="text" required value="<?= $frontdeskSelected['endereco'] ?>">
-                            <label for="endereco">Endereço</label>
-                        </div>
-                        <div class="input-field col l4 m6 s12">
-                            <i class="fa-solid fa-map-pin prefix"></i>
-                            <input name="bairro" id="bairro" type="text" required value="<?= $frontdeskSelected['bairro'] ?>">
-                            <label for="bairro">Bairro</label>
-                        </div>
-                        <div class="input-field col l4 m6 s12">
-                            <i class="fa-solid fa-city prefix"></i>
-                            <input name="cidade" id="cidade" type="text" required value="<?= $frontdeskSelected['cidade'] ?>">
-                            <label for="cidade">Cidade</label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="input-field col l6 m6 s12">
-                            <i class="fa-solid fa-flag prefix"></i>
-                            <input name="estado" id="estado" type="text" required value="<?= $frontdeskSelected['estado'] ?>">
-                            <label for="estado">Estado</label>
-                        </div>
-                        <div class="input-field col l6 m6 s12">
-                            <i class="fa-solid fa-mail-bulk prefix"></i>
-                            <input name="cep" id="cep" type="text" required value="<?= $frontdeskSelected['cep'] ?>">
-                            <label for="cep">CEP</label>
-                        </div>
-                        <div class="input-field col l4 m6 s12">
-                            <i class="fa-solid fa-gavel prefix"></i>
-                            <input name="parteadversa" id="parteadversa" type="text" value="<?= $frontdeskSelected['parteadversa'] ?>">
-                            <label for="parteadversa">Parte Adversa (Opcional)</label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="input-field col s12 m6">
-                            <i class="fa-solid fa-folder-open prefix"></i>
-                            <select name="pastaHibrida" id="pastaHibrida" required>
-                                <option value="Sim" <?= ($frontdeskSelected['pastaHibrida'] ?? '') == 'Sim' ? 'selected' : '' ?>>Sim</option>
-                                <option value="Não" <?= ($frontdeskSelected['pastaHibrida'] ?? '') == 'Não' ? 'selected' : '' ?>>Não</option>
-                            </select>
-                            <label for="pastaHibrida" class="active" style="transform: translateY(10px);">Pasta híbrida</label>
-                        </div>
-
-                        <div class="input-field col s12 m6">
-                            <i class="fa-solid fa-user-check prefix"></i>
-                            <input type="text" id="indicacaoNome" name="indicacaoNome"
-                                value="<?= htmlspecialchars($frontdeskSelected['indicacaoNome'] ?? '') ?>">
-                            <label for="indicacaoNome" class="active">Nome Indicação</label>
-                        </div>
-
-                        <div class="input-field col s12 m6">
-                            <i class="fa-solid fa-phone-volume prefix"></i>
-                            <input type="text" id="indicacao" name="indicacao"
-                                value="<?= htmlspecialchars($frontdeskSelected['indicacao'] ?? '') ?>">
-                            <label for="indicacao" class="active">Contato Indicação</label>
-                        </div>
-                    </div>
-                    <br>
-
-                    <div class="row">
-                        <div class="input-field col s12 m6">
-                            <i class="fa-solid fa-user-group prefix"></i>
-                            <select id="situacao" name="situacao">
-                                <option value="">Tipo do cliente</option>
-                                <option value="maior" <?= $frontdeskSelected['situacao'] == 'maior' ? 'selected' : '' ?>>Maior de idade</option>
-                                <option value="menor_pubere" <?= $frontdeskSelected['situacao'] == 'menor_pubere' ? 'selected' : '' ?>>Menor púbere</option>
-                                <option value="menor_impubere" <?= $frontdeskSelected['situacao'] == 'menor_impubere' ? 'selected' : '' ?>>Menor impúbere</option>
-                                <option value="pj" <?= $frontdeskSelected['situacao'] == 'pj' ? 'selected' : '' ?>>Pessoa Jurídica (PJ)</option>
-                            </select>
-                            <label for="situacao" class="active" style="transform: translateY(10px);">Tipo do cliente</label>
-                        </div>
-                    </div>
-                    <div id="responsavel-fields" style="display:none;">
-                        <div class="row" >
-                            <div class="input-field col s6">
-                                <input type="text" id="nomeDependente" name="nomeDependente"
-                                    value="<?= htmlspecialchars($frontdeskSelected['nomeDependente'] ?? '') ?>">
-                                <label for="nomeDependente">Nome do dependente</label>
+                            <div class="row">
+                                <?php foreach ($documentOptions as $id => $label): ?>
+                                    <div class="col s12 m6" style="margin-bottom:10px;">
+                                        <label style="display:flex; align-items:center; gap:8px;">
+                                            <input type="checkbox" name="documentos[]" value="<?=$id?>" 
+                                                <?= in_array((string)$id, $docsSelecionados) ? 'checked' : '' ?> />
+                                            <span><?=$label?></span>
+                                        </label>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
-                            <div class="input-field col s6">
-                                <input type="text" id="nacionalidadeDependente" name="nacionalidadeDependente"
-                                    value="<?= htmlspecialchars($frontdeskSelected['nacionalidadeDependente'] ?? '') ?>">
-                                <label for="nacionalidadeDependente">Nacionalidade do dependente</label>
+                            <div class="input-field col s12 m6">
+                                <i class="fa-solid fa-user-group prefix"></i>
+                                <select id="situacao" name="situacao">
+                                    <option value="">Tipo do cliente</option>
+                                    <option value="maior" <?= $frontdeskSelected['situacao'] == 'maior' ? 'selected' : '' ?>>Maior de idade</option>
+                                    <option value="menor_pubere" <?= $frontdeskSelected['situacao'] == 'menor_pubere' ? 'selected' : '' ?>>Menor púbere</option>
+                                    <option value="menor_impubere" <?= $frontdeskSelected['situacao'] == 'menor_impubere' ? 'selected' : '' ?>>Menor impúbere</option>
+                                    <option value="pj" <?= $frontdeskSelected['situacao'] == 'pj' ? 'selected' : '' ?>>Pessoa Jurídica (PJ)</option>
+                                    <option value="litis" <?= $frontdeskSelected['situacao'] == 'litis' ? 'selected' : '' ?>>Litisconsórcio</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-card" id="informacoes-adicionais-card">
+                        <div class="form-card-title">
+                            Informações do Atendimento
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <i class="fa-solid fa-calendar-check prefix"></i>
+                                <input type="date" id="dataReferencia" name="dataReferencia"
+                                    value="<?= $frontdeskSelected['data_referencia'] ?>" 
+                                    class="validate" required>
+                                <label class="active" for="dataReferencia">Data Referência</label>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s6">
-                                <input type="text" id="rgDependente" name="rgDependente"
-                                    value="<?= htmlspecialchars($frontdeskSelected['rgDependente'] ?? '') ?>">
-                                <label for="rgDependente">RG do dependente</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input type="text" id="cpfDependente" name="cpfDependente"
-                                    value="<?= htmlspecialchars($frontdeskSelected['cpfDependente'] ?? '') ?>">
-                                <label for="cpfDependente">CPF do dependente</label>
-                            </div>
-                            <div class="input-field col s12">
-                                <input type="text" id="relacaoResponsavel" name="relacaoResponsavel"
-                                    value="<?= htmlspecialchars($frontdeskSelected['relacaoResponsavel'] ?? '') ?>">
-                                <label for="relacaoResponsavel">Relação com o dependente</label>
-                            </div>
-                        </div>
-                    </div>
-
-                     <div id="pj-fields" style="display:none;">
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <i class="fa-solid fa-building prefix"></i>
-                                <input type="text" id="empresa" name="empresa" value="<?= $frontdeskSelected['empresa'] ?>">
-                                <label for="empresa">Nome empresa</label>
+                            <div class="input-field col s12 m6">
+                                <i class="fa-solid fa-folder-open prefix"></i>
+                                <select name="pastaHibrida" id="pastaHibrida" required>
+                                    <option value="Sim" <?= ($frontdeskSelected['pastaHibrida'] ?? '') == 'Sim' ? 'selected' : '' ?>>Sim</option>
+                                    <option value="Não" <?= ($frontdeskSelected['pastaHibrida'] ?? '') == 'Não' ? 'selected' : '' ?>>Não</option>
+                                </select>
+                                <label for="pastaHibrida" class="active" style="transform: translateY(10px);">Pasta híbrida</label>
                             </div>
 
-                            <div class="input-field col s6">
-                                <i class="fa-solid fa-id-card prefix"></i>
-                                <input type="text" id="cnpj" name="cnpj" value="<?= $frontdeskSelected['cnpj'] ?>">
-                                <label for="cnpj">CNPJ</label>
+                            <div class="input-field col s12 m6">
+                                <i class="fa-solid fa-user-check prefix"></i>
+                                <input type="text" id="indicacaoNome" name="indicacaoNome"
+                                    value="<?= htmlspecialchars($frontdeskSelected['indicacaoNome'] ?? '') ?>">
+                                <label for="indicacaoNome" class="active">Nome Indicação</label>
                             </div>
 
-                            <div class="input-field col s6">
-                                <i class="fa-solid fa-briefcase prefix"></i>
-                                <input type="text" id="cargo" name="cargo" value="<?= $frontdeskSelected['cargo'] ?>">
-                                <label for="cargo">Cargo do representante</label>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <i class="fa-solid fa-location-dot prefix"></i>
-                                <input type="text" id="endereco_pj" name="endereco_pj" value="<?= $frontdeskSelected['endereco_pj'] ?>">
-                                <label for="endereco_pj">Endereço</label>
-                            </div>
-
-                            <div class="input-field col s6">
-                                <i class="fa-solid fa-map-pin prefix"></i>
-                                <input type="text" id="bairro_pj" name="bairro_pj" value="<?= $frontdeskSelected['bairro_pj'] ?>">
-                                <label for="bairro_pj">Bairro</label>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <i class="fa-solid fa-city prefix"></i>
-                                <input type="text" id="cidade_pj" name="cidade_pj" value="<?= $frontdeskSelected['cidade_pj'] ?>">
-                                <label for="cidade_pj">Cidade</label>
-                            </div>
-
-                            <div class="input-field col s6">
-                                <i class="fa-solid fa-flag prefix"></i>
-                                <input type="text" id="estado_pj" name="estado_pj" value="<?= $frontdeskSelected['estado_pj'] ?>">
-                                <label for="cidade_pj">Estado</label>
-                            </div>
-
-                            <div class="input-field col s6">
-                                <i class="fa-solid fa-mail-bulk prefix"></i>
-                                <input type="text" id="cep_pj" name="cep_pj" value="<?= $frontdeskSelected['cep_pj'] ?>">
-                                <label for="cep_pj">CEP</label>
+                            <div class="input-field col s12 m6">
+                                <i class="fa-solid fa-phone-volume prefix"></i>
+                                <input type="text" id="indicacao" name="indicacao"
+                                    value="<?= htmlspecialchars($frontdeskSelected['indicacao'] ?? '') ?>">
+                                <label for="indicacao" class="active">Contato Indicação</label>
                             </div>
                         </div>
                     </div>
-                    <br>
-
-                    <div class="row">
-                        <div class="input-field col s12" style="padding-top: 10px;">
-                            <i class="fa-solid fa-clipboard-list prefix"></i>
-                            <textarea id="fatos" name="fatos" class="materialize-textarea" style="min-height: 200px;"><?= htmlspecialchars($frontdeskSelected['fatos'] ?? '') ?></textarea>
-                            <label for="fatos">Fatos</label>
-                        </div>
-                    </div>
-
-                    <!-- Documentos Selecionados -->
-                     <?php
-                        $documentOptions = [
-                            1 => "01 - NOVO ATENDIMENTO INICIAL",
-                            2 => "02 - NOVA PROCURAÇÃO",
-                            3 => "03 - NOVA DECLARAÇÃO DE HIPOSSUFICIENCIA",
-                            4 => "04 - NOVA PROCURAÇÃO INSS",
-                            5 => "05 - NOVO CONTRATO DE PRESTAÇÃO DE SERVIÇOS ADVOCATÍCIOS",
-                            6 => "06 - TERMO DE REVOGAÇÃO DE PROCURAÇÃO AD JUDICIA"
-                        ];
-
-                        $docsSelecionados = [];
-                        if (!empty($frontdeskSelected['documentos'])) {
-                            $docsSelecionados = explode(',', $frontdeskSelected['documentos']);
-                        }
-                    ?>
-                    <div class="row">
-                    <div class="col s12">
-                        <label style="font-weight:bold; font-size:16px; display:block; margin-bottom:8px;">
-                            Documentos Selecionados:
-                        </label>
-                        <div class="row" style="margin-top:0;">
-                            <?php foreach ($documentOptions as $id => $label): ?>
-                                <div class="col s12 m6" style="margin-bottom:10px;">
-                                    <label style="display:flex; align-items:center; gap:8px;">
-                                        <input type="checkbox" name="documentos[]" value="<?=$id?>" 
-                                            <?= in_array((string)$id, $docsSelecionados) ? 'checked' : '' ?> />
-                                        <span><?=$label?></span>
-                                    </label>
+                    
+                    <div id="pj-fields" style="display:none;">
+                        <div class="form-card">
+                            <div class="form-card-title">
+                                Dados PJ
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <i class="fa-solid fa-building prefix"></i>
+                                    <input type="text" id="empresa" name="empresa" value="<?= $frontdeskSelected['empresa'] ?>">
+                                    <label for="empresa">Nome empresa</label>
                                 </div>
-                            <?php endforeach; ?>
+
+                                <div class="input-field col s6">
+                                    <i class="fa-solid fa-id-card prefix"></i>
+                                    <input type="text" id="cnpj" name="cnpj" value="<?= $frontdeskSelected['cnpj'] ?>">
+                                    <label for="cnpj">CNPJ</label>
+                                </div>
+
+                                <div class="input-field col s6">
+                                    <i class="fa-solid fa-briefcase prefix"></i>
+                                    <input type="text" id="cargo" name="cargo" value="<?= $frontdeskSelected['cargo'] ?>">
+                                    <label for="cargo">Cargo do representante</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <i class="fa-solid fa-location-dot prefix"></i>
+                                    <input type="text" id="endereco_pj" name="endereco_pj" value="<?= $frontdeskSelected['endereco_pj'] ?>">
+                                    <label for="endereco_pj">Endereço</label>
+                                </div>
+
+                                <div class="input-field col s6">
+                                    <i class="fa-solid fa-map-pin prefix"></i>
+                                    <input type="text" id="bairro_pj" name="bairro_pj" value="<?= $frontdeskSelected['bairro_pj'] ?>">
+                                    <label for="bairro_pj">Bairro</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <i class="fa-solid fa-city prefix"></i>
+                                    <input type="text" id="cidade_pj" name="cidade_pj" value="<?= $frontdeskSelected['cidade_pj'] ?>">
+                                    <label for="cidade_pj">Cidade</label>
+                                </div>
+
+                                <div class="input-field col s6">
+                                    <i class="fa-solid fa-flag prefix"></i>
+                                    <input type="text" id="estado_pj" name="estado_pj" value="<?= $frontdeskSelected['estado_pj'] ?>">
+                                    <label for="cidade_pj">Estado</label>
+                                </div>
+
+                                <div class="input-field col s6">
+                                    <i class="fa-solid fa-mail-bulk prefix"></i>
+                                    <input type="text" id="cep_pj" name="cep_pj" value="<?= $frontdeskSelected['cep_pj'] ?>">
+                                    <label for="cep_pj">CEP</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    
+                    <div id="dados-cliente-wrapper" style="display:none;">
+                        <div class="form-card" id="cliente-card">
+                            <div class="form-card-title" id="cliente-card-title">
+                                Dados do Cliente
+                            </div>
+                            <div class="row">
+                                <div class="input-field col l4 m6 s12">
+                                    <i class="fa-solid fa-user prefix"></i>
+                                    <input name="nome" id="nome" type="text" class="validate" required value="<?= $frontdeskSelected['nome'] ?>">
+                                    <label for="nome">Nome</label>
+                                </div>
+                                <div class="input-field col l4 m6 s12">
+                                    <i class="fa-solid fa-globe prefix"></i>
+                                    <input name="nacionalidade" id="nacionalidade" type="text" class="validate" required value="<?= $frontdeskSelected['nacionalidade'] ?>">
+                                    <label for="nacionalidade">Nacionalidade</label>
+                                </div>
+                                <div class="input-field col l4 m6 s12">
+                                    <i class="fa-solid fa fa-user-friends prefix"></i>
+                                    <input name="estadoCivil" id="estadoCivil" type="text" class="validate" required value="<?= $frontdeskSelected['estadoCivil'] ?>">
+                                    <label for="estadoCivil">Estado Civil</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col l4 m6 s12">
+                                    <i class="fa-solid fa-briefcase prefix"></i>
+                                    <input name="profissao" id="profissao" type="text" class="validate" required value="<?= $frontdeskSelected['profissao'] ?>">
+                                    <label for="profissao">Profissão</label>
+                                </div>
+                                <div class="input-field col l6 m6 s12">
+                                    <i class="fa-solid fa-id-card prefix"></i>
+                                    <input name="rg" id="rg" type="text" class="validate" required value="<?= $frontdeskSelected['rg'] ?>">
+                                    <label for="rg">RG</label>
+                                </div>
+                                <div class="input-field col l6 m6 s12">
+                                    <i class="fa-solid fa-id-card prefix"></i>
+                                    <input name="cpf" id="cpf" type="text" class="validate" required value="<?= $frontdeskSelected['cpf'] ?>">
+                                    <label for="cpf">CPF</label>
+                                </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col l4 m6 s12">
+                                <i class="fa-solid fa-location-dot prefix"></i>
+                                <input name="endereco" id="endereco" type="text" required value="<?= $frontdeskSelected['endereco'] ?>">
+                                <label for="endereco">Endereço</label>
+                            </div>
+                            <div class="input-field col l4 m6 s12">
+                                <i class="fa-solid fa-map-pin prefix"></i>
+                                <input name="bairro" id="bairro" type="text" required value="<?= $frontdeskSelected['bairro'] ?>">
+                                <label for="bairro">Bairro</label>
+                            </div>
+                            <div class="input-field col l4 m6 s12">
+                                <i class="fa-solid fa-city prefix"></i>
+                                <input name="cidade" id="cidade" type="text" required value="<?= $frontdeskSelected['cidade'] ?>">
+                                <label for="cidade">Cidade</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col l6 m6 s12">
+                                <i class="fa-solid fa-flag prefix"></i>
+                                <input name="estado" id="estado" type="text" required value="<?= $frontdeskSelected['estado'] ?>">
+                                <label for="estado">Estado</label>
+                            </div>
+                            <div class="input-field col l6 m6 s12">
+                                <i class="fa-solid fa-mail-bulk prefix"></i>
+                                <input name="cep" id="cep" type="text" required value="<?= $frontdeskSelected['cep'] ?>">
+                                <label for="cep">CEP</label>
+                            </div>
+                            <div class="input-field col l4 m6 s12">
+                                <i class="fa-solid fa-gavel prefix"></i>
+                                <input name="parteadversa" id="parteadversa" type="text" value="<?= $frontdeskSelected['parteadversa'] ?>">
+                                <label for="parteadversa">Parte Adversa (Opcional)</label>
+                            </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Botões -->
+                    <div id="responsavel-fields" style="display:none;">
+                        <div class="form-card">
+                            <div class="form-card-title">
+                                Dados do Dependente
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input type="text" id="nomeDependente" name="nomeDependente"
+                                        value="<?= htmlspecialchars($frontdeskSelected['nomeDependente'] ?? '') ?>">
+                                    <label class="active" for="nomeDependente">Nome do dependente</label>
+                                </div>
+
+                                <div class="input-field col s6">
+                                    <input type="text" id="nacionalidadeDependente" name="nacionalidadeDependente"
+                                        value="<?= htmlspecialchars($frontdeskSelected['nacionalidadeDependente'] ?? '') ?>">
+                                    <label class="active" for="nacionalidadeDependente">Nacionalidade do dependente</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input type="text" id="rgDependente" name="rgDependente"
+                                        value="<?= htmlspecialchars($frontdeskSelected['rgDependente'] ?? '') ?>">
+                                    <label class="active" for="rgDependente">RG do dependente</label>
+                                </div>
+
+                                <div class="input-field col s6">
+                                    <input type="text" id="cpfDependente" name="cpfDependente"
+                                        value="<?= htmlspecialchars($frontdeskSelected['cpfDependente'] ?? '') ?>">
+                                    <label class="active" for="cpfDependente">CPF do dependente</label>
+                                </div>
+
+                                <div class="input-field col s12">
+                                    <input type="text" id="relacaoResponsavel" name="relacaoResponsavel"
+                                        value="<?= htmlspecialchars($frontdeskSelected['relacaoResponsavel'] ?? '') ?>">
+                                    <label class="active" for="relacaoResponsavel">Relação com o dependente</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="litis-fields" style="display:none;">
+                        <div class="form-card">
+                            <div class="form-card-title">
+                                Dados do Litisconsorte 2
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input type="text" id="nome_litis" name="nome_litis"
+                                        value="<?= htmlspecialchars($frontdeskSelected['nome_litis'] ?? '') ?>">
+                                    <label for="nome_litis">Nome</label>
+                                </div>
+
+                                <div class="input-field col s6">
+                                    <input type="text" id="nacionalidade_litis" name="nacionalidade_litis"
+                                        value="<?= htmlspecialchars($frontdeskSelected['nacionalidade_litis'] ?? '') ?>">
+                                    <label for="nacionalidade_litis">Nacionalidade</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input type="text" id="estadoCivil_litis" name="estadoCivil_litis"
+                                        value="<?= htmlspecialchars($frontdeskSelected['estadoCivil_litis'] ?? '') ?>">
+                                    <label for="estadoCivil_litis">Estado Civil</label>
+                                </div>
+
+                                <div class="input-field col s6">
+                                    <input type="text" id="rg_litis" name="rg_litis"
+                                        value="<?= htmlspecialchars($frontdeskSelected['rg_litis'] ?? '') ?>">
+                                    <label for="rg_litis">RG</label>
+                                </div>
+
+                                <div class="input-field col s6">
+                                    <input type="text" id="cpf_litis" name="cpf_litis"
+                                        value="<?= htmlspecialchars($frontdeskSelected['cpf_litis'] ?? '') ?>">
+                                    <label for="cpf_litis">CPF</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input type="text" id="profissao_litis" name="profissao_litis"
+                                        value="<?= htmlspecialchars($frontdeskSelected['profissao_litis'] ?? '') ?>">
+                                    <label for="profissao_litis">Profissão</label>
+                                </div>
+
+                                <div class="input-field col s6">
+                                    <input type="text" id="endereco_litis" name="endereco_litis"
+                                        value="<?= htmlspecialchars($frontdeskSelected['endereco_litis'] ?? '') ?>">
+                                    <label for="endereco_litis">Endereço</label>
+                                </div>
+
+                                <div class="input-field col s6">
+                                    <input type="text" id="bairro_litis" name="bairro_litis"
+                                        value="<?= htmlspecialchars($frontdeskSelected['bairro_litis'] ?? '') ?>">
+                                    <label for="bairro_litis">Bairro</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input type="text" id="cidade_litis" name="cidade_litis"
+                                        value="<?= htmlspecialchars($frontdeskSelected['cidade_litis'] ?? '') ?>">
+                                    <label for="cidade_litis">Cidade</label>
+                                </div>
+
+                                <div class="input-field col s6">
+                                    <input type="text" id="cep_litis" name="cep_litis"
+                                        value="<?= htmlspecialchars($frontdeskSelected['cep_litis'] ?? '') ?>">
+                                    <label for="cep_litis">CEP</label>
+                                </div>
+
+                                <div class="input-field col s6">
+                                    <input type="text" id="estado_litis" name="estado_litis"
+                                        value="<?= htmlspecialchars($frontdeskSelected['estado_litis'] ?? '') ?>">
+                                    <label for="estado_litis">Estado</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-card" id="informacoes-adicionais-inicial-card">
+                        <div class="form-card-title">
+                            Dados do Atendimento Inicial
+                        </div>
+                        <div class="row">
+                            <div class="input-field col l4 m6 s12">
+                                <i class="fa-solid fa-envelope prefix"></i>
+                                <input name="email" id="email" type="email" value="<?= $frontdeskSelected['email'] ?>">
+                                <label for="email">E-mail (Opcional)</label>
+                            </div>
+                            <div class="input-field col l4 m6 s12">
+                                <i class="fa-solid fa-phone prefix"></i>
+                                <input name="telefone1" id="telefone1" type="text" value="<?= $frontdeskSelected['telefone1'] ?>">
+                                <label for="telefone1">Telefone 1 (Opcional)</label>
+                            </div>
+                            <div class="input-field col l4 m6 s12">
+                                <i class="fa-solid fa-phone-alt prefix"></i>
+                                <input name="telefone2" id="telefone2" type="text" value="<?= $frontdeskSelected['telefone2'] ?>">
+                                <label for="telefone2">Telefone 2 (Opcional)</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12" style="padding-top: 10px;">
+                                <i class="fa-solid fa-clipboard-list prefix"></i>
+                                <textarea id="fatos" name="fatos" class="materialize-textarea" style="min-height: 200px;"><?= htmlspecialchars($frontdeskSelected['fatos'] ?? '') ?></textarea>
+                                <label for="fatos">Fatos</label>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <button class="btn waves-effect waves-light" type="submit" name="action" id="reg-user"> 
                             <i class="fa-solid fa-pencil"></i>Alterar 
