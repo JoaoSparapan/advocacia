@@ -96,77 +96,7 @@ if ($index . "" == "0") {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s6">
-                    <input type="text" id="nome" name="nome" required>
-                    <label for="nome">Nome</label>
-                </div>
-                <div class="input-field col s6">
-                    <input type="text" id="nacionalidade" name="nacionalidade" required>
-                    <label for="nacionalidade">Nacionalidade</label>
-                </div>
-                <div class="input-field col s6">
-                    <input type="text" id="estadoCivil" name="estadoCivil" required>
-                    <label for="estadoCivil">Estado Civil</label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s6">
-                    <input type="text" id="profissao" name="profissao" required>
-                    <label for="profissao">Profissão</label>
-                </div>
-                <div class="input-field col s6">
-                    <input type="text" id="rg" name="rg" required>
-                    <label for="rg">RG</label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s6">
-                    <input type="text" id="cpf" name="cpf" required>
-                    <label for="cpf">CPF</label>
-                </div>
-                <div class="input-field col s6">
-                    <input type="text" id="endereco" name="endereco" required>
-                    <label for="endereco">Endereço</label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s4">
-                    <input type="text" id="bairro" name="bairro" required>
-                    <label for="bairro">Bairro</label>
-                </div>
-                <div class="input-field col s4">
-                    <input type="text" id="cidade" name="cidade" required>
-                    <label for="cidade">Cidade</label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s6">
-                    <input type="text" id="cep" name="cep" required>
-                    <label for="cep">CEP</label>
-                </div>
-                <div class="input-field col s4">
-                    <input type="text" id="estado" name="estado" required>
-                    <label for="estado">Estado</label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s12 m6">
-                    <select name="pastaHibrida" id="pastaHibrida" required>
-                        <option value="" disabled selected>Pasta híbrida</option>
-                        <option value="Sim">Sim</option>
-                        <option value="Não">Não</option>
-                    </select>
-                    <label>Pasta híbrida</label>
-                </div>
-            </div>
+            </div><br>
 
             <div class="row" style="margin-top: -15px;">
                 <div class="input-field col s12 m6">
@@ -177,6 +107,7 @@ if ($index . "" == "0") {
                         <option value="menor_impubere">Menor impúbere</option>
                         <option value="pj">Pessoa Jurídica (PJ)</option>
                     </select>
+                    <label>Tipo do cliente</label>
                 </div>
             </div>
 
@@ -200,10 +131,6 @@ if ($index . "" == "0") {
                         <input type="text" id="cpfDependente" name="cpfDependente">
                         <label for="cpfDependente">CPF dependente</label>
                     </div>
-                    <div class="input-field col s12">
-                        <input type="text" id="relacaoResponsavel" name="relacaoResponsavel">
-                        <label for="relacaoResponsavel">Relação com o dependente</label>
-                    </div>
                 </div>
             </div>
 
@@ -211,7 +138,7 @@ if ($index . "" == "0") {
                 <div class="row">
                     <div class="input-field col s6">
                         <input type="text" id="empresa" name="empresa">
-                        <label for="empresa">Nome empresa</label>
+                        <label for="empresa">Nome da pessoa jurídica</label>
                     </div>
 
                     <div class="input-field col s6">
@@ -228,30 +155,103 @@ if ($index . "" == "0") {
                 <div class="row">
                     <div class="input-field col s6">
                         <input type="text" id="endereco_pj" name="endereco_pj">
-                        <label for="endereco_pj">Endereço</label>
+                        <label for="endereco_pj">Endereço da pessoa jurídica</label>
                     </div>
 
                     <div class="input-field col s6">
                         <input type="text" id="bairro_pj" name="bairro_pj">
-                        <label for="bairro_pj">Bairro</label>
+                        <label for="bairro_pj">Bairro da pessoa jurídica</label>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="input-field col s6">
                         <input type="text" id="cidade_pj" name="cidade_pj">
-                        <label for="cidade_pj">Cidade</label>
+                        <label for="cidade_pj">Cidade da pessoa jurídica</label>
                     </div>
 
                     <div class="input-field col s6">
                         <input type="text" id="estado_pj" name="estado_pj">
-                        <label for="cidade_pj">Estado</label>
+                        <label for="cidade_pj">Estado da pessoa jurídica</label>
                     </div>
 
                     <div class="input-field col s6">
                         <input type="text" id="cep_pj" name="cep_pj">
-                        <label for="cep_pj">CEP</label>
+                        <label for="cep_pj">CEP da pessoa jurídica</label>
                     </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="input-field col s6">
+                    <input type="text" id="nome" name="nome" required>
+                    <label for="nome">Nome</label>
+                </div>
+                <div class="input-field col s6" style="display:none;">
+                        <input type="text" id="relacaoResponsavel" name="relacaoResponsavel">
+                        <label for="relacaoResponsavel">Relação com o dependente</label>
+                    </div>
+                <div class="input-field col s6">
+                    <input type="text" id="nacionalidade" name="nacionalidade" required>
+                    <label for="nacionalidade">Nacionalidade</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s6">
+                    <input type="text" id="estadoCivil" name="estadoCivil" required>
+                    <label for="estadoCivil">Estado Civil</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="rg" name="rg" required>
+                    <label for="rg">RG</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="cpf" name="cpf" required>
+                    <label for="cpf">CPF/CNI</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s6">
+                    <input type="text" id="profissao" name="profissao" required>
+                    <label for="profissao">Profissão</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="endereco" name="endereco" required>
+                    <label for="endereco">Endereço</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="bairro" name="bairro" required>
+                    <label for="bairro">Bairro</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s6">
+                    <input type="text" id="cidade" name="cidade" required>
+                    <label for="cidade">Cidade</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="cep" name="cep" required>
+                    <label for="cep">CEP</label>
+                </div>
+                <div class="input-field col s4">
+                    <input type="text" id="estado" name="estado" required>
+                    <label for="estado">Estado</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <select name="pastaHibrida" id="pastaHibrida" required>
+                        <option value="" disabled selected>Pasta híbrida</option>
+                        <option value="Sim">Sim</option>
+                        <option value="Não">Não</option>
+                    </select>
+                    <label>Pasta híbrida</label>
                 </div>
             </div>
 

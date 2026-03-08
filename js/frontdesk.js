@@ -4,6 +4,106 @@ $(document).ready(function () {
   // Inicializa todos os selects da página
   $('select').formSelect();
 
+  // -------------------- CONFIGURAÇÃO DINÂMICA DE LABELS --------------------
+
+  const labelConfig = {
+
+    maior: {
+      nome: "Nome",
+      nacionalidade: "Nacionalidade",
+      estadoCivil: "Estado Civil",
+      rg: "RG",
+      cpf: "CPF ou CNI",
+      profissao: "Profissão",
+      endereco: "Endereço",
+      bairro: "Bairro",
+      cidade: "Cidade",
+      cep: "CEP",
+      estado: "Estado"
+    },
+
+    menor_pubere: {
+      nome: "Nome do assistente",
+      relacaoResponsavel: "Relação com o assistido",
+      nacionalidade: "Nacionalidade do assistente",
+      estadoCivil: "Estado Civil do assistente",
+      rg: "RG do assistente",
+      cpf: "CPF ou CNI do assistente",
+      profissao: "Profissão do assistente",
+      endereco: "Endereço do assistente",
+      bairro: "Bairro do assistente",
+      cidade: "Cidade do assistente",
+      cep: "CEP do assistente",
+      estado: "Estado do assistente",
+
+      nomeDependente: "Nome do menor assistido",
+      nacionalidadeDependente: "Nacionalidade do menor assistido",
+      rgDependente: "RG do menor assistido",
+      cpfDependente: "CPF do menor assistido"
+    },
+
+    menor_impubere: {
+      nome: "Nome do representante",
+      relacaoResponsavel: "Relação com o menor",
+      nacionalidade: "Nacionalidade do representante",
+      estadoCivil: "Estado Civil do representante",
+      rg: "RG do representante",
+      cpf: "CPF ou CNI do representante",
+      profissao: "Profissão do representante",
+      endereco: "Endereço do representante",
+      bairro: "Bairro do representante",
+      cidade: "Cidade do representante",
+      cep: "CEP do representante",
+      estado: "Estado do representante",
+
+      nomeDependente: "Nome do menor",
+      nacionalidadeDependente: "Nacionalidade do menor",
+      rgDependente: "RG do menor",
+      cpfDependente: "CPF do menor"
+    },
+
+    pj: {
+      nome: "Nome do representante",
+      relacaoResponsavel: "Relação com o menor",
+      nacionalidade: "Nacionalidade do representante",
+      estadoCivil: "Estado Civil do representante",
+      rg: "RG do representante",
+      cpf: "CPF ou CNI do representante",
+      profissao: "Profissão do representante",
+      endereco: "Endereço do representante",
+      bairro: "Bairro do representante",
+      cidade: "Cidade do representante",
+      cep: "CEP do representante",
+      estado: "Estado do representante"
+    }
+
+  };
+
+  function updateLabels(tipo) {
+
+    const config = labelConfig[tipo] || labelConfig["maior"];
+
+    Object.keys(config).forEach(id => {
+      $(`label[for="${id}"]`).text(config[id]);
+    });
+
+    // Mostrar ou ocultar campo relação
+    if (tipo === "menor_pubere" || tipo === "menor_impubere") {
+      $("#relacaoResponsavel").closest(".input-field").show();
+    } else {
+      $("#relacaoResponsavel").closest(".input-field").hide();
+    }
+
+  }
+
+  // Executa ao mudar o select
+  $("#situacao").on("change", function () {
+    updateLabels($(this).val());
+  });
+
+  // Garante estado inicial
+  updateLabels($("#situacao").val());
+
   // -------------------- FILTROS DE BUSCA --------------------
   $("#sel-type").on("change", function () {
     let s = $("#ncli"), t = $("#resp-sel"), per = $("#search_period"), adv = $("#adversa"), indicacao = $("#indicacaoF"), hibrida = $("#hibrida");
