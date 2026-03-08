@@ -1,11 +1,18 @@
 $(document).ready(function () {
 
   // -------------------- INICIALIZAÇÃO DO MATERIALIZE --------------------
-  // Inicializa todos os selects da página
   $('select').formSelect();
 
-  // -------------------- CONFIGURAÇÃO DINÂMICA DE LABELS --------------------
+  
+  function toggleDadosCliente(tipo) {
+  if (!tipo) {
+    $("#dados-cliente-wrapper").hide();
+  } else {
+    $("#dados-cliente-wrapper").fadeIn(150);
+  }
+}
 
+  // -------------------- CONFIGURAÇÃO DINÂMICA DE LABELS --------------------
   const labelConfig = {
 
     maior: {
@@ -96,13 +103,82 @@ $(document).ready(function () {
 
   }
 
+  const cardTitleConfig = {
+    maior: "Dados do cliente",
+    menor_pubere: "Dados do assistente",
+    menor_impubere: "Dados do representante",
+    pj: "Dados do representante",
+    litis: "Dados do litisconsorte"
+  };
+
+  function updateCardTitle(tipo) {
+    const titulo = cardTitleConfig[tipo] || cardTitleConfig["maior"];
+    $("#cliente-card-title").text(titulo);
+  }
+
+
+  function updateMenorTitle(tipo) {
+
+    let titulo = "Dados do Menor";
+
+    if (tipo === "menor_pubere") {
+      titulo = "Dados do menor assistido";
+    }
+
+    if (tipo === "menor_impubere") {
+      titulo = "Dados do menor";
+    }
+
+    $("#menor-card-title").text(titulo);
+  }
+
   // Executa ao mudar o select
   $("#situacao").on("change", function () {
-    updateLabels($(this).val());
+    const tipo = $(this).val();
+
+    updateLabels(tipo);
+    updateCardTitle(tipo);
+    toggleDadosCliente(tipo);
+    updateMenorTitle(tipo);
+
+    const responsavelFields = $("#responsavel-fields");
+    const pjFields = $("#pj-fields");
+    const litisFields = $("#litis-fields");
+
+    const dependenteInputs = $("#responsavel-fields input");
+    const pjInputs = $("#pj-fields input");
+    const litisInputs = $("#litis-fields input");
+
+    responsavelFields.hide();
+    pjFields.hide();
+    litisFields.hide();
+
+    dependenteInputs.removeAttr("required");
+    pjInputs.removeAttr("required");
+    litisInputs.removeAttr("required");
+
+    if (tipo === "menor_pubere" || tipo === "menor_impubere") {
+      responsavelFields.show();
+      dependenteInputs.attr("required", "required");
+    }
+
+    if (tipo === "pj") {
+      pjFields.show();
+      pjInputs.attr("required", "required");
+    }
+
+    if (tipo === "litis") {
+      litisFields.show();
+      litisInputs.attr("required", "required");
+    }
   });
 
   // Garante estado inicial
-  updateLabels($("#situacao").val());
+  const tipoInicial = $("#situacao").val();
+
+  updateLabels(tipoInicial);
+  updateCardTitle(tipoInicial);
+  toggleDadosCliente(tipoInicial);
 
   // -------------------- FILTROS DE BUSCA --------------------
   $("#sel-type").on("change", function () {
@@ -187,6 +263,16 @@ $(document).ready(function () {
   // -------------------- FORM SUBMIT PARA ZIP --------------------
   $("#modal2 form").on("submit", function(e) {
     e.preventDefault();
+    const documentosSelecionados = $(".doc-option:checked");
+
+    if (documentosSelecionados.length === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Nenhum documento selecionado',
+            text: 'Selecione ao menos um documento para gerar.'
+        });
+        return;
+    }
     const form = this;
     const formData = new FormData(form);
     const clientName = $("#nome").val().replace(/\s+/g, "_"); // substitui espaços por _
