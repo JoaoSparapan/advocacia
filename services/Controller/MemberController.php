@@ -13,7 +13,7 @@ include_once '../Models/Exceptions.php';
 $url_callback="../../pages/login.php";
 $name = addslashes($_POST['nome']);
 $email= addslashes($_POST['email']);
-$password = addslashes($_POST['senha']);
+$password = trim($_POST['senha']);
 $cpf=addslashes($_POST['cpf']);
 $idRole= (int) $_POST['role'];
 

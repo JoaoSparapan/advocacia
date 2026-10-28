@@ -45,6 +45,7 @@ if (!class_exists('AuthController')) {
         {
             session_regenerate_id(true);
             self::sendSessionCookie();
+            unset($user['password']);
             $_SESSION['user'] = $user;
         }
 
@@ -75,28 +76,49 @@ if (!class_exists('AuthController')) {
             ]);
         }
 
+        // senhas antigas usam MD5-crypt com salt fixo; são convertidas para password_hash no próximo login
+        const LEGACY_SALT = '$1$rasmusle$';
+
+        public static function hashPassword($password)
+        {
+            return password_hash($password, PASSWORD_DEFAULT);
+        }
+
+        public static function checkPassword($password, $hash)
+        {
+            if (strpos($hash, self::LEGACY_SALT) === 0) {
+                return hash_equals($hash, crypt($password, self::LEGACY_SALT));
+            }
+            return password_verify($password, $hash);
+        }
+
         public function verifyUser($email = '', $password = '')
         {
-            $encrypt_pass = crypt($password, '$1$rasmusle$');
             $conn = $this->connectDB();
 
             $stmt = mysqli_prepare($conn, "
                 SELECT * FROM user
                 WHERE email = ?
-                AND password = ?
                 LIMIT 1
             ");
-            mysqli_stmt_bind_param($stmt, 'ss', $email, $encrypt_pass);
+            mysqli_stmt_bind_param($stmt, 's', $email);
             mysqli_stmt_execute($stmt);
-            $query = mysqli_stmt_get_result($stmt);
+            $user = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
 
-            $result = null;
-            if ($query && mysqli_num_rows($query) > 0) {
-                $result = mysqli_fetch_assoc($query);
+            if (!$user || !self::checkPassword($password, $user['password'])) {
+                $this->disconnectDB($conn);
+                return null;
+            }
+
+            if (password_needs_rehash($user['password'], PASSWORD_DEFAULT)) {
+                $newHash = self::hashPassword($password);
+                $up = mysqli_prepare($conn, "UPDATE user SET password = ? WHERE idUser = ?");
+                mysqli_stmt_bind_param($up, 'si', $newHash, $user['idUser']);
+                mysqli_stmt_execute($up);
             }
 
             $this->disconnectDB($conn);
-            return $result;
+            return $user;
         }
 
         public function createVerificationSession($user_id, $codigo)

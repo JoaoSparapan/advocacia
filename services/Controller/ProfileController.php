@@ -7,15 +7,15 @@
 
     $nome = addslashes($_POST['name']);
     $email = addslashes($_POST['email']);
-    $senhaAnt = addslashes($_POST['senhaantiga']);
+    $senhaAnt = trim($_POST['senhaantiga']);
     $cpf = addslashes($_POST['cpf']);
-    $novaSenha = addslashes($_POST['senhaagr']);
-    $confirmSenha = addslashes($_POST['senhaagrconfirm']);
+    $novaSenha = trim($_POST['senhaagr']);
+    $confirmSenha = trim($_POST['senhaagrconfirm']);
 
-    $pass_current_user = AuthController::getUser()['password'];
     $contUser = new UserController();
+    $pass_current_user = $contUser->getById(AuthController::getUser()['idUser'])['password'];
     
-    if(crypt($senhaAnt, '$1$rasmusle$')!=$pass_current_user){
+    if(!AuthController::checkPassword($senhaAnt, $pass_current_user)){
         header("Refresh: 3, url=../../pages/profile.php");
         $exc = new ExceptionAlert("Senha antiga não corresponde com a informada!",3000);
         echo $exc->alerts("error", "Erro ao alterar informações");
@@ -26,9 +26,9 @@
         $res=null;
         if(trim($novaSenha)=="" || trim($confirmSenha)=="")
         {
-            $res = $userContr->updateUserProfile($nome, $cpf,crypt($senhaAnt,'$1$rasmusle$'),$email, AuthController::getUser()['idUser']);
+            $res = $userContr->updateUserProfile($nome, $cpf,AuthController::hashPassword($senhaAnt),$email, AuthController::getUser()['idUser']);
         }else{
-            $res = $userContr->updateUserProfile($nome, $cpf,crypt($novaSenha,'$1$rasmusle$'),$email, AuthController::getUser()['idUser']);
+            $res = $userContr->updateUserProfile($nome, $cpf,AuthController::hashPassword($novaSenha),$email, AuthController::getUser()['idUser']);
         }
         
         if($res[0]=="success"){

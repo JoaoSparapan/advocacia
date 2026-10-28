@@ -9,7 +9,7 @@ class UserController extends GlobalController{
 
     public function insertUser($name='', $cpf='', $password='', $email='', $idRole=2){
         $conn = $this->connectDB();
-        $encrypt_pass = crypt($password, '$1$rasmusle$');
+        $encrypt_pass = AuthController::hashPassword($password);
         $idRole = (int) $idRole;
         $query = "INSERT INTO user(name,cpf,password,email,idRole) VALUES('$name', '$cpf','$encrypt_pass','$email', $idRole)";
         $vrf = ($this->getByCpf($cpf));
@@ -142,7 +142,7 @@ class UserController extends GlobalController{
     public function updatePasswordForget($email='', $newpassword='')
     {
         $conn = $this->connectDB();
-        $encrypt_pass = crypt($newpassword, '$1$rasmusle$');
+        $encrypt_pass = AuthController::hashPassword($newpassword);
         $query = "UPDATE user SET password='$encrypt_pass' WHERE email='$email'";
         $result = mysqli_query($conn, $query);
 
