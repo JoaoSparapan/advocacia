@@ -1,5 +1,9 @@
 $(document).ready(function () {
 
+  $("#pastaHibridaSelect").on("change", function () {
+    $("#pastaHibrida").val($(this).val());
+  });
+
   $('select').formSelect();
   M.updateTextFields(); // ativa labels preenchidas
 

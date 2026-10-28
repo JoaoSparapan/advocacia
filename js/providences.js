@@ -1,7 +1,6 @@
 var idTimeOutTerm;
 var idTimeOut;
 function compareDates(dta1, dta2) {
-  //informada, atual
   let d1 = parseInt(dta1[0]),
     d2 = parseInt(dta2[0]);
   let m1 = parseInt(dta1[1]),
@@ -129,11 +128,29 @@ $("#state-holiday").on("change", () => {
 $("#national-holiday").on("change", () => {
   requestEstimateTerm();
 });
-$("#qte-dias_mobile").on("change", () => {
+$("#qte-dias_mobile").on("input change", () => {
   requestEstimateTermMobile();
 });
-$("#qte-dias").on("change", () => {
+$("#qte-dias").on("input change", () => {
   requestEstimateTerm();
+});
+$('#qte-dias, #qte-dias_mobile').each(function () {
+    var $input = $(this);
+    var previous = $input.val();
+
+    $input.on('focus click', function () {
+        if ($input.val() !== '') {
+            previous = $input.val();
+            $input.val('');
+        }
+    });
+
+    $input.on('blur', function () {
+        if ($input.val() === '') {
+            $input.val(previous);
+            $input.trigger('change'); // recalcula o prazo
+        }
+    });
 });
 $("#sel-days_mobile").on("change", () => {
   requestEstimateTermMobile();
@@ -250,7 +267,7 @@ $(document).ready(function () {
       
       if (selectedValue === '-1') {
           alert('Por favor, selecione o tipo da contagem de dias.');
-          event.preventDefault(); // Impede o envio do formulário
+          event.preventDefault();
       }
     });
     let dataInformada = new Date($("#data-intim_mobile").val()).toLocaleString(
@@ -285,7 +302,7 @@ $(document).ready(function () {
         
         if (selectedValue === '-1') {
             alert('Por favor, selecione o tipo da contagem de dias.');
-            event.preventDefault(); // Impede o envio do formulário
+            event.preventDefault();
         }
       });
     let dataInformada = new Date($("#data-intim").val()).toLocaleString(
@@ -536,7 +553,6 @@ $(document).ready(function () {
   $("select").formSelect();
   var elems = document.querySelectorAll("select");
   var listOp = $("#search_numProcess_inp").data("listnproc").split(",");
-  //console.log("teste " + listOp);
   var obj = {};
 
   for (let i = 0; i < listOp.length; i++) {
@@ -586,13 +602,11 @@ $(document).ready(function () {
   }
 });
 
-// Handle responsible person change
 $(document).delegate(".updateResponsible", "change", function() {
   const selectedUserId = $(this).val();
   const processId = $(this).data("process");
   const $select = $(this);
   
-  // Show loading state
   $select.prop("disabled", true);
   $select.css("opacity", "0.6");
   
@@ -607,7 +621,6 @@ $(document).delegate(".updateResponsible", "change", function() {
     success: function(response) {
       $select.css("opacity", "1");
       if(response.status === 'success') {
-        // Show success message
         Swal.fire({
           icon: 'success',
           title: 'Sucesso!',
@@ -616,7 +629,6 @@ $(document).delegate(".updateResponsible", "change", function() {
           showConfirmButton: false
         });
       } else {
-        // Show error message and revert
         Swal.fire({
           icon: 'error',
           title: 'Erro!',
@@ -642,11 +654,10 @@ $(document).delegate(".updateResponsible", "change", function() {
         text: errorMessage
       });
       $select.prop("disabled", false);
-      // location.reload();
+       location.reload();
     }
   });
 });
-// M.FormSelect.init(document.querySelectorAll('#modalcreateProvidence select'));
 $("#modalcreateProvidence").modal();
 $("#modal3").modal();
 $("#modalproc").modal();
