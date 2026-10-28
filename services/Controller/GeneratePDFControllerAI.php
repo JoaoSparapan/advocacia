@@ -1,4 +1,5 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT']."/advocacia/services/Controller/RequireLogin.php";
 require_once __DIR__ . '/../vendor/autoload.php';
 
 date_default_timezone_set('America/Sao_Paulo');

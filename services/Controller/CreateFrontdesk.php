@@ -1,6 +1,7 @@
 <?php
 ob_start(); // INICIA O BUFFER PARA IMPEDIR CORRUPÇÃO DO ZIP
 session_start();
+require_once $_SERVER['DOCUMENT_ROOT']."/advocacia/services/Controller/RequireLogin.php";
 date_default_timezone_set('America/Sao_Paulo');
 
 require $_SERVER['DOCUMENT_ROOT']."/advocacia/services/vendor/autoload.php";

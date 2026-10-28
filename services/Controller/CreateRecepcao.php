@@ -1,4 +1,5 @@
 <?php
+  require_once $_SERVER['DOCUMENT_ROOT']."/advocacia/services/Controller/RequireLogin.php";
   include_once './ReceptionController.php';
   include_once '../Models/Exceptions.php';
   date_default_timezone_set('America/Sao_Paulo');

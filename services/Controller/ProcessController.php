@@ -124,10 +124,11 @@ class ProcessController extends GlobalController{
                 $vara="INNER JOIN court ON (court.idCourt = process.idCourt)";
             }
 
-            $query = "SELECT * FROM process INNER JOIN user ON (user.idUser = process.idUser) $vara WHERE numProcess LIKE '%$numproc%'";
-            
+            $fields = "process.*, user.name".($include_vara ? ", court.sigla" : "");
+            $query = "SELECT $fields FROM process INNER JOIN user ON (user.idUser = process.idUser) $vara WHERE numProcess LIKE '%$numproc%'";
+
             if($equal=="true"){
-                $query = "SELECT * FROM process INNER JOIN user ON (user.idUser = process.idUser) $vara WHERE numProcess = '$numproc'";
+                $query = "SELECT $fields FROM process INNER JOIN user ON (user.idUser = process.idUser) $vara WHERE numProcess = '$numproc'";
             }
             
             
