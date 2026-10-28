@@ -62,7 +62,7 @@ if($index.""=="0"){
                 <form class="col s12" method="POST" action="../services/Controller/UpdateStatusProvidence.php">
                     <input type="hidden" id="idProvidenceModal" name="idProvidence" value="" />
                     <input type="hidden" id="providenced" name="providenced" value="1" />
-                    <input type="hidden" name="callback" value="<?=$_SERVER["REQUEST_URI"]?>">
+                    <input type="hidden" name="callback" value="<?=e($_SERVER["REQUEST_URI"])?>">
 
                     <div class="row">
 
@@ -122,7 +122,7 @@ if($index.""=="0"){
                             <?php
                                 for($i=0;$i<sizeof($court);$i++)
                                 {
-                                    echo "<option value='".$court[$i]['idCourt']."'>".$court[$i]['sigla']."</option>";
+                                    echo "<option value='".e($court[$i]['idCourt'])."'>".e($court[$i]['sigla'])."</option>";
                                 }
                             ?>
                         </select>
@@ -178,13 +178,13 @@ if($index.""=="0"){
                     $end= explode("/",addslashes($_GET['data_end']));
                     if(sizeof($end)>1){
 
-                        $end = $end[2]."-".$end[1]."-".$end[0];
+                        $end = $end[2]."-".e($end[1])."-".$end[0];
                     }else{
                         $end="";
                     }
                     if(sizeof($start)>1){
 
-                        $start = $start[2]."-".$start[1]."-".$start[0];
+                        $start = $start[2]."-".e($start[1])."-".$start[0];
                     }else{
                         $start="";
                     }
@@ -294,22 +294,22 @@ if($index.""=="0"){
                               <td>'.date("d-m-Y", strtotime($p[6])).'</td>
                               <td>'.date("d-m-Y", strtotime($p[7])).'</td>
                               <td>'.date("d-m-Y", strtotime($p[8])).'</td>
-                              <td>'.$proc["numProcess"].'</td>
-                              <td>'.$vara["sigla"].'</td>
-                              <td>'.$user["name"].'</td>
-                              <td>'.$proc["clientName"].'</td>
-                              <td>'.$p[9].'</td>
+                              <td>'.e($proc["numProcess"]).'</td>
+                              <td>'.e($vara["sigla"]).'</td>
+                              <td>'.e($user["name"]).'</td>
+                              <td>'.e($proc["clientName"]).'</td>
+                              <td>'.e($p[9]).'</td>
                               <td>'.$status.'</td>';
                   
                     if(AuthController::getUser()['idRole']==1){
 
                         $button_action='
                                   <a class="btn-floating btn-small green modal-trigger openModalStatus" 
-                                  data-prov="'.$p[0].'" 
-                                  data-done="'.$p[10].'"
-                                  data-provided="'.$p[11].'"
+                                  data-prov="'.e($p[0]).'" 
+                                  data-done="'.e($p[10]).'"
+                                  data-provided="'.e($p[11]).'"
                                   title="Alterar status" href="#modal3"><i class="fa fa-th-list"></i></a>
-                                <a class="btn-floating btn-small red deleteProvicendeBtn" title="Excluir providência" href="../services/Controller/DeleteProvidence.php?id='.$p[0].'"><i class="fa-solid fa-trash"></i></a>
+                                <a class="btn-floating btn-small red deleteProvicendeBtn" title="Excluir providência" href="../services/Controller/DeleteProvidence.php?id='.e($p[0]).'"><i class="fa-solid fa-trash"></i></a>
                                 ';
                     }
                  
@@ -375,7 +375,7 @@ if($index.""=="0"){
             <?php
                 if($providences!=null){
             ?>
-            <a target="_blank" href="<?php echo "../services/Controller/GeneratePDFControllerProv.php?id=1&".$params;?>">
+            <a target="_blank" href="<?php echo "../services/Controller/GeneratePDFControllerProv.php?id=1&".e($params);?>">
                 <button style="margin-left: 10px;background-color: #27c494; color:white;"
                     class="btn waves-effect waves-light" type="button" id="back">
                     Exportar PDF

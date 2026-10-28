@@ -94,8 +94,8 @@ if($index.""=="0"){
                         <i class="fa-solid fa-user prefix"></i>
                         <input name="client-id" id="client-id" type="hidden" value="" />
                         <input name="client-front" id="client" type="text" required value=""
-                            class="validate autocomplete" data-clientlist="<?= $nameList;?>"
-                            data-clientids="<?= $cods;?>">
+                            class="validate autocomplete" data-clientlist="<?= e($nameList);?>"
+                            data-clientids="<?= e($cods);?>">
                         <label for="autocomplete-input">Cliente</label>
                     </div>
 
@@ -135,7 +135,7 @@ if($index.""=="0"){
                                 {
 
                                     if($users[$i]['idRole']!=3){
-                                        echo "<option value='".$users[$i]['idUser']."'>".$users[$i]['name']."</option>";
+                                        echo "<option value='".e($users[$i]['idUser'])."'>".e($users[$i]['name'])."</option>";
                                     }
                                 }
                             ?>
@@ -190,7 +190,7 @@ if($index.""=="0"){
                             <?php
                                 for($i=0;$i<sizeof($users);$i++)
                                 {
-                                        echo "<option value='".$users[$i]['idUser']."'>".$users[$i]['name']."</option>";
+                                        echo "<option value='".e($users[$i]['idUser'])."'>".e($users[$i]['name'])."</option>";
                                 }
                             ?>
                         </select>
@@ -261,7 +261,7 @@ if($index.""=="0"){
                     $start= explode("/",addslashes($_GET['dta-contract']));
                     if(sizeof($start)>1){
 
-                        $start = $start[2]."-".$start[1]."-".$start[0];
+                        $start = $start[2]."-".e($start[1])."-".$start[0];
                     }else{
                         $start="";
                     }
@@ -279,12 +279,12 @@ if($index.""=="0"){
                     }else{
                     if(sizeof($end)>1){
 
-                        $end = $end[2]."-".$end[1]."-".$end[0];
+                        $end = $end[2]."-".e($end[1])."-".$end[0];
                         $end.=' 23:59:59';
                     }
                     if(sizeof($start)>1){
 
-                        $start = $start[2]."-".$start[1]."-".$start[0];
+                        $start = $start[2]."-".e($start[1])."-".$start[0];
                         $start.=' 00:00:00';
                     }
                     $receptions = $receptionController->getReceptionByPeriod($start, $end);
@@ -369,15 +369,15 @@ if($index.""=="0"){
                                 $end = sizeof($receptions)-$diff;
                             }
                         }
-                        //echo "  - ".$params." ( pagination_number>=1 query param)";
+                        //echo "  - ".e($params)." ( pagination_number>=1 query param)";
                         $pagination = $paginationModel->createPagination($page,$receptions,'recepcao.php', $params);
                     }else{
-                        // echo "  - ".$params." ( pagination_number<1 query param)";
+                        // echo "  - ".e($params)." ( pagination_number<1 query param)";
                         $pagination = $paginationModel->createPagination("1",$receptions,'recepcao.php', $params);
                     }
 
                 }else{
-                    // echo "  - ".$params." (no pagination_number query param)";
+                    // echo "  - ".e($params)." (no pagination_number query param)";
                     $pagination = $paginationModel->createPagination("1",$receptions,'recepcao.php', $params);
                 }
 
@@ -411,12 +411,12 @@ if($index.""=="0"){
                     $table.='<tr>
                                 <td>'.date("d-m-Y H:i:s", strtotime($u["arrival"])).'</td>
                                 <td>'.$saida.'</td>
-                                <td>'.$clo["name"].'</td>
-                                <td>'.$phoneCli.'</td>
-                                <td>'.$cpfCli.'</td>
-                                <td>'.$resp["name"].'</td>
-                                <td>'.$u["subject"].'</td>
-                                <td>'.$n.'</td>';
+                                <td>'.e($clo["name"]).'</td>
+                                <td>'.e($phoneCli).'</td>
+                                <td>'.e($cpfCli).'</td>
+                                <td>'.e($resp["name"]).'</td>
+                                <td>'.e($u["subject"]).'</td>
+                                <td>'.e($n).'</td>';
                     
                     
                     $button_action = '';
@@ -424,7 +424,7 @@ if($index.""=="0"){
                         $button_action .= '
                             <a class="btn-floating btn-small green" 
                             title="Finalizar atendimento" 
-                            href="../services/Controller/RecepcaoFinalized.php?id='.$u['idReception'].'">
+                            href="../services/Controller/RecepcaoFinalized.php?id='.e($u['idReception']).'">
                             <i class="fa-solid fa-check"></i>
                             </a>
                         ';
@@ -434,13 +434,13 @@ if($index.""=="0"){
                         $button_action .= '
                             <a class="btn-floating btn-small blue" 
                             title="Editar recepção" 
-                            href="./updateRecepcao.php?id='.$u['idReception'].'">
+                            href="./updateRecepcao.php?id='.e($u['idReception']).'">
                             <i class="fa-solid fa-pencil"></i>
                             </a>
 
                             <a class="btn-floating btn-small red deleteUserBtn" 
                             title="Excluir recepção" 
-                            href="../services/Controller/DeleteRecepcao.php?id='.$u['idReception'].'">
+                            href="../services/Controller/DeleteRecepcao.php?id='.e($u['idReception']).'">
                             <i class="fa-solid fa-trash"></i>
                             </a>
                         ';
@@ -500,7 +500,7 @@ if($index.""=="0"){
                 if($receptions!=null && isMobile()){
             ?>
 
-            <a href="<?php echo "../services/Controller/GeneratePDFControllerRecepcao.php?id=0&".$params;?>">
+            <a href="<?php echo "../services/Controller/GeneratePDFControllerRecepcao.php?id=0&".e($params);?>">
                 <button style="margin-left: 10px;background-color: #27c494; color:white;"
                     class="btn waves-effect waves-light" type="button" id="back">
                     Exportar PDF
@@ -512,7 +512,7 @@ if($index.""=="0"){
                 {
             ?>
 
-            <a target="_blank" href="<?php echo "../services/Controller/GeneratePDFControllerRecepcao.php?id=0&".$params;?>">
+            <a target="_blank" href="<?php echo "../services/Controller/GeneratePDFControllerRecepcao.php?id=0&".e($params);?>">
                 <button style="margin-left: 10px;background-color: #27c494; color:white;"
                     class="btn waves-effect waves-light" type="button" id="back">
                     Exportar PDF

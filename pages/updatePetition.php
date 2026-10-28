@@ -58,15 +58,15 @@ if(isset($_GET['id'])){
 
                 <form class="col s12" style="" method="POST" action="../services/Controller/UpdatePetition.php"
                     style="padding: 0 !important;">
-                    <input type="hidden" name="petitionId" value="<?=$petitionSelected['idPetition']?>">
-                    <input type="hidden" name="callback" value="<?=$_SERVER['HTTP_REFERER']?>">
+                    <input type="hidden" name="petitionId" value="<?=e($petitionSelected['idPetition'])?>">
+                    <input type="hidden" name="callback" value="<?=e($_SERVER['HTTP_REFERER'])?>">
 
                     <div class="row computer">
                         <div class="input-field col s3">
 
                             <i class="fa-solid fa-calendar-days prefix"></i>
                             <input name="dta-contact" id="data-intim" type="date" min="2000-01-01T00:00"
-                                max="<?=date('Y-m-d')?>" required value="<?=$petitionSelected['startDate']?>">
+                                max="<?=date('Y-m-d')?>" required value="<?=e($petitionSelected['startDate'])?>">
                             <label for="data-intim" style="top: -5px !important;">Data da
                                 Contratação</label>
                             <span class="helper-text" data-error="Formato de Data incorreto"
@@ -77,7 +77,7 @@ if(isset($_GET['id'])){
                         <div class="input-field col s3">
                             <i class="fa-regular fa-file-lines prefix"></i>
                             <input name="clientName" id="clientName" type="text" class="validate" required
-                                value="<?=$petitionSelected['clientName']?>">
+                                value="<?=e($petitionSelected['clientName'])?>">
                             <label for="providencia">Cliente</label>
                             <span class="helper-text" data-error="Campo obrigatório" data-success="Correto!"></span>
                         </div>
@@ -85,7 +85,7 @@ if(isset($_GET['id'])){
                         <div class="input-field col s3">
                             <i class="fa-regular fa-file-lines prefix"></i>
                             <input name="adverse" id="adverse" type="text" class="validate" required
-                                value="<?=$petitionSelected['adverse']?>">
+                                value="<?=e($petitionSelected['adverse'])?>">
                             <label for="providencia">Adverso</label>
                             <span class="helper-text" data-error="Campo obrigatório" data-success="Correto!"></span>
                         </div>
@@ -95,7 +95,7 @@ if(isset($_GET['id'])){
 
                             <i class="fa-solid fa-calendar-days prefix"></i>
                             <input name="dta-contact" id="data-intim_mobile" type="date" min="2000-01-01T00:00"
-                                max="<?=date('Y-m-d')?>" required value="<?=$petitionSelected['startDate']?>"
+                                max="<?=date('Y-m-d')?>" required value="<?=e($petitionSelected['startDate'])?>"
                                 style="min-width: 80% !important;">
                             <label for="data-intim_mobile" style="top: -5px !important;">Data de Contratação</label>
                             <span class="helper-text" data-error="Formato de Data incorreto"
@@ -108,7 +108,7 @@ if(isset($_GET['id'])){
                         <div class="input-field">
                             <i class="fa-regular fa-file-lines prefix"></i>
                             <input name="clientName" id="client_name_mobile" type="text" class="validate" required
-                                value="<?=$petitionSelected['clientName']?>">
+                                value="<?=e($petitionSelected['clientName'])?>">
                             <label for="providencia">Cliente</label>
                             <span class="helper-text" data-error="Campo obrigatório" data-success="Correto!"></span>
                         </div>
@@ -117,7 +117,7 @@ if(isset($_GET['id'])){
                         <div class="input-field">
                             <i class="fa-regular fa-file-lines prefix"></i>
                             <input name="adverse" id="adverse_mobile" type="text" class="validate" required
-                                value="<?=$petitionSelected['adverse']?>">
+                                value="<?=e($petitionSelected['adverse'])?>">
                             <label for="providencia">Adverso</label>
                             <span class="helper-text" data-error="Campo obrigatório" data-success="Correto!"></span>
                         </div>
@@ -139,7 +139,7 @@ if(isset($_GET['id'])){
                 }
                $namaUser =$u[$i]['name'];
                $idUser = $u[$i]['idUser'];
-               echo '<option '.$selected.' value="'.$idUser.'">'.$namaUser.'</option>';
+               echo '<option '.$selected.' value="'.$idUser.'">'.e($namaUser).'</option>';
             
             }
             
@@ -154,7 +154,7 @@ if(isset($_GET['id'])){
                         <div class="input-field col s3">
                             <i class="fa-regular fa-file-lines prefix"></i>
                             <input name="typeAction" id="typeAction" type="text" class="validate" required
-                                value="<?=$petitionSelected['typeAction']?>">
+                                value="<?=e($petitionSelected['typeAction'])?>">
                             <label for="providencia">Natureza da Ação</label>
                             <span class="helper-text" data-error="Campo obrigatório" data-success="Correto!"></span>
                         </div>
@@ -176,7 +176,7 @@ if(isset($_GET['id'])){
                $namaUser =$u[$i]['name'];
                $idUser = $u[$i]['idUser'];
                
-               echo '<option '.$selected.' value="'.$idUser.'">'.$namaUser.'</option>';
+               echo '<option '.$selected.' value="'.$idUser.'">'.e($namaUser).'</option>';
             
             }
             
@@ -191,7 +191,7 @@ if(isset($_GET['id'])){
                         <div class="input-field">
                             <i class="fa-regular fa-file-lines prefix"></i>
                             <input name="typeAction" id="typeAction_mobile" type="text" class="validate" required
-                                value="<?=$petitionSelected['typeAction']?>">
+                                value="<?=e($petitionSelected['typeAction'])?>">
                             <label for="providencia">Natureza da Ação</label>
                             <span class="helper-text" data-error="Campo obrigatório" data-success="Correto!"></span>
                         </div>

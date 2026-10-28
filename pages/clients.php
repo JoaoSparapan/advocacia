@@ -254,15 +254,15 @@ if($index.""=="0"){
                     }
                     $button_action='';
                     $table.='<tr>
-                                <td>'.$u["name"].'</td>
-                                <td>'.$email.'</td>
-                                <td>'.$cpf.'</td>
-                                <td>'.$phone.'</td>';               
+                                <td>'.e($u["name"]).'</td>
+                                <td>'.e($email).'</td>
+                                <td>'.e($cpf).'</td>
+                                <td>'.e($phone).'</td>';               
 
                     $button_action = '
                         <a class="btn-floating btn-small blue" 
                         title="Editar cliente" 
-                        href="./updateClient.php?id='.$u['idClient'].'">
+                        href="./updateClient.php?id='.e($u['idClient']).'">
                         <i class="fa-solid fa-pencil"></i>
                         </a>
                     ';
@@ -271,7 +271,7 @@ if($index.""=="0"){
                         $button_action .= '
                             <a class="btn-floating btn-small red deleteUserBtn" 
                             title="Excluir cliente" 
-                            href="../services/Controller/DeleteClient.php?id='.$u['idClient'].'">
+                            href="../services/Controller/DeleteClient.php?id='.e($u['idClient']).'">
                             <i class="fa-solid fa-trash"></i>
                             </a>
                         ';

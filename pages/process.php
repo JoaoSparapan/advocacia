@@ -85,7 +85,7 @@ $court = $c->getAll();
                             <?php
                                 for($i=0;$i<sizeof($court);$i++)
                                 {
-                                    echo "<option value='".$court[$i]['idCourt']."'>".$court[$i]['sigla']."</option>";
+                                    echo "<option value='".e($court[$i]['idCourt'])."'>".e($court[$i]['sigla'])."</option>";
                                 }
                             ?>
 
@@ -113,7 +113,7 @@ $court = $c->getAll();
                         {
                            $namaUser =$u[$i]['name'];
                            $idUser = $u[$i]['idUser'];
-                           echo '<option value="'.$idUser.'">'.$namaUser.'</option>';
+                           echo '<option value="'.$idUser.'">'.e($namaUser).'</option>';
                         
                         }
                         
@@ -168,7 +168,7 @@ $court = $c->getAll();
                             <?php
                                 for($i=0;$i<sizeof($court);$i++)
                                 {
-                                    echo "<option value='".$court[$i]['idCourt']."'>".$court[$i]['sigla']."</option>";
+                                    echo "<option value='".e($court[$i]['idCourt'])."'>".e($court[$i]['sigla'])."</option>";
                                 }
                             ?>
                         </select>
@@ -288,14 +288,14 @@ $court = $c->getAll();
                     $vara = $c->getById($u['idCourt']);
                     $button_action='';
                     $table.='<tr>
-                                <td>'.$u["numProcess"].'</td>
-                                <td>'.$vara["sigla"].'</td>
-                                <td>'.$u["clientName"].'</td>
-                                <td>'.$user["name"].'</td>';
+                                <td>'.e($u["numProcess"]).'</td>
+                                <td>'.e($vara["sigla"]).'</td>
+                                <td>'.e($u["clientName"]).'</td>
+                                <td>'.e($user["name"]).'</td>';
                     if(AuthController::getUser()['idRole']==1){
                     $button_action='
-                            <a class="btn-floating btn-small blue" title="Editar processo" href="./updateProcess.php?id='.$u['idProcess'].'"><i class="fa-solid fa-pencil"></i></a>
-                            <a class="btn-floating btn-small red deleteUserBtn" title="Excluir processo" href="../services/Controller/DeleteProcess.php?id='.$u['idProcess'].'"><i class="fa-solid fa-trash"></i></a>
+                            <a class="btn-floating btn-small blue" title="Editar processo" href="./updateProcess.php?id='.e($u['idProcess']).'"><i class="fa-solid fa-pencil"></i></a>
+                            <a class="btn-floating btn-small red deleteUserBtn" title="Excluir processo" href="../services/Controller/DeleteProcess.php?id='.e($u['idProcess']).'"><i class="fa-solid fa-trash"></i></a>
                             ';
                     }
 

@@ -49,7 +49,7 @@ if(isset($_GET['id'])){
         
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          Alterar informações do usuário: <?= $userSelected['name'] ?>
+          Alterar informações do usuário: <?= e($userSelected['name']) ?>
         </div>
       </nav>
 
@@ -58,13 +58,13 @@ if(isset($_GET['id'])){
             <div class="content-info-user">
 
                 <form class="col s12" method="POST" action="../services/Controller/UpdateUser.php">
-                    <input name="id" style="display: none" type="text" required value="<?=$userSelected['idUser']?>">
+                    <input name="id" style="display: none" type="text" required value="<?=e($userSelected['idUser'])?>">
                     <div class="row">
                         <div class="input-field col s3">
 
                             <i class="fa-solid fa-user prefix"></i>
                             <input name="nome" id="name" type="text" class="validate" required
-                                value="<?=$userSelected['name']?>">
+                                value="<?=e($userSelected['name'])?>">
                             <label for="name">Nome</label>
                             <span class="helper-text" data-success="Correto!"></span>
                         </div>
@@ -74,7 +74,7 @@ if(isset($_GET['id'])){
 
                             <i class="fa fa-envelope prefix"></i>
                             <input name="email" id="email-reg" type="email" class="validate" required
-                                value="<?=$userSelected['email']?>">
+                                value="<?=e($userSelected['email'])?>">
                             <label for="email-reg">Email</label>
                             <span class="helper-text" data-error="Formato de email incorreto"
                                 data-success="Correto!"></span>
@@ -85,7 +85,7 @@ if(isset($_GET['id'])){
 
                             <i class="fa fa-id-card prefix" aria-hidden="true"></i>
                             <input name="cpf" id="cpf" type="text" class="form-control " required
-                                value="<?=$userSelected['cpf']?>">
+                                value="<?=e($userSelected['cpf'])?>">
                             <label for="cpf">CPF</label>
                             <span class="helper-text" data-error="CPF incorreto!" data-success="Correto!"></span>
                         </div>
@@ -113,7 +113,7 @@ if(isset($_GET['id'])){
                                             $selected = "selected";
                                         }
 
-                                        echo '<option '.$selected.' value="'.$allRoles[$i]['idRole'].'">'
+                                        echo '<option '.$selected.' value="'.e($allRoles[$i]['idRole']).'">'
                                             .$allRoles[$i]['description'].
                                             '</option>';
                                     }
@@ -121,7 +121,7 @@ if(isset($_GET['id'])){
                             </select>
 
                             <?php if($isOwnProfile): ?>
-                                <input type="hidden" name="idRole" value="<?= $userSelected['idRole'] ?>">
+                                <input type="hidden" name="idRole" value="<?= e($userSelected['idRole']) ?>">
                             <?php endif; ?>
 
                             <label>Função do Usuário</label>

@@ -84,7 +84,7 @@ if(isset($_GET['id'])){
             ?>
                 <div class="content-info-user">
                     <form class="col s12" method="POST" action="../services/Controller/UpdateFrontdesk.php">
-                    <input name="id" type="hidden" value="<?= $frontdeskSelected['idFrontdesk'] ?>">
+                    <input name="id" type="hidden" value="<?= e($frontdeskSelected['idFrontdesk']) ?>">
                     <div class="form-card" id="informacoes-tipoCliente-card">
                         <div class="form-card-title">
                             Informações gerais
@@ -95,7 +95,7 @@ if(isset($_GET['id'])){
                                         <label style="display:flex; align-items:center; gap:8px;">
                                             <input type="checkbox" name="documentos[]" value="<?=$id?>" 
                                                 <?= in_array((string)$id, $docsSelecionados) ? 'checked' : '' ?> />
-                                            <span><?=$label?></span>
+                                            <span><?=e($label)?></span>
                                         </label>
                                     </div>
                                 <?php endforeach; ?>
@@ -122,7 +122,7 @@ if(isset($_GET['id'])){
                             <div class="input-field col s12 m6">
                                 <i class="fa-solid fa-calendar-check prefix"></i>
                                 <input type="date" id="dataReferencia" name="dataReferencia"
-                                    value="<?= $frontdeskSelected['data_referencia'] ?>" 
+                                    value="<?= e($frontdeskSelected['data_referencia']) ?>" 
                                     class="validate" required>
                                 <label class="active" for="dataReferencia">Data Referência</label>
                             </div>
@@ -162,19 +162,19 @@ if(isset($_GET['id'])){
                             <div class="row">
                                 <div class="input-field col s6">
                                     <i class="fa-solid fa-building prefix"></i>
-                                    <input type="text" id="empresa" name="empresa" value="<?= $frontdeskSelected['empresa'] ?>">
+                                    <input type="text" id="empresa" name="empresa" value="<?= e($frontdeskSelected['empresa']) ?>">
                                     <label for="empresa">Nome empresa</label>
                                 </div>
 
                                 <div class="input-field col s6">
                                     <i class="fa-solid fa-id-card prefix"></i>
-                                    <input type="text" id="cnpj" name="cnpj" value="<?= $frontdeskSelected['cnpj'] ?>">
+                                    <input type="text" id="cnpj" name="cnpj" value="<?= e($frontdeskSelected['cnpj']) ?>">
                                     <label for="cnpj">CNPJ</label>
                                 </div>
 
                                 <div class="input-field col s6">
                                     <i class="fa-solid fa-briefcase prefix"></i>
-                                    <input type="text" id="cargo" name="cargo" value="<?= $frontdeskSelected['cargo'] ?>">
+                                    <input type="text" id="cargo" name="cargo" value="<?= e($frontdeskSelected['cargo']) ?>">
                                     <label for="cargo">Cargo do representante</label>
                                 </div>
                             </div>
@@ -182,13 +182,13 @@ if(isset($_GET['id'])){
                             <div class="row">
                                 <div class="input-field col s6">
                                     <i class="fa-solid fa-location-dot prefix"></i>
-                                    <input type="text" id="endereco_pj" name="endereco_pj" value="<?= $frontdeskSelected['endereco_pj'] ?>">
+                                    <input type="text" id="endereco_pj" name="endereco_pj" value="<?= e($frontdeskSelected['endereco_pj']) ?>">
                                     <label for="endereco_pj">Endereço</label>
                                 </div>
 
                                 <div class="input-field col s6">
                                     <i class="fa-solid fa-map-pin prefix"></i>
-                                    <input type="text" id="bairro_pj" name="bairro_pj" value="<?= $frontdeskSelected['bairro_pj'] ?>">
+                                    <input type="text" id="bairro_pj" name="bairro_pj" value="<?= e($frontdeskSelected['bairro_pj']) ?>">
                                     <label for="bairro_pj">Bairro</label>
                                 </div>
                             </div>
@@ -196,19 +196,19 @@ if(isset($_GET['id'])){
                             <div class="row">
                                 <div class="input-field col s6">
                                     <i class="fa-solid fa-city prefix"></i>
-                                    <input type="text" id="cidade_pj" name="cidade_pj" value="<?= $frontdeskSelected['cidade_pj'] ?>">
+                                    <input type="text" id="cidade_pj" name="cidade_pj" value="<?= e($frontdeskSelected['cidade_pj']) ?>">
                                     <label for="cidade_pj">Cidade</label>
                                 </div>
 
                                 <div class="input-field col s6">
                                     <i class="fa-solid fa-flag prefix"></i>
-                                    <input type="text" id="estado_pj" name="estado_pj" value="<?= $frontdeskSelected['estado_pj'] ?>">
+                                    <input type="text" id="estado_pj" name="estado_pj" value="<?= e($frontdeskSelected['estado_pj']) ?>">
                                     <label for="cidade_pj">Estado</label>
                                 </div>
 
                                 <div class="input-field col s6">
                                     <i class="fa-solid fa-mail-bulk prefix"></i>
-                                    <input type="text" id="cep_pj" name="cep_pj" value="<?= $frontdeskSelected['cep_pj'] ?>">
+                                    <input type="text" id="cep_pj" name="cep_pj" value="<?= e($frontdeskSelected['cep_pj']) ?>">
                                     <label for="cep_pj">CEP</label>
                                 </div>
                             </div>
@@ -223,22 +223,22 @@ if(isset($_GET['id'])){
                             <div class="row">
                                 <div class="input-field col l4 m6 s12">
                                     <i class="fa-solid fa-user prefix"></i>
-                                    <input name="nome" id="nome" type="text" class="validate" required value="<?= $frontdeskSelected['nome'] ?>">
+                                    <input name="nome" id="nome" type="text" class="validate" required value="<?= e($frontdeskSelected['nome']) ?>">
                                     <label for="nome">Nome</label>
                                 </div>
                                 <div class="input-field col l4 m6 s12">
                                     <i class="fa-solid fa-globe prefix"></i>
-                                    <input name="nacionalidade" id="nacionalidade" type="text" class="validate" required value="<?= $frontdeskSelected['nacionalidade'] ?>">
+                                    <input name="nacionalidade" id="nacionalidade" type="text" class="validate" required value="<?= e($frontdeskSelected['nacionalidade']) ?>">
                                     <label for="nacionalidade">Nacionalidade</label>
                                 </div>
                                 <div class="input-field col l4 m6 s12">
                                     <i class="fa-solid fa fa-user-friends prefix"></i>
-                                    <input name="estadoCivil" id="estadoCivil" type="text" class="validate" required value="<?= $frontdeskSelected['estadoCivil'] ?>">
+                                    <input name="estadoCivil" id="estadoCivil" type="text" class="validate" required value="<?= e($frontdeskSelected['estadoCivil']) ?>">
                                     <label for="estadoCivil">Estado Civil</label>
                                 </div>
                                 <div class="input-field col l4 m6 s12">
                                     <i class="fa-solid fa-briefcase prefix"></i>
-                                    <input name="profissao" id="profissao" type="text" class="validate" required value="<?= $frontdeskSelected['profissao'] ?>">
+                                    <input name="profissao" id="profissao" type="text" class="validate" required value="<?= e($frontdeskSelected['profissao']) ?>">
                                     <label for="profissao">Profissão</label>
                                 </div>
                             </div>
@@ -246,39 +246,39 @@ if(isset($_GET['id'])){
                             <div class="row">
                                 <div class="input-field col l6 m6 s12">
                                     <i class="fa-solid fa-id-card prefix"></i>
-                                    <input name="rg" id="rg" type="text" class="validate" required value="<?= $frontdeskSelected['rg'] ?>">
+                                    <input name="rg" id="rg" type="text" class="validate" required value="<?= e($frontdeskSelected['rg']) ?>">
                                     <label for="rg">RG</label>
                                 </div>
                                 <div class="input-field col l6 m6 s12">
                                     <i class="fa-solid fa-id-card prefix"></i>
-                                    <input name="cpf" id="cpf" type="text" class="validate" required value="<?= $frontdeskSelected['cpf'] ?>">
+                                    <input name="cpf" id="cpf" type="text" class="validate" required value="<?= e($frontdeskSelected['cpf']) ?>">
                                     <label for="cpf">CPF</label>
                                 </div>
                                 <div class="input-field col l4 m6 s12">
                                     <i class="fa-solid fa-location-dot prefix"></i>
-                                    <input name="endereco" id="endereco" type="text" required value="<?= $frontdeskSelected['endereco'] ?>">
+                                    <input name="endereco" id="endereco" type="text" required value="<?= e($frontdeskSelected['endereco']) ?>">
                                     <label for="endereco">Endereço</label>
                                 </div>
                                 <div class="input-field col l4 m6 s12">
                                     <i class="fa-solid fa-map-pin prefix"></i>
-                                    <input name="bairro" id="bairro" type="text" required value="<?= $frontdeskSelected['bairro'] ?>">
+                                    <input name="bairro" id="bairro" type="text" required value="<?= e($frontdeskSelected['bairro']) ?>">
                                     <label for="bairro">Bairro</label>
                                 </div>
                         </div>
                         <div class="row">
                             <div class="input-field col l4 m6 s12">
                                 <i class="fa-solid fa-city prefix"></i>
-                                <input name="cidade" id="cidade" type="text" required value="<?= $frontdeskSelected['cidade'] ?>">
+                                <input name="cidade" id="cidade" type="text" required value="<?= e($frontdeskSelected['cidade']) ?>">
                                 <label for="cidade">Cidade</label>
                             </div>
                             <div class="input-field col l6 m6 s12">
                                 <i class="fa-solid fa-flag prefix"></i>
-                                <input name="estado" id="estado" type="text" required value="<?= $frontdeskSelected['estado'] ?>">
+                                <input name="estado" id="estado" type="text" required value="<?= e($frontdeskSelected['estado']) ?>">
                                 <label for="estado">Estado</label>
                             </div>
                             <div class="input-field col l6 m6 s12">
                                 <i class="fa-solid fa-mail-bulk prefix"></i>
-                                <input name="cep" id="cep" type="text" required value="<?= $frontdeskSelected['cep'] ?>">
+                                <input name="cep" id="cep" type="text" required value="<?= e($frontdeskSelected['cep']) ?>">
                                 <label for="cep">CEP</label>
                             </div>
                         </div>
@@ -292,12 +292,12 @@ if(isset($_GET['id'])){
                         <div class="row">
                             <div class="input-field col l6 m6 s12">
                                 <i class="fa-solid fa-gavel prefix"></i>
-                                <input name="parteadversa" id="parteadversa" type="text" value="<?= $frontdeskSelected['parteadversa'] ?? '' ?>">
+                                <input name="parteadversa" id="parteadversa" type="text" value="<?= e($frontdeskSelected['parteadversa'] ?? '') ?>">
                                 <label for="parteadversa">Parte Adversa</label>
                             </div>
                             <div class="input-field col l6 m6 s12">
                                 <i class="fa-solid fa-id-card prefix"></i>
-                                <input name="cpf_cnpj_adversa" id="cpf_cnpj_adversa" type="text" value="<?= $frontdeskSelected['cpf_cnpj_adversa'] ?? '' ?>">
+                                <input name="cpf_cnpj_adversa" id="cpf_cnpj_adversa" type="text" value="<?= e($frontdeskSelected['cpf_cnpj_adversa'] ?? '') ?>">
                                 <label for="cpf_cnpj_adversa">CPF ou CNPJ</label>
                             </div>
                         </div>
@@ -305,7 +305,7 @@ if(isset($_GET['id'])){
                         <div class="row">
                             <div class="input-field col s12">
                                 <i class="fa-solid fa-location-dot prefix"></i>
-                                <input name="endereco_adversa" id="endereco_adversa" type="text" value="<?= $frontdeskSelected['endereco_adversa'] ?? '' ?>">
+                                <input name="endereco_adversa" id="endereco_adversa" type="text" value="<?= e($frontdeskSelected['endereco_adversa'] ?? '') ?>">
                                 <label for="endereco_adversa">Endereço completo</label>
                             </div>
                         </div>
@@ -313,12 +313,12 @@ if(isset($_GET['id'])){
                         <div class="row">
                             <div class="input-field col l6 m6 s12">
                                 <i class="fa-solid fa-phone prefix"></i>
-                                <input name="telefone1_adversa" id="telefone1_adversa" type="text" value="<?= $frontdeskSelected['telefone1_adversa'] ?? '' ?>">
+                                <input name="telefone1_adversa" id="telefone1_adversa" type="text" value="<?= e($frontdeskSelected['telefone1_adversa'] ?? '') ?>">
                                 <label for="telefone1_adversa">Tel. 01</label>
                             </div>
                             <div class="input-field col l6 m6 s12">
                                 <i class="fa-solid fa-mobile-screen-button prefix"></i>
-                                <input name="telefone2_adversa" id="telefone2_adversa" type="text" value="<?= $frontdeskSelected['telefone2_adversa'] ?? '' ?>">
+                                <input name="telefone2_adversa" id="telefone2_adversa" type="text" value="<?= e($frontdeskSelected['telefone2_adversa'] ?? '') ?>">
                                 <label for="telefone2_adversa">Tel. 02</label>
                             </div>
                         </div>
@@ -457,17 +457,17 @@ if(isset($_GET['id'])){
                         <div class="row">
                             <div class="input-field col l4 m6 s12">
                                 <i class="fa-solid fa-envelope prefix"></i>
-                                <input name="email" id="email" type="email" value="<?= $frontdeskSelected['email'] ?>">
+                                <input name="email" id="email" type="email" value="<?= e($frontdeskSelected['email']) ?>">
                                 <label for="email">E-mail (Opcional)</label>
                             </div>
                             <div class="input-field col l4 m6 s12">
                                 <i class="fa-solid fa-phone prefix"></i>
-                                <input name="telefone1" id="telefone1" type="text" value="<?= $frontdeskSelected['telefone1'] ?>">
+                                <input name="telefone1" id="telefone1" type="text" value="<?= e($frontdeskSelected['telefone1']) ?>">
                                 <label for="telefone1">Telefone 1 (Opcional)</label>
                             </div>
                             <div class="input-field col l4 m6 s12">
                                 <i class="fa-solid fa-phone-alt prefix"></i>
-                                <input name="telefone2" id="telefone2" type="text" value="<?= $frontdeskSelected['telefone2'] ?>">
+                                <input name="telefone2" id="telefone2" type="text" value="<?= e($frontdeskSelected['telefone2']) ?>">
                                 <label for="telefone2">Telefone 2 (Opcional)</label>
                             </div>
                         </div>
@@ -486,7 +486,7 @@ if(isset($_GET['id'])){
                             </div>
                             <div class="row">
                                 <div class="input-field col s6">
-                                    <input type="text" id="palavra_chave" name="palavra_chave" value="<?= $frontdeskSelected['palavra_chave'] ?>" required>
+                                    <input type="text" id="palavra_chave" name="palavra_chave" value="<?= e($frontdeskSelected['palavra_chave']) ?>" required>
                                 </div>
                             </div>
                         </div>

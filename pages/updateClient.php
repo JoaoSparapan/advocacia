@@ -60,19 +60,19 @@ if(isset($_GET['id'])){
                         <i class="fa fa-bars"></i>
                         <span class="sr-only">Toggle Menu</span>
                     </button>
-                    Alterar informações do cliente: <?= $cliSelected['name'] ?>
+                    Alterar informações do cliente: <?= e($cliSelected['name']) ?>
                 </div>
             </nav>
             <div class="content-info-user">
 
                 <form class="col s12" method="POST" action="../services/Controller/UpdateClient.php">
-                    <input name="id" style="display: none" type="text" required value="<?=$cliSelected['idClient']?>">
+                    <input name="id" style="display: none" type="text" required value="<?=e($cliSelected['idClient'])?>">
                     <div class="row">
                         <div class="input-field col s3">
 
                             <i class="fa-solid fa-user prefix"></i>
                             <input name="name" id="name" type="text" class="validate" required
-                                value="<?=$cliSelected['name']?>">
+                                value="<?=e($cliSelected['name'])?>">
                             <label for="name">Nome</label>
                             <span class="helper-text" data-success="Correto!"></span>
                         </div>
@@ -82,7 +82,7 @@ if(isset($_GET['id'])){
 
                             <i class="fa-solid fa-envelope prefix"></i>
                             <input name="email" id="email" type="text" class="validate"
-                                value="<?=$cliSelected['email']?>">
+                                value="<?=e($cliSelected['email'])?>">
                             <label for="email">Email</label>
                             <span class="helper-text" data-success="Correto!"></span>
                         </div>
@@ -92,7 +92,7 @@ if(isset($_GET['id'])){
 
                             <i class="fa-solid fa-id-card prefix"></i>
                             <input name="cpf" id="cpf" type="text" class="validate"
-                                value="<?=$cliSelected['cpf']?>">
+                                value="<?=e($cliSelected['cpf'])?>">
                             <label for="cpf">CPF</label>
                             <span class="helper-text" data-success="Correto!"></span>
                         </div>
@@ -102,7 +102,7 @@ if(isset($_GET['id'])){
 
                             <i class="fa-solid fa-phone prefix"></i>
                             <input name="phone" id="phone" type="text" class="validate"
-                                value="<?=$cliSelected['phone']?>">
+                                value="<?=e($cliSelected['phone'])?>">
                             <label for="phone">Celular</label>
                             <span class="helper-text" data-success="Correto!"></span>
                         </div>

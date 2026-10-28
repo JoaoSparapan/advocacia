@@ -46,7 +46,7 @@ if(AuthController::getUser()==null){
                             <div class="input-field col s6">
 
                                 <i class="fa-solid fa-user prefix"></i>
-                                <input name="name" id="nome" type="text" value="<?=$user_info['name']?>">
+                                <input name="name" id="nome" type="text" value="<?=e($user_info['name'])?>">
                                 <label for="nome">Nome</label>
 
                             </div>
@@ -56,7 +56,7 @@ if(AuthController::getUser()==null){
                             <div class="input-field col s6">
                                 <i class="fa fa-envelope prefix"></i>
                                 <input name="email" id="email" type="email" class="validate"
-                                    value="<?=$user_info['email']?>">
+                                    value="<?=e($user_info['email'])?>">
                                 <label for="email">Email</label>
                                 <span class="helper-text" data-error="Formato de email incorreto"
                                     data-success="Correto!"></span>
@@ -65,7 +65,7 @@ if(AuthController::getUser()==null){
                             <div class="input-field col s6">
                                 <i class="fa fa-id-card prefix" aria-hidden="true"></i>
                                 <input name="cpf" id="cpf" type="text" class="form-control "
-                                    value="<?=$user_info['cpf']?>">
+                                    value="<?=e($user_info['cpf'])?>">
                                 <label for="cpf">CPF</label>
                                 <span class="helper-text" data-error="CPF inválido!" data-success="Correto!"></span>
                             </div>

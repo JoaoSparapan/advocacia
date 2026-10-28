@@ -123,7 +123,7 @@ $consulta_active = ($current_page === 'consulta.php') ? 'active' : '';
                 <span class="fa fa-user"></span> Perfil
             </a>
             <div class="navbar-user">
-                <p class="user-name"><?=AuthController::getUser()['name']?></p>
+                <p class="user-name"><?=e(AuthController::getUser()['name'])?></p>
                 <p class="user-role"><?=$role?></p>
             </div>
             <button class="navbar-logout logout" type="button">

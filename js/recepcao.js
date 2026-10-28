@@ -1,3 +1,8 @@
+// escapa texto antes de inseri-lo como HTML
+function escapeHtml(text) {
+  return String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
 $(document).ready(function () {
   let clients, codClients;
   $("select").formSelect();
@@ -8,7 +13,7 @@ $(document).ready(function () {
   var obj = {};
 
   for (let i = 0; i < clients.length; i++) {
-    obj[clients[i]] = null;
+    obj[escapeHtml(clients[i])] = null;
   }
 
   $("#client.autocomplete").autocomplete({

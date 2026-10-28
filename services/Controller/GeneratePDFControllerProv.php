@@ -37,13 +37,13 @@
                     		$end= explode("/",addslashes($_GET['data_end']));
                     		if(sizeof($end)>1){
 
-                        		$end = $end[2]."-".$end[1]."-".$end[0];
+                        		$end = $end[2]."-".e($end[1])."-".$end[0];
                     		}else{
                         		$end="";
                     		}
                     		if(sizeof($start)>1){
 
-                        		$start = $start[2]."-".$start[1]."-".$start[0];
+                        		$start = $start[2]."-".e($start[1])."-".$start[0];
                     		}else{
                         		$start="";
                     		}
@@ -155,14 +155,14 @@
 		$html .= '<tr style="border: none;border-bottom: 1px solid rgb(209,209,209);"><td style="'.$style.'">'.$id.'</td>';
         $html .= '<td style="'.$style.'">'.date("d-m-Y", strtotime($p[6])).'</td>';
 		$html .= '<td style="'.$style.'">'.date("d-m-Y", strtotime($p[8])).'</td>';
-		$html .= '<td style="'.$style.'">'.$proc["numProcess"].'</td>';
-		$html .= '<td style="'.$style.'">'.$vara["sigla"].'</td>';
-		$html .= '<td style="'.$style.'">'.$user["name"].'</td>';
-        $html .= '<td style="'.$style.'">'.$proc["clientName"].'</td>';
+		$html .= '<td style="'.$style.'">'.e($proc["numProcess"]).'</td>';
+		$html .= '<td style="'.$style.'">'.e($vara["sigla"]).'</td>';
+		$html .= '<td style="'.$style.'">'.e($user["name"]).'</td>';
+        $html .= '<td style="'.$style.'">'.e($proc["clientName"]).'</td>';
 		if($num!=1){
-        	$html .= '<td style="'.$style.'">'.$p[9].'</td>';
+        	$html .= '<td style="'.$style.'">'.e($p[9]).'</td>';
 		}else{
-			$html .= '<td style="'.$style.'">'.$p[9].'</td></tr>';
+			$html .= '<td style="'.$style.'">'.e($p[9]).'</td></tr>';
 		}
 
 		if($num!=1)

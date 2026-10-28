@@ -166,18 +166,18 @@ for ($i = 0; $i < sizeof($fronts); $i++) {
     }
 
 	$html .= '<tr style="border: none;border-bottom: 1px solid rgb(209,209,209);"><td style="' . $style . '">' . $idTabela . '</td>';
-	$html .= '<td style="' . $style . '">' . $u["nome"] . '</td>';
-	$html .= '<td style="' . $style . '">' . $u["cpf"] . '</td>';
-	$html .= '<td style="' . $style . '">' . $situacao . '</td>';
-	$html .= '<td style="' . $style . '">' . $phoneCli1 . '</td>';
-	$html .= '<td style="' . $style . '">' . $parteAdversa . '</td>';
-	$html .= '<td style="' . $style . '">' . $u["pastaHibrida"] . '</td>';
-	$html .= '<td style="' . $style . '">' . $indicacaoNome . '</td>';
-	$html .= '<td style="' . $style . '">' . $indicacao . '</td>';
-	$html .= '<td style="' . $style . '">' . $u["usuario"] . '</td>';
+	$html .= '<td style="' . $style . '">' . e($u["nome"]) . '</td>';
+	$html .= '<td style="' . $style . '">' . e($u["cpf"]) . '</td>';
+	$html .= '<td style="' . $style . '">' . e($situacao) . '</td>';
+	$html .= '<td style="' . $style . '">' . e($phoneCli1) . '</td>';
+	$html .= '<td style="' . $style . '">' . e($parteAdversa) . '</td>';
+	$html .= '<td style="' . $style . '">' . e($u["pastaHibrida"]) . '</td>';
+	$html .= '<td style="' . $style . '">' . e($indicacaoNome) . '</td>';
+	$html .= '<td style="' . $style . '">' . e($indicacao) . '</td>';
+	$html .= '<td style="' . $style . '">' . e($u["usuario"]) . '</td>';
 	$html .= '<td style="' . $style . '">' . date("d-m-Y", strtotime($u["data_cadastro"])) . '</td>';
-	$html .= '<td style="' . $style . '">' . $docsDisplayString . '</td>';
-	$html .= '<td style="' . $style . '">' . $u["palavra_chave"] . '</td>';
+	$html .= '<td style="' . $style . '">' . e($docsDisplayString) . '</td>';
+	$html .= '<td style="' . $style . '">' . e($u["palavra_chave"]) . '</td>';
 
 }
 $html .= '</tbody>';

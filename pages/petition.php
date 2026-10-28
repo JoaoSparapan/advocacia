@@ -123,7 +123,7 @@ $u = $userController->getAdminAndColaboradorAll();
                         {
                            $namaUser =$u[$i]['name'];
                            $idUser = $u[$i]['idUser'];
-                           echo '<option value="'.$idUser.'">'.$namaUser.'</option>';
+                           echo '<option value="'.$idUser.'">'.e($namaUser).'</option>';
                         
                         }
                         
@@ -153,7 +153,7 @@ $u = $userController->getAdminAndColaboradorAll();
                            $namaUser =$u[$i]['name'];
                            $idUser = $u[$i]['idUser'];
                            
-                           echo '<option value="'.$idUser.'">'.$namaUser.'</option>';
+                           echo '<option value="'.$idUser.'">'.e($namaUser).'</option>';
                         
                         }
                         
@@ -424,7 +424,7 @@ $u = $userController->getAdminAndColaboradorAll();
                     $start= explode("/",addslashes($_GET['dta-contract']));
                     if(sizeof($start)>1){
 
-                        $start = $start[2]."-".$start[1]."-".$start[0];
+                        $start = $start[2]."-".e($start[1])."-".$start[0];
                     }else{
                         $start="";
                     }
@@ -442,11 +442,11 @@ $u = $userController->getAdminAndColaboradorAll();
                     }else{
                     if(sizeof($end)>1){
 
-                        $end = $end[2]."-".$end[1]."-".$end[0];
+                        $end = $end[2]."-".e($end[1])."-".$end[0];
                     }
                     if(sizeof($start)>1){
 
-                        $start = $start[2]."-".$start[1]."-".$start[0];
+                        $start = $start[2]."-".e($start[1])."-".$start[0];
                     }
                     $petitions = $pController->getProvidenceByPeriod($start, $end,0,1);
                     }
@@ -577,11 +577,11 @@ $u = $userController->getAdminAndColaboradorAll();
                   $button_action='';
                   $table.='<tr style="'.$color_style.'">
                               <td>'.$id.'</td>
-                              <td>'.$p[2].'</td>
-                              <td>'.$p[3].'</td>
+                              <td>'.e($p[2]).'</td>
+                              <td>'.e($p[3]).'</td>
                               <td>'.date("d-m-Y", strtotime($p[1])).'</td>
-                              <td>'.$p[9].'</td>
-                              <td>'.$p[11].'</td>
+                              <td>'.e($p[9]).'</td>
+                              <td>'.e($p[11]).'</td>
                               <td>'.$d.'</td>
                               <td>'.$pres.'</td>
                               <td>'.$deca.'</td>';
@@ -591,21 +591,21 @@ $u = $userController->getAdminAndColaboradorAll();
                   
                         
                           <a class="btn-floating btn-small green modal-trigger openModalStatus" 
-                          data-prov="'.$p[0].'" 
-                          data-provided="'.$p[4].'"
-                          data-sf="'.$p[7].'"
+                          data-prov="'.e($p[0]).'" 
+                          data-provided="'.e($p[4]).'"
+                          data-sf="'.e($p[7]).'"
                           title="Alterar status" href="#modal3"><i class="fa fa-th-list"></i></a>
-                          <a class="btn-floating btn-small blue" title="Editar petição" href="./updatePetition.php?id='.$p[0].'"><i class="fa-solid fa-pencil"></i></a>
-                          <a class="btn-floating btn-small red deleteProvicendeBtn" title="Excluir petição" href="../services/Controller/DeletePetition.php?id='.$p[0].'"><i class="fa-solid fa-trash"></i></a>
+                          <a class="btn-floating btn-small blue" title="Editar petição" href="./updatePetition.php?id='.e($p[0]).'"><i class="fa-solid fa-pencil"></i></a>
+                          <a class="btn-floating btn-small red deleteProvicendeBtn" title="Excluir petição" href="../services/Controller/DeletePetition.php?id='.e($p[0]).'"><i class="fa-solid fa-trash"></i></a>
                           ';
                 }else{
                     $button_action='
                   
                         
                           <a class="btn-floating btn-small green modal-trigger openModalStatus" 
-                          data-prov="'.$p[0].'" 
-                          data-provided="'.$p[4].'"
-                          data-sf="'.$p[7].'"
+                          data-prov="'.e($p[0]).'" 
+                          data-provided="'.e($p[4]).'"
+                          data-sf="'.e($p[7]).'"
                           title="Alterar status" href="#modal3"><i class="fa fa-th-list"></i></a>
                           ';
                 }
@@ -676,7 +676,7 @@ $u = $userController->getAdminAndColaboradorAll();
                 if($petitions!=null && isMobile()){
             ?>
 
-            <a href="<?php echo "../services/Controller/GeneratePDFController.php?id=0&".$params;?>">
+            <a href="<?php echo "../services/Controller/GeneratePDFController.php?id=0&".e($params);?>">
                 <button style="margin-left: 10px;background-color: #27c494; color:white;"
                     class="btn waves-effect waves-light" type="button" id="back">
                     Exportar PDF
@@ -688,7 +688,7 @@ $u = $userController->getAdminAndColaboradorAll();
                 {
             ?>
 
-            <a target="_blank" href="<?php echo "../services/Controller/GeneratePDFController.php?id=0&".$params;?>">
+            <a target="_blank" href="<?php echo "../services/Controller/GeneratePDFController.php?id=0&".e($params);?>">
                 <button style="margin-left: 10px;background-color: #27c494; color:white;"
                     class="btn waves-effect waves-light" type="button" id="back">
                     Exportar PDF

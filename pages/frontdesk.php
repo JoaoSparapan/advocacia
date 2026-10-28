@@ -479,7 +479,7 @@ if ($index . "" == "0") {
                             <option value="-1" selected disabled>Selecionar</option>
                             <?php
                             for ($i = 0; $i < sizeof($users); $i++) {
-                                echo "<option value='" . $users[$i]['idUser'] . "'>" . $users[$i]['name'] . "</option>";
+                                echo "<option value='" . e($users[$i]['idUser']) . "'>" . e($users[$i]['name']) . "</option>";
                             }
                             ?>
                         </select>
@@ -715,31 +715,31 @@ if ($index . "" == "0") {
                     }
                     $button_action = '';
                     $table .= '<tr>
-                                <td>' . $u["nome"] . '</td>
-                                <td>' . $u["cpf"] . '</td>
-                                <td>' . $situacao . '</td>
-                                <td>' . $phoneCli1 . '</td>
-                                <td>' . $parteAdversa . '</td>
-                                <td>' . $u["pastaHibrida"] . '</td>
-                                <td>' . $indicacao . '</td>
-                                <td>' . $u["usuario"] . '</td>
+                                <td>' . e($u["nome"]) . '</td>
+                                <td>' . e($u["cpf"]) . '</td>
+                                <td>' . e($situacao) . '</td>
+                                <td>' . e($phoneCli1) . '</td>
+                                <td>' . e($parteAdversa) . '</td>
+                                <td>' . e($u["pastaHibrida"]) . '</td>
+                                <td>' . e($indicacao) . '</td>
+                                <td>' . e($u["usuario"]) . '</td>
                                 <td>' . date('d-m-Y H:i:s', strtotime($u["data_cadastro"])) . '</td>
-                                <td>' . $docsDisplayString . '</td>
-                                <td>' . $u["palavra_chave"] . '</td>';
+                                <td>' . e($docsDisplayString) . '</td>
+                                <td>' . e($u["palavra_chave"]) . '</td>';
 
                     $button_action = '
-                        <a class="btn-floating btn-small green" title="Baixar documentos" href="../services/Controller/DownloadFrontdesk.php?id='.$u['idFrontdesk'].'">
+                        <a class="btn-floating btn-small green" title="Baixar documentos" href="../services/Controller/DownloadFrontdesk.php?id='.e($u['idFrontdesk']).'">
                             <i class="fa-solid fa-download"></i>
                         </a>
 
-                        <a class="btn-floating btn-small blue" title="Editar atendimento" href="./updateFrontDesk.php?id='.$u['idFrontdesk'].'">
+                        <a class="btn-floating btn-small blue" title="Editar atendimento" href="./updateFrontDesk.php?id='.e($u['idFrontdesk']).'">
                             <i class="fa-solid fa-pencil"></i>
                         </a>
                     ';
 
                     if($_SESSION['user']['idRole'] == 1){
                         $button_action .= '
-                            <a class="btn-floating btn-small red deleteUserBtn" title="Excluir atendimento" href="../services/Controller/DeleteFront.php?id='.$u['idFrontdesk'].'">
+                            <a class="btn-floating btn-small red deleteUserBtn" title="Excluir atendimento" href="../services/Controller/DeleteFront.php?id='.e($u['idFrontdesk']).'">
                                 <i class="fa-solid fa-trash"></i>
                             </a>
                         ';
@@ -804,7 +804,7 @@ if ($index . "" == "0") {
             if ($fronts != null && isMobile()) {
                 ?>
 
-                <a href="<?php echo "../services/Controller/GeneratePDFControllerAI.php?id=0&" . $params; ?>">
+                <a href="<?php echo "../services/Controller/GeneratePDFControllerAI.php?id=0&" . e($params); ?>">
                     <button style="margin-left: 10px;background-color: #27c494; color:white;"
                         class="btn waves-effect waves-light" type="button" id="back">
                         Exportar PDF
@@ -815,7 +815,7 @@ if ($index . "" == "0") {
             } else if ($fronts != null && !isMobile()) {
                 ?>
 
-                    <a target="_blank" href="<?php echo "../services/Controller/GeneratePDFControllerAI.php?id=0&" . $params; ?>">
+                    <a target="_blank" href="<?php echo "../services/Controller/GeneratePDFControllerAI.php?id=0&" . e($params); ?>">
                         <button style="margin-left: 10px;background-color: #27c494; color:white;"
                             class="btn waves-effect waves-light" type="button" id="back">
                             Exportar PDF

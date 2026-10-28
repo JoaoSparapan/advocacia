@@ -62,19 +62,19 @@ if(isset($_GET['id'])){
 
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          Alterar informações do processo: <?= $procSelected['numProcess'] ?>
+          Alterar informações do processo: <?= e($procSelected['numProcess']) ?>
         </div>
       </nav>
       <div class="content-info-user">
 
         <form class="col s12" method="POST" action="../services/Controller/UpdateCourt.php">
-          <input name="id" style="display: none" type="text" required value="<?=$procSelected['idProcess']?>">
+          <input name="id" style="display: none" type="text" required value="<?=e($procSelected['idProcess'])?>">
           <div class="row">
             <div class="input-field col s3">
 
               <i class="fa-solid fa-user prefix"></i>
               <input name="nome" id="name" type="text" class="validate" required
-                value="<?=$procSelected['numProcess']?>">
+                value="<?=e($procSelected['numProcess'])?>">
               <label for="name">Nome</label>
               <span class="helper-text" data-success="Correto!"></span>
             </div>
@@ -84,7 +84,7 @@ if(isset($_GET['id'])){
 
               <i class="fa-solid fa-user prefix"></i>
               <input name="client" id="client" type="text" class="validate" required
-                value="<?=$procSelected['clientName']?>">
+                value="<?=e($procSelected['clientName'])?>">
               <label for="client">Cliente</label>
               <span class="helper-text" data-success="Correto!"></span>
             </div>
@@ -106,7 +106,7 @@ if(isset($_GET['id'])){
                       }
                         echo "<option
                         ".$selected."
-                        value='".$court[$i]['idCourt']."'>".$court[$i]['sigla']."
+                        value='".e($court[$i]['idCourt'])."'>".e($court[$i]['sigla'])."
                         </option>";
                     }
                 ?>
@@ -130,7 +130,7 @@ if(isset($_GET['id'])){
                                         }
                                     $namaUser =$u[$i]['name'];
                                     $idUser = $u[$i]['idUser'];
-                                    echo '<option '.$selected.' value="'.$idUser.'">'.$namaUser.'</option>';
+                                    echo '<option '.$selected.' value="'.$idUser.'">'.e($namaUser).'</option>';
                                     
                                     }
                                     

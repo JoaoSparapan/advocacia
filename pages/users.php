@@ -219,24 +219,24 @@ if($index.""=="0"){
                     $funcao = $userController->getRoleByIdUser($u['idRole']);
                     $button_action='';
                     $table.='<tr>
-                                <td>'.$u["name"].'</td>
-                                <td>'.$u["email"].'</td>
-                                <td>'.$u["cpf"].'</td>
-                                <td>'.$funcao.'</td>';
+                                <td>'.e($u["name"]).'</td>
+                                <td>'.e($u["email"]).'</td>
+                                <td>'.e($u["cpf"]).'</td>
+                                <td>'.e($funcao).'</td>';
                     
 
 
                     if($user['idUser']== $u['idUser']){
 
                         $button_action='
-                            <a class="btn-floating btn-small blue" title="Editar usuário" href="./updateUser.php?id='.$u['idUser'].'"><i class="fa-solid fa-pencil"></i></a>
+                            <a class="btn-floating btn-small blue" title="Editar usuário" href="./updateUser.php?id='.e($u['idUser']).'"><i class="fa-solid fa-pencil"></i></a>
                                     
                                 ';
             
                     }else{
                         $button_action='
-                            <a class="btn-floating btn-small blue" title="Editar usuário" href="./updateUser.php?id='.$u['idUser'].'"><i class="fa-solid fa-pencil"></i></a>
-                            <a class="btn-floating btn-small red deleteUserBtn" title="Excluir usuário" href="../services/Controller/DeleteUser.php?id='.$u['idUser'].'"><i class="fa-solid fa-trash"></i></a>
+                            <a class="btn-floating btn-small blue" title="Editar usuário" href="./updateUser.php?id='.e($u['idUser']).'"><i class="fa-solid fa-pencil"></i></a>
+                            <a class="btn-floating btn-small red deleteUserBtn" title="Excluir usuário" href="../services/Controller/DeleteUser.php?id='.e($u['idUser']).'"><i class="fa-solid fa-trash"></i></a>
                                 ';
                    }
 

@@ -38,7 +38,7 @@
 					}
 				}else
 				if(sizeof($start)>1){
-					$start = $start[2]."-".$start[1]."-".$start[0];
+					$start = $start[2]."-".e($start[1])."-".$start[0];
 					$petitions = $pController->getProvidenceByData($start,$num,1);
 				}	
 				}
@@ -57,11 +57,11 @@
 				}else{
 				if(sizeof($end)>1){
 
-					$end = $end[2]."-".$end[1]."-".$end[0];
+					$end = $end[2]."-".e($end[1])."-".$end[0];
 				}
 				if(sizeof($start)>1){
 
-					$start = $start[2]."-".$start[1]."-".$start[0];
+					$start = $start[2]."-".e($start[1])."-".$start[0];
 				}
 				//echo $start;echo $end;exit;
 				$petitions = $pController->getProvidenceByPeriod($start,$end,$num,1,$num);
@@ -222,11 +222,11 @@
                 }
 		}
 		$html .= '<tr style="border: none;border-bottom: 1px solid rgb(209,209,209);"><td style="'.$style.'">'.$id.'</td>';
-        $html .= '<td style="'.$style.'">'.$p[2].'</td>';
-		$html .= '<td style="'.$style.'">'.$p[3].'</td>';
+        $html .= '<td style="'.$style.'">'.e($p[2]).'</td>';
+		$html .= '<td style="'.$style.'">'.e($p[3]).'</td>';
 		$html .= '<td style="'.$style.'">'.date("d-m-Y", strtotime($p[1])).'</td>';
-		$html .= '<td style="'.$style.'">'.$p[9].'</td>';
-		$html .= '<td style="'.$style.'">'.$p[11].'</td>';
+		$html .= '<td style="'.$style.'">'.e($p[9]).'</td>';
+		$html .= '<td style="'.$style.'">'.e($p[11]).'</td>';
 		$html .= '<td style="'.$style.'">'.$d.'</td>';
 		$html .= '<td style="'.$style.'">'.$pres.'</td>';
 		$html .= '<td style="'.$style.'">'.$deca.'</td>';
