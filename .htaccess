@@ -9,7 +9,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^(.*)$ $1.php
 # redireciona quando da erro 404
-ErrorDocument 404 http://%{HTTP_HOST}/advocacia/pages/not-found.php
+ErrorDocument 404 /advocacia/pages/not-found.php
 
 <IfModule mod_headers.c>
     Header always set X-Content-Type-Options "nosniff"
