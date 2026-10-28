@@ -73,7 +73,7 @@ if(isset($_GET['id'])){
 
                 <form class="col s12" method="POST" action="../services/Controller/UpdateRecepcao.php">
                     <input name="id" style="display: none" type="text" required
-                        value="<?=$receptionSelected['idReception']?>">
+                        value="<?=e($receptionSelected['idReception'])?>">
 
                     
                     <div class="row">
@@ -81,7 +81,7 @@ if(isset($_GET['id'])){
 
                             <i class="fa-solid fa-calendar-days prefix"></i>
                             <input name="data-chegada" id="data-chegada" type="datetime-local" min="2000-01-01T00:00"
-                                    max="9999-12-31T00:00" required value="<?=$receptionSelected['arrival']?>">
+                                    max="9999-12-31T00:00" required value="<?=e($receptionSelected['arrival'])?>">
                             <label for="data-chegada" style="top: -35px !important;">Data/Hora da chegada</label>
 
                         </div>
@@ -105,10 +105,10 @@ if(isset($_GET['id'])){
 
                     <div class="input-field col s12">
                         <i class="fa-solid fa-user prefix"></i>
-                        <input name="client-id" id="client-id" type="hidden" value="<?= $cliSelected['idClient'];?>" />
-                        <input name="client-front" id="client" type="text" required value="<?= $cliSelected['name'];?>"
-                            class="validate autocomplete" data-clientlist="<?= $nameList;?>"
-                            data-clientids="<?= $cods;?>">
+                        <input name="client-id" id="client-id" type="hidden" value="<?= e($cliSelected['idClient']);?>" />
+                        <input name="client-front" id="client" type="text" required value="<?= e($cliSelected['name']);?>"
+                            class="validate autocomplete" data-clientlist="<?= e($nameList);?>"
+                            data-clientids="<?= e($cods);?>">
                         <label for="autocomplete-input">Cliente</label>
 
                         </div>
@@ -118,7 +118,7 @@ if(isset($_GET['id'])){
 
                             <i class="fa fa-envelope prefix"></i>
                             <input name="assunto" id="assunto" type="text" class="validate" required
-                                value="<?=$receptionSelected['subject']?>">
+                                value="<?=e($receptionSelected['subject'])?>">
                             <label for="assunto">Assunto</label>
                         </div>
                     </div>
@@ -127,7 +127,7 @@ if(isset($_GET['id'])){
 
                     <div class="input-field col s3">
                         <i class="fa fa-list-ol prefix"></i>
-                        <input name="providencia" id="providencia" type="text" value="<?=$receptionSelected['providence']?>">
+                        <input name="providencia" id="providencia" type="text" value="<?=e($receptionSelected['providence'])?>">
                         <label for="providencia">Providência</label>
                     </div>
 
@@ -150,7 +150,7 @@ if(isset($_GET['id'])){
                                             }
                                                 echo "<option
                                                 ".$selected."
-                                                value='".$users[$i]['idUser']."'>".$users[$i]['name']."
+                                                value='".e($users[$i]['idUser'])."'>".e($users[$i]['name'])."
                                                 </option>";
                                         
                                     }

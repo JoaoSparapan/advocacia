@@ -1,3 +1,8 @@
+// escapa texto antes de inseri-lo como HTML
+function escapeHtml(text) {
+  return String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
 var idTimeOutTerm;
 var idTimeOut;
 function compareDates(dta1, dta2) {
@@ -296,7 +301,7 @@ $(document).ready(function () {
           var obj = {};
 
           for (let i = 0; i < listOp.length; i++) {
-            obj[listOp[i]] = null;
+            obj[escapeHtml(listOp[i])] = null;
           }
 
           $("#search_numProcess_inp.autocomplete").autocomplete({

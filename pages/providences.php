@@ -90,7 +90,7 @@ $court = $c->getAll();
                             <?php
                                 for($i=0;$i<sizeof($court);$i++)
                                 {
-                                    echo "<option value='".$court[$i]['idCourt']."'>".$court[$i]['sigla']."</option>";
+                                    echo "<option value='".e($court[$i]['idCourt'])."'>".e($court[$i]['sigla'])."</option>";
                                 }
                             ?>
 
@@ -119,7 +119,7 @@ $court = $c->getAll();
                         {
                            $namaUser =$u[$i]['name'];
                            $idUser = $u[$i]['idUser'];
-                           echo '<option value="'.$idUser.'">'.$namaUser.'</option>';
+                           echo '<option value="'.$idUser.'">'.e($namaUser).'</option>';
                         
                         }
                         
@@ -211,7 +211,7 @@ $court = $c->getAll();
                         
                         ?>
                         <i class="fa fa-id-card prefix"></i>
-                        <input data-listnproc="<?= $numProcList;?>" name="process" id="search_numProcess_inp"
+                        <input data-listnproc="<?= e($numProcList);?>" name="process" id="search_numProcess_inp"
                             type="text" class="autocomplete validate" required>
                         <label for="qte-dias">Num. Processo</label>
                         <a class="modal-trigger" href="#modalproc">
@@ -264,7 +264,7 @@ $court = $c->getAll();
                         
                         ?>
                         <i class="fa fa-id-card prefix"></i>
-                        <input data-listnproc="<?= $numProcList;?>" name="process" id="search_numProcess_inp_mobile"
+                        <input data-listnproc="<?= e($numProcList);?>" name="process" id="search_numProcess_inp_mobile"
                             type="text" class="autocomplete validate" required>
                         <label for="qte-dias">Num. Processo</label>
                         <a class="modal-trigger" href="#modalproc">
@@ -502,7 +502,7 @@ $court = $c->getAll();
 
             <form class="col s12" method="POST" action="../services/Controller/UpdateStatusProvidence.php">
                 <input type="hidden" id="idProvidenceModal" name="idProvidence" value="" />
-                <input type="hidden" name="callback" value="<?=$_SERVER["REQUEST_URI"]?>">
+                <input type="hidden" name="callback" value="<?=e($_SERVER["REQUEST_URI"])?>">
 
                 <div class="row">
                     <?php
@@ -580,7 +580,7 @@ $court = $c->getAll();
                     <div class="input-field col s8" style="padding: 0; margin: 0;">
                     
                         <input placeholder="Placeholder" id="datesubmission" name="datesubmission" type="date"
-                            class="validate" value="<?=$lastSub['updateDate']?>"
+                            class="validate" value="<?=e($lastSub['updateDate'])?>"
                             style="background-color: transparent !important;height: 30px;margin:0;">
                         <label for="datesubmission" style="margin: 0;">Data</label>
                     </div>                
@@ -597,7 +597,7 @@ $court = $c->getAll();
                     <div class="input-field col s8" style="padding: 0; margin: 0;">
                     
                     <input disabled placeholder="Placeholder" id="first_name" name="datesubmission" type="date"
-                        class="validate" value="<?=$lastSub['updateDate']?>"
+                        class="validate" value="<?=e($lastSub['updateDate'])?>"
                         style="background-color: transparent !important;height: 30px;margin-right: 1rem; margin:0;">
                     <label for="first_name" style="margin: 0;">Data</label>
                 </div>
@@ -617,7 +617,7 @@ $court = $c->getAll();
                             <?php
                                 for($i=0;$i<sizeof($court);$i++)
                                 {
-                                    echo "<option value='".$court[$i]['idCourt']."'>".$court[$i]['sigla']."</option>";
+                                    echo "<option value='".e($court[$i]['idCourt'])."'>".e($court[$i]['sigla'])."</option>";
                                 }
                             ?>
                         </select>
@@ -686,13 +686,13 @@ $court = $c->getAll();
                     $end= explode("/",addslashes($_GET['data_end']));
                     if(sizeof($end)>1){
 
-                        $end = $end[2]."-".$end[1]."-".$end[0];
+                        $end = $end[2]."-".e($end[1])."-".$end[0];
                     }else{
                         $end="";
                     }
                     if(sizeof($start)>1){
 
-                        $start = $start[2]."-".$start[1]."-".$start[0];
+                        $start = $start[2]."-".e($start[1])."-".$start[0];
                     }else{
                         $start="";
                     }
@@ -856,16 +856,16 @@ $court = $c->getAll();
                   $button_action='';
                   $responsibleColumn = '';
                   if(AuthController::getUser()['idRole']==1 || AuthController::getUser()['idRole']==3){
-                      $responsibleColumn = '<td class="responsibleSelectCell align-middle"><select class="updateResponsible" data-process="'.$proc["idProcess"].'">';
+                      $responsibleColumn = '<td class="responsibleSelectCell align-middle"><select class="updateResponsible" data-process="'.e($proc["idProcess"]).'">';
                       for($j=0; $j<sizeof($u); $j++){
                           $selected = ($u[$j]['idUser'] == $p[17]) ? 'selected' : '';
-                          $responsibleColumn .= '<option value="'.$u[$j]['idUser'].'" '.$selected.'>'.$u[$j]['name'].'</option>';
+                          $responsibleColumn .= '<option value="'.e($u[$j]['idUser']).'" '.$selected.'>'.e($u[$j]['name']).'</option>';
                       }
                       $responsibleColumn .= '</select></td>';
                   }else if(AuthController::getUser()['idRole']==2){
-                      $responsibleColumn = '<td style="text-align: center;">'.$user["name"].'</td>';
+                      $responsibleColumn = '<td style="text-align: center;">'.e($user["name"]).'</td>';
                   }else{
-                      $responsibleColumn = '<td>'.$user["name"].'</td>';
+                      $responsibleColumn = '<td>'.e($user["name"]).'</td>';
                   }
                   
                   $table.='<tr style=" color:'.$color_style.';">
@@ -873,11 +873,11 @@ $court = $c->getAll();
                               <td>'.date("d-m-Y", strtotime($p[6])).'</td>
                               <td>'.date("d-m-Y", strtotime($p[7])).'</td>
                               <td>'.date("d-m-Y", strtotime($p[8])).'</td>
-                              <td>'.$proc["numProcess"].'</td>
-                              <td>'.$vara["sigla"].'</td>
+                              <td>'.e($proc["numProcess"]).'</td>
+                              <td>'.e($vara["sigla"]).'</td>
                               '.$responsibleColumn.'
-                              <td>'.$proc["clientName"].'</td>
-                              <td>'.$p[9].'</td>
+                              <td>'.e($proc["clientName"]).'</td>
+                              <td>'.e($p[9]).'</td>
                               <td title="'.$title.'" style="color: '.$color_style.'">'.$style_status." ".$status.'</td>';
                               
                 if(AuthController::getUser()['idRole']==1){
@@ -885,12 +885,12 @@ $court = $c->getAll();
                   
                         
                           <a class="btn-floating btn-small green modal-trigger openModalStatus" 
-                          data-prov="'.$p[0].'" 
-                          data-done="'.$p[10].'"
-                          data-provided="'.$p[11].'"
+                          data-prov="'.e($p[0]).'" 
+                          data-done="'.e($p[10]).'"
+                          data-provided="'.e($p[11]).'"
                           title="Alterar status" href="#modal3"><i class="fa fa-th-list"></i></a>
-                          <a class="btn-floating btn-small blue" title="Editar providência" href="./updateProvidence.php?id='.$p[0].'"><i class="fa-solid fa-pencil"></i></a>
-                          <a class="btn-floating btn-small red deleteProvicendeBtn" title="Excluir providência" href="../services/Controller/DeleteProvidence.php?id='.$p[0].'"><i class="fa-solid fa-trash"></i></a>
+                          <a class="btn-floating btn-small blue" title="Editar providência" href="./updateProvidence.php?id='.e($p[0]).'"><i class="fa-solid fa-pencil"></i></a>
+                          <a class="btn-floating btn-small red deleteProvicendeBtn" title="Excluir providência" href="../services/Controller/DeleteProvidence.php?id='.e($p[0]).'"><i class="fa-solid fa-trash"></i></a>
                           ';
                 }
 
@@ -961,7 +961,7 @@ $court = $c->getAll();
                 if($providences!=null && isMobile()){
             ?>
 
-            <a href="<?php echo "../services/Controller/GeneratePDFControllerProv.php?id=0&".$params;?>">
+            <a href="<?php echo "../services/Controller/GeneratePDFControllerProv.php?id=0&".e($params);?>">
                 <button style="margin-left: 10px;background-color: #27c494; color:white;"
                     class="btn waves-effect waves-light" type="button" id="back">
                     Exportar PDF
@@ -973,7 +973,7 @@ $court = $c->getAll();
                 {
             ?>
 
-            <a target="_blank" href="<?php echo "../services/Controller/GeneratePDFControllerProv.php?id=0&".$params;?>">
+            <a target="_blank" href="<?php echo "../services/Controller/GeneratePDFControllerProv.php?id=0&".e($params);?>">
                 <button style="margin-left: 10px;background-color: #27c494; color:white;"
                     class="btn waves-effect waves-light" type="button" id="back">
                     Exportar PDF

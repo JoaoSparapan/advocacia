@@ -3,6 +3,14 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/advocacia/config.php";
 include_once $_SERVER['DOCUMENT_ROOT'] . "/advocacia/services/Controller/AuthController.php";
 include_once $_SERVER['DOCUMENT_ROOT'] . "/advocacia/services/Controller/Router.php";
 
+// escapa um valor para saída em HTML (conteúdo e atributos)
+if (!function_exists('e')) {
+  function e($value)
+  {
+    return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+  }
+}
+
 class GlobalController
 {
 

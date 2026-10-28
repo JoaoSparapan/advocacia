@@ -62,7 +62,7 @@ if(!isset($_SESSION['isOpenModal'])){
 
     <div>
         <div class="dashboard-title">
-            Bem-vindo, <?=AuthController::getUser()["name"]?>!
+            Bem-vindo, <?=e(AuthController::getUser()["name"])?>!
         </div>
         <div class="dashboard-subtitle">
             Sistema de gerenciamento da Advocacia Bertoldi
@@ -92,8 +92,8 @@ if(!isset($_SESSION['isOpenModal'])){
                             $proj = $pAnalise[$i];
                             echo "<tr>
                                     <td>" . date('d-m-Y', strtotime($proj[1])) . "</td>
-                                    <td>{$proj[9]}</td>
-                                    <td>{$proj[2]}</td>
+                                    <td>" . e($proj[9]) . "</td>
+                                    <td>" . e($proj[2]) . "</td>
                                 </tr>";
                         }
                     } else {
@@ -130,8 +130,8 @@ if(!isset($_SESSION['isOpenModal'])){
                             $proj = $pConc[$i];
                             echo "<tr>
                                     <td>" . date('d-m-Y', strtotime($proj[1])) . "</td>
-                                    <td>{$proj[9]}</td>
-                                    <td>{$proj[2]}</td>
+                                    <td>" . e($proj[9]) . "</td>
+                                    <td>" . e($proj[2]) . "</td>
                                 </tr>";
                         }
                     } else {
@@ -169,7 +169,7 @@ if(!isset($_SESSION['isOpenModal'])){
                             echo "<tr>
                                     <td>" . date('d-m-Y', strtotime($prov[7])) . "</td>
                                     <td>" . date('d-m-Y', strtotime($prov[8])) . "</td>
-                                    <td>{$prov[9]}</td>
+                                    <td>" . e($prov[9]) . "</td>
                                 </tr>";
                         }
                     } else {
@@ -207,7 +207,7 @@ if(!isset($_SESSION['isOpenModal'])){
                             echo "<tr>
                                     <td>" . date('d-m-Y', strtotime($prov[7])) . "</td>
                                     <td>" . date('d-m-Y', strtotime($prov[8])) . "</td>
-                                    <td>{$prov[9]}</td>
+                                    <td>" . e($prov[9]) . "</td>
                                 </tr>";
                         }
                     } else {

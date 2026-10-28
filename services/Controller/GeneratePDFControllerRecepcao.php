@@ -36,7 +36,7 @@
 			$start= explode("/",addslashes($_GET['dta-contract']));
 			if(sizeof($start)>1){
 
-				$start = $start[2]."-".$start[1]."-".$start[0];
+				$start = $start[2]."-".e($start[1])."-".$start[0];
 			}else{
 				$start="";
 			}
@@ -54,12 +54,12 @@
 			}else{
 			if(sizeof($end)>1){
 
-				$end = $end[2]."-".$end[1]."-".$end[0];
+				$end = $end[2]."-".e($end[1])."-".$end[0];
 				$end.=' 23:59:59';
 			}
 			if(sizeof($start)>1){
 
-				$start = $start[2]."-".$start[1]."-".$start[0];
+				$start = $start[2]."-".e($start[1])."-".$start[0];
 				$start.=' 00:00:00';
 			}
 			$receptions = $receptionController->getReceptionByPeriod($start, $end);
@@ -146,12 +146,12 @@
 		$html .= '<tr style="border: none;border-bottom: 1px solid rgb(209,209,209);"><td style="'.$style.'">'.$id.'</td>';
         $html .= '<td style="'.$style.'">'.date("d-m-Y", strtotime($p["arrival"])).'</td>';
 		$html .= '<td style="'.$style.'">'.$saida.'</td>';
-		$html .= '<td style="'.$style.'">'.$clo["name"].'</td>';
-        $html .= '<td style="'.$style.'">'.$phoneCli.'</td>';
-        $html .= '<td style="'.$style.'">'.$cpfCli.'</td>';
-        $html .= '<td style="'.$style.'">'.$resp["name"].'</td>';
-        $html .= '<td style="'.$style.'">'.$p["subject"].'</td>';
-		$html .= '<td style="'.$style.'">'.$n.'</td></tr>';
+		$html .= '<td style="'.$style.'">'.e($clo["name"]).'</td>';
+        $html .= '<td style="'.$style.'">'.e($phoneCli).'</td>';
+        $html .= '<td style="'.$style.'">'.e($cpfCli).'</td>';
+        $html .= '<td style="'.$style.'">'.e($resp["name"]).'</td>';
+        $html .= '<td style="'.$style.'">'.e($p["subject"]).'</td>';
+		$html .= '<td style="'.$style.'">'.e($n).'</td></tr>';
 
 	}
 	$html .= '</tbody>';

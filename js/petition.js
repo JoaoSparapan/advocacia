@@ -1,3 +1,8 @@
+// escapa texto antes de inseri-lo como HTML
+function escapeHtml(text) {
+  return String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
 $("#nproc").mask("0000000-00.0000/00", {
   onKeyPress: function (v, event, currentField) {
     if (v.length >= 15 && v.length <= 18) {
@@ -105,13 +110,13 @@ $(document).delegate(".openModalStatus", "click", function (event) {
     data = data[0].split("-");
     data = `${data[2]}/${data[1]}/${data[0]}`;
     if (logs[i][1] == 1) {
-      phrase = `<p style="margin:0;">Status da petição alterado para <b style='color: green;'>Distribuída</b> por ${logs[i][5]}</p>`;
+      phrase = `<p style="margin:0;">Status da petição alterado para <b style='color: green;'>Distribuída</b> por ${escapeHtml(logs[i][5])}</p>`;
     }else if(logs[i][1] == 2)
     {
-      phrase = `<p style="margin:0;">Status da petição alterado para <b style='color: red;'>Sem fundamento</b> por ${logs[i][5]}</p>`;
+      phrase = `<p style="margin:0;">Status da petição alterado para <b style='color: red;'>Sem fundamento</b> por ${escapeHtml(logs[i][5])}</p>`;
     } 
     else {
-      phrase = `<p style="margin:0;">Status da petição alterado para <b>Não Distribuída</b> por ${logs[i][5]}</p>`;
+      phrase = `<p style="margin:0;">Status da petição alterado para <b>Não Distribuída</b> por ${escapeHtml(logs[i][5])}</p>`;
     }
 
     result += `<div style="position: relative;border-radius: 0.3rem; padding: 0.5rem; background-color: #e0e0e0;"> 

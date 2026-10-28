@@ -77,15 +77,15 @@ $d = date('d-m-Y',strtotime($end[0]));
                         <i class="fa fa-bars"></i>
                         <span class="sr-only">Toggle Menu</span>
                     </button>
-                    Alterar informações da providência: <?= $provSelected['idProvidence'] ?>
+                    Alterar informações da providência: <?= e($provSelected['idProvidence']) ?>
                 </div>
             </nav>
             <div class="content-info-user">
 
                 <form class="col s12" method="POST" action="../services/Controller/UpdateProvidence.php">
                     <input name="id" style="display: none" type="text" required
-                        value="<?=$provSelected['idProvidence']?>">
-                        <input type="hidden" name="callback" value="<?=$_SERVER['HTTP_REFERER']?>">
+                        value="<?=e($provSelected['idProvidence'])?>">
+                        <input type="hidden" name="callback" value="<?=e($_SERVER['HTTP_REFERER'])?>">
                     <div class="row">
                     </div>
                     <div class="row computer">
@@ -93,7 +93,7 @@ $d = date('d-m-Y',strtotime($end[0]));
 
                             <i class="fa-solid fa-calendar-days prefix"></i>
                             <input name="data-intim" id="data-intim" type="date" min="2000-01-01T00:00"
-                                max="9999-12-31T00:00" required value="<?=$init[0]?>"
+                                max="9999-12-31T00:00" required value="<?=e($init[0])?>"
                                 style="background: transparent !important;">
                             <label for="data-intim">Data de disponibilização</label>
                             <span class="helper-text" data-error="Formato de Data incorreto"
@@ -104,7 +104,7 @@ $d = date('d-m-Y',strtotime($end[0]));
 
                             <i class="fa-solid fa-calendar-days prefix"></i>
                             <input name="data-publi" id="data-publi" type="date" min="2000-01-01T00:00"
-                                max="9999-12-31T00:00" required value="<?=$post[0]?>"
+                                max="9999-12-31T00:00" required value="<?=e($post[0])?>"
                                 style="background: transparent !important;">
                             <label for="data-publi">Data da publicação</label>
                             <span class="helper-text" data-error="Formato de Data incorreto"
@@ -117,7 +117,7 @@ $d = date('d-m-Y',strtotime($end[0]));
 
                             <i class="fa-solid fa-calendar-days prefix"></i>
                             <input name="data-intim" id="data-intim_mobile" type="date" min="2000-01-01T00:00"
-                                max="9999-12-31T00:00" required value="<?=$init[0]?>"
+                                max="9999-12-31T00:00" required value="<?=e($init[0])?>"
                                 style="min-width: 80% !important; background: transparent !important;">
                             <label for="data-intim_mobile" style="top: -5px !important;">Data de
                                 disponibilização</label>
@@ -131,7 +131,7 @@ $d = date('d-m-Y',strtotime($end[0]));
 
                             <i class="fa-solid fa-calendar-days prefix"></i>
                             <input name="data-publi" id="data-publi_mobile" type="date" min="2000-01-01T00:00"
-                                max="9999-12-31T00:00" required value="<?=$post[0]?>"
+                                max="9999-12-31T00:00" required value="<?=e($post[0])?>"
                                 style="min-width: 80% !important; background: transparent !important;">
                             <label for="data-publi_mobile" style="top: -5px !important;">Data da publicação</label>
                             <span class="helper-text" data-error="Formato de Data incorreto"
@@ -143,7 +143,7 @@ $d = date('d-m-Y',strtotime($end[0]));
                         <div class="input-field col s3">
                             <i class="fa-regular fa-file-lines prefix"></i>
                             <input name="providencia" id="providencia" type="text" list="providencia-options" class="validate" required
-                                value="<?=$provSelected['description']?>" style="background: transparent !important;">
+                                value="<?=e($provSelected['description'])?>" style="background: transparent !important;">
                             <datalist id="providencia-options">
                                 <option value="AGENDAR"></option>
                                 <option value="AGRAVO DE INSTRUMENTO"></option>
@@ -206,8 +206,8 @@ $d = date('d-m-Y',strtotime($end[0]));
                         
                         ?>
                             <i class="fa fa-id-card prefix"></i>
-                            <input data-listnproc="<?= $numProcList;?>" name="process" id="search_numProcess_inp"
-                                type="text" class="autocomplete validate" required value="<?=$atual['numProcess']?>"
+                            <input data-listnproc="<?= e($numProcList);?>" name="process" id="search_numProcess_inp"
+                                type="text" class="autocomplete validate" required value="<?=e($atual['numProcess'])?>"
                                 style="background: transparent !important;">
                             <label for="qte-dias">Num. Processo</label>
                             <a class="modal-trigger" href="#modalproc">
@@ -224,7 +224,7 @@ $d = date('d-m-Y',strtotime($end[0]));
 
                             <i class="fa-solid fa-list-ol prefix"></i>
                             <input name="qte-dias" min="1" id="qte-dias" type="number" class="validate" required
-                                value="<?=$provSelected['term']?>" style="background: transparent !important;">
+                                value="<?=e($provSelected['term'])?>" style="background: transparent !important;">
                             <label for="qte-dias">Quantidade de dias</label>
                             <span class="helper-text" data-error="Insira o número de dias"
                                 data-success="Correto!"></span>

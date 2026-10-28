@@ -15,7 +15,7 @@ if(AuthController::getUser()['idRole']=="2"){
 ?>
 <div class="logout-div">
     <div>
-        <p><?=AuthController::getUser()['name']?></p>
+        <p><?=e(AuthController::getUser()['name'])?></p>
         <p>
             <?=$role?>
         </p>
