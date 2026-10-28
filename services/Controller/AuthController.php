@@ -51,12 +51,15 @@ if (!class_exists('AuthController')) {
             $encrypt_pass = crypt($password, '$1$rasmusle$');
             $conn = $this->connectDB();
 
-            $query = mysqli_query($conn, "
+            $stmt = mysqli_prepare($conn, "
                 SELECT * FROM user
-                WHERE email = '$email'
-                AND password = '$encrypt_pass'
+                WHERE email = ?
+                AND password = ?
                 LIMIT 1
             ");
+            mysqli_stmt_bind_param($stmt, 'ss', $email, $encrypt_pass);
+            mysqli_stmt_execute($stmt);
+            $query = mysqli_stmt_get_result($stmt);
 
             $result = null;
             if ($query && mysqli_num_rows($query) > 0) {
@@ -91,14 +94,17 @@ if (!class_exists('AuthController')) {
             $conn = $this->connectDB();
             $now = date('Y-m-d H:i:s');
 
-            $query = mysqli_query($conn, "
+            $stmt = mysqli_prepare($conn, "
                 SELECT * FROM auth_sessions
-                WHERE user_id = '$user_id'
-                AND verification_code = '$codigo'
-                AND expires_at > '$now'
+                WHERE user_id = ?
+                AND verification_code = ?
+                AND expires_at > ?
                 AND verified = 0
                 LIMIT 1
             ");
+            mysqli_stmt_bind_param($stmt, 'iss', $user_id, $codigo, $now);
+            mysqli_stmt_execute($stmt);
+            $query = mysqli_stmt_get_result($stmt);
 
             $session = mysqli_fetch_assoc($query);
 
