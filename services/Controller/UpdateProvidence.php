@@ -12,11 +12,17 @@
         echo $exc->alerts("error", "Erro");
         exit;
     }
+    if(AuthController::getUser()['idRole'] != 1){
+        header("Refresh: 2, url=../../pages/providences.php");
+        $exc = new ExceptionAlert("Você não tem permissão para alterar providências.");
+        echo $exc->alerts("error", "Acesso negado");
+        exit;
+    }
     $startDate = addslashes($_POST['data-intim']);
     $postDate = addslashes($_POST['data-publi']);
     $numProcess = addslashes($_POST['process']);
     $providencia = addslashes($_POST['providencia']);
-    $id = addslashes($_POST['id']);
+    $id = (int) $_POST['id'];
     $url_callback=addslashes($_POST['callback']);
     
 

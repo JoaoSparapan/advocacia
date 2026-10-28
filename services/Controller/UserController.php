@@ -10,6 +10,7 @@ class UserController extends GlobalController{
     public function insertUser($name='', $cpf='', $password='', $email='', $idRole=2){
         $conn = $this->connectDB();
         $encrypt_pass = crypt($password, '$1$rasmusle$');
+        $idRole = (int) $idRole;
         $query = "INSERT INTO user(name,cpf,password,email,idRole) VALUES('$name', '$cpf','$encrypt_pass','$email', $idRole)";
         $vrf = ($this->getByCpf($cpf));
         $vrfEmail=($this->getByEmail($email));
@@ -52,6 +53,7 @@ class UserController extends GlobalController{
 
     public function getByRole($role=4){
         $conn = $this->connectDB();
+        $role = (int) $role;
         $query = "SELECT * FROM user WHERE idRole=$role";
         $result = mysqli_query($conn, $query);
         $r=null;
@@ -64,6 +66,7 @@ class UserController extends GlobalController{
 
     public function getAdminAndColaboradorAll($role=4){
         $conn = $this->connectDB();
+        $role = (int) $role;
         $query = "SELECT * FROM user WHERE idRole!=$role";
         $result = mysqli_query($conn, $query);
         $r=null;
@@ -76,6 +79,7 @@ class UserController extends GlobalController{
 
     public function getAdminAndColaboradorByEmail($email,$role=4){
         $conn = $this->connectDB();
+        $role = (int) $role;
         $query = "SELECT * FROM user WHERE email='$email' and idRole!=$role";
         $result = mysqli_query($conn, $query);
         $r=null;
@@ -100,6 +104,7 @@ class UserController extends GlobalController{
 
     public function getById($id=1){
         $conn = $this->connectDB();
+        $id = (int) $id;
         $query = "SELECT * FROM user WHERE idUser=$id";
         $result = mysqli_query($conn, $query);
         $r = mysqli_fetch_assoc($result);
@@ -119,6 +124,7 @@ class UserController extends GlobalController{
         
         if(AuthController::getUser()['idRole']==1){
             $conn = $this->connectDB();
+            $idUser = (int) $idUser;
             mysqli_query($conn, "DELETE FROM auth_sessions WHERE user_id = $idUser");
             $query = "DELETE FROM user WHERE idUser=$idUser";
             $result = mysqli_query($conn, $query);
@@ -154,6 +160,7 @@ class UserController extends GlobalController{
         
         $conn = $this->connectDB();
         if(AuthController::getUser()['email']==$email){
+            $idUser = (int) $idUser;
             $query = "UPDATE user SET name='$name',password='$pass',cpf='$cpf', email='$email' WHERE idUser=$idUser";            
             $r = mysqli_query($conn, $query);
             if($r){
@@ -195,6 +202,7 @@ class UserController extends GlobalController{
         $vrfEmail = $this->getByEmail($email);
 
         if($vrfEmail == NULL){
+            $idUser = (int) $idUser;
             $query = "UPDATE user SET cpf='$cpf',name='$name', email='$email', idRole='$idRole' WHERE idUser=$idUser";            
             $r = mysqli_query($conn, $query);
             if($r){

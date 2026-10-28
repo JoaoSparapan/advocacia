@@ -31,7 +31,7 @@ if ($user != null) {
         }
     }
 
-    $codigo = rand(100000, 999999);
+    $codigo = random_int(100000, 999999);
     $auth->createVerificationSession($user_id, $codigo);
 
     $mailTemplate = new TwoFactorMail($codigo, $user['name']);
@@ -41,12 +41,12 @@ if ($user != null) {
     $phpmailer->isSMTP();
     $phpmailer->SMTPAuth = true;
     $phpmailer->SMTPSecure = 'ssl';
-    $phpmailer->Host = 'smtp.hostinger.com';
-    $phpmailer->Port = 465;
+    $phpmailer->Host = Config::$smtpHost;
+    $phpmailer->Port = Config::$smtpPort;
     $phpmailer->CharSet = 'UTF-8';
-    $phpmailer->Username = 'sendemail@advbertoldi.com.br';
-    $phpmailer->Password = 'Email@123';
-    $phpmailer->setFrom('sendemail@advbertoldi.com.br', 'Sistema de Gerenciamento - Advocacia Bertoldi');
+    $phpmailer->Username = Config::$smtpUser;
+    $phpmailer->Password = Config::$smtpPass;
+    $phpmailer->setFrom(Config::$smtpUser, 'Sistema de Gerenciamento - Advocacia Bertoldi');
     $phpmailer->addAddress($user['email'], $user['name']);
     $phpmailer->isHTML(true);
     $phpmailer->Subject = 'Seu código de verificação';

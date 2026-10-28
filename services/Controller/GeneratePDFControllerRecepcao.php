@@ -110,6 +110,9 @@
 	$html .= '</thead>';
 	$html .= '<tbody>';
 	
+	if(!is_array($receptions)){
+		$receptions = [];
+	}
 	for($i=0;$i<sizeof($receptions);$i++){
         $p = $receptions[$i];
 		$id = $i+1;

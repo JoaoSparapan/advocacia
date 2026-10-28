@@ -3,12 +3,19 @@
     include_once './ClientController.php';
     include_once '../Models/Exceptions.php';
 
+    if(AuthController::getUser()['idRole'] != 1 && AuthController::getUser()['idRole'] != 2){
+        header("Refresh: 2, url=../../pages/clients.php");
+        $exc = new ExceptionAlert("Você não tem permissão para alterar clientes.");
+        echo $exc->alerts("error", "Acesso negado");
+        exit;
+    }
+
     
     $name = addslashes($_POST['name']);
     $email=addslashes($_POST['email']);
     $cpf=addslashes($_POST['cpf']);
     $phone=addslashes($_POST['phone']);
-    $id = addslashes($_POST['id']);
+    $id = (int) $_POST['id'];
 
     if(isset($_POST['name'])==false || isset($_POST['email'])==false || isset($_POST['cpf'])==false ||
     isset($_POST['phone'])==false){

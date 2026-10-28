@@ -3,11 +3,18 @@
     include_once './ProcessController.php';
     include_once '../Models/Exceptions.php';
 
+    if(AuthController::getUser()['idRole'] != 1){
+        header("Refresh: 2, url=../../pages/process.php");
+        $exc = new ExceptionAlert("Você não tem permissão para alterar processos.");
+        echo $exc->alerts("error", "Acesso negado");
+        exit;
+    }
+
     
     $name = addslashes($_POST['nome']);
     $vara=addslashes($_POST['court']);
     $client=addslashes($_POST['client']);
-    $id = addslashes($_POST['id']);
+    $id = (int) $_POST['id'];
     $adv = addslashes($_POST['adv']);
 
     if(isset($_POST['name'])==false || isset($_POST['client'])==false || isset($_POST['vara'])==false){

@@ -43,6 +43,7 @@ if (!class_exists('AuthController')) {
 
         public static function setUser($user)
         {
+            session_regenerate_id(true);
             $_SESSION['user'] = $user;
         }
 

@@ -97,6 +97,9 @@ $html .= '</tr>';
 $html .= '</thead>';
 $html .= '<tbody>';
 
+if (!is_array($fronts)) {
+	$fronts = [];
+}
 for ($i = 0; $i < sizeof($fronts); $i++) {
 	$p = $fronts[$i];
 	$idTabela = $i + 1;

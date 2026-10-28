@@ -146,6 +146,9 @@
 	$html .= '</thead>';
 	$html .= '<tbody>';
 	
+	if(!is_array($petitions)){
+		$petitions = [];
+	}
 	for($i=0;$i<sizeof($petitions);$i++){
         $p = $petitions[$i];
 		$id = $i+1;

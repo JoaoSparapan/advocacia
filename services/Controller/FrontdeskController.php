@@ -227,6 +227,7 @@ class FrontdeskController extends GlobalController
     {
         $conn = $this->connectDB();
         $id = intval($id);
+        $id = (int) $id;
         $query = "SELECT * FROM frontdesk WHERE idFrontdesk=$id";
         $result = mysqli_query($conn, $query);
         $registro = null;
@@ -298,6 +299,7 @@ class FrontdeskController extends GlobalController
 
         $conn = $this->connectDB();
 
+        $id = (int) $id;
         $query = "
             UPDATE frontdesk SET 
                 nome = '$nome',
@@ -376,6 +378,7 @@ class FrontdeskController extends GlobalController
             }
             $conn = $this->connectDB();
 
+            $id = (int) $id;
             $query = "DELETE FROM frontdesk WHERE idFrontDesk=$id";
     
             $result=NULL;

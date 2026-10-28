@@ -9,6 +9,9 @@ class Pagination{
 
     public function createPagination($page="1",$users=[],$url="users", $params=""){
 
+            $page = intval($page);
+            $url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
+            $params = htmlspecialchars($params, ENT_QUOTES, 'UTF-8');
             $div = intval(sizeof($users)/10);
             $pagination="";
             if(intval($page)<=1){

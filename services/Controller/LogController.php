@@ -9,10 +9,13 @@ class LogController extends GlobalController{
 
     public function insertLog($edited_by='',$description=0,$idUser=0,$idPetition=0){
         $conn = $this->connectDB();
+        $description = (int) $description;
         $aux = $this->getAllLastLogByPetition($idPetition);
         $query = "";
         if($aux==null)
         {
+            $idPetition = (int) $idPetition;
+            $idUser = (int) $idUser;
             $query = "INSERT INTO log(edited_by,description,idUser,idPetition) VALUES('$edited_by', $description,$idUser,$idPetition)";
         }else{
             if($aux['description']==$description)
@@ -31,6 +34,7 @@ class LogController extends GlobalController{
     public function deleteLog($idPetition)
     {
         $conn = $this->connectDB();
+        $idPetition = (int) $idPetition;
         $query = "DELETE FROM log WHERE idPetition=$idPetition";
         $result = mysqli_query($conn, $query);
         $this->disconnectDB($conn);
@@ -40,6 +44,7 @@ class LogController extends GlobalController{
     public function getLogByPetition($idPetition)
     {
         $conn = $this->connectDB();
+        $idPetition = (int) $idPetition;
         $query = "SELECT log.*,u.name FROM log INNER JOIN user u on (u.idUser = log.idUser) WHERE idPetition=$idPetition ORDER BY edited_by ASC";
         // echo $query;
         $result = mysqli_query($conn, $query);
