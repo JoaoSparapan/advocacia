@@ -44,7 +44,35 @@ if (!class_exists('AuthController')) {
         public static function setUser($user)
         {
             session_regenerate_id(true);
+            self::sendSessionCookie();
             $_SESSION['user'] = $user;
+        }
+
+        // A Hostinger ignora o .user.ini, então as flags do cookie de sessão são definidas aqui
+        private static function sendSessionCookie()
+        {
+            if (headers_sent()) {
+                return;
+            }
+            // remove o Set-Cookie da sessão enviado sem flags, mantendo os demais cookies
+            $others = array_filter(headers_list(), function ($h) {
+                return stripos($h, 'Set-Cookie: ' . session_name() . '=') !== 0
+                    && stripos($h, 'Set-Cookie:') === 0;
+            });
+            header_remove('Set-Cookie');
+            foreach ($others as $h) {
+                header($h, false);
+            }
+
+            $params = session_get_cookie_params();
+            setcookie(session_name(), session_id(), [
+                'expires' => $params['lifetime'] > 0 ? time() + $params['lifetime'] : 0,
+                'path' => $params['path'],
+                'domain' => $params['domain'],
+                'secure' => $params['secure'] || (($_SERVER['HTTPS'] ?? '') === 'on'),
+                'httponly' => true,
+                'samesite' => 'Lax'
+            ]);
         }
 
         public function verifyUser($email = '', $password = '')
