@@ -1,9 +1,9 @@
 <?php
+include_once $_SERVER['DOCUMENT_ROOT'] . "/advocacia/config.php";
 
 class HolidayController
 {
     private string $cachePath = "../../files/";
-    private string $token = "2587%7Cg5ZUyNmCx098wx0ktPZ8AHrPki8xIosR";
     private string $state = "SP";
 
     /* ===============================
@@ -12,7 +12,8 @@ class HolidayController
 
     private function requestHolidayInAPI(int $year): array
     {
-        $url = "https://api.invertexto.com/v1/holidays/{$year}?token={$this->token}&state={$this->state}";
+        $token = Config::$holidayToken;
+        $url = "https://api.invertexto.com/v1/holidays/{$year}?token={$token}&state={$this->state}";
         $response = file_get_contents($url);
 
         return $response ? json_decode($response, true) : [];

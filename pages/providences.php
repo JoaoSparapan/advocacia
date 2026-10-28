@@ -763,7 +763,7 @@ $court = $c->getAll();
                   
                   if(intval($_GET['pagination_number']) >=1){
                       
-                      $page = $_GET['pagination_number'];
+                      $page = (int) $_GET['pagination_number'];
                       $diff=(sizeof($providences) - (intval($page)*10));
               
                       if($diff==0){

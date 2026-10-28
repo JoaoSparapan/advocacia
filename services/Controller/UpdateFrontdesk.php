@@ -6,6 +6,13 @@ include_once './FrontdeskController.php';
 include_once '../Models/Exceptions.php';
 include_once './AuthController.php';
 
+if(AuthController::getUser()['idRole'] != 1 && AuthController::getUser()['idRole'] != 2){
+    header("Refresh: 2, url=../../pages/frontdesk.php");
+    $exc = new ExceptionAlert("Você não tem permissão para alterar atendimentos.");
+    echo $exc->alerts("error", "Acesso negado");
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     exit('Método não permitido');

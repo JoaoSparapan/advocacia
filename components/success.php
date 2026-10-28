@@ -16,8 +16,8 @@
     <script type="text/javascript" src="../js/swal/sweetalert2.all.min.js"></script>
     <script type="text/javascript">
     window.onload = function() {
-        var v = "<?php echo $msg; ?>";
-        var t = "<?php echo $time; ?>";
+        var v = <?php echo json_encode($msg, JSON_HEX_TAG | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_HEX_APOS); ?>;
+        var t = <?php echo (int) $time; ?>;
         Swal.fire({
             icon: 'success',
             title: 'Sucesso',

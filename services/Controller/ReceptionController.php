@@ -3,9 +3,6 @@
 
     class ReceptionController extends GlobalController{
 
-        function construct(){
-            parent::construct();
-        }
 
         public function createReception($arrival=NULL, $leave=NULL, $idResponsavel=NULL, $idClient=NULL,$assunto=NULL,$prov=NULL){
 
@@ -15,6 +12,8 @@
 
             $conn = $this->connectDB();
 
+            $idClient = (int) $idClient;
+            $idResponsavel = (int) $idResponsavel;
             $query = "INSERT INTO reception (`arrival`, `leave`, `subject`,`providence`,idResponsavel, idClient)
             VALUES ('$arrival',null, '$assunto', '$prov',$idResponsavel, $idClient)";
             //echo $query;exit;
@@ -53,6 +52,7 @@
         public function getAllReceptionById($receptionId=NULL,$order_direction="DESC"){
             $conn = $this->connectDB();
 
+            $receptionId = (int) $receptionId;
             $query = "SELECT * FROM reception WHERE idReception=$receptionId ORDER BY arrival $order_direction";
     
             $result=NULL;
@@ -83,6 +83,7 @@
         public function getAllReceptionByResponsavel($responsavelId=NULL,$order_direction="DESC"){
             $conn = $this->connectDB();
 
+            $responsavelId = (int) $responsavelId;
             $query = "SELECT * FROM reception WHERE idResponsavel=$responsavelId ORDER BY arrival $order_direction";
 
             $result=NULL;
@@ -102,6 +103,7 @@
         public function getAllReceptionByClientId($clientId=NULL,$order_direction="DESC"){
             $conn = $this->connectDB();
 
+            $clientId = (int) $clientId;
             $query = "SELECT * FROM reception  WHERE idClient=$clientId ORDER BY arrival $order_direction";
     
             $result=NULL;
@@ -252,6 +254,7 @@
             }
 
             $conn = $this->connectDB();
+            $id = (int) $id;
             $query="UPDATE reception SET `leave`='$leave' WHERE idReception=$id";
             //echo $query;exit;
             $result=NULL;
@@ -314,6 +317,7 @@
             }
             $conn = $this->connectDB();
 
+            $id = (int) $id;
             $query = "DELETE FROM reception WHERE idReception=$id";
     
             $result=NULL;

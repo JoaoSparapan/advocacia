@@ -7,7 +7,7 @@ class ProcessController extends GlobalController{
         parent::__construct();
     }
 
-    public function insertProcess($numproc='', $client='', $idCourt='',$idUser){
+    public function insertProcess($numproc, $client, $idCourt, $idUser){
         $conn = $this->connectDB();
         
         if($this->isAlreadyExists($numproc)){
@@ -16,6 +16,8 @@ class ProcessController extends GlobalController{
             return $result;
         }
 
+        $idCourt = (int) $idCourt;
+        $idUser = (int) $idUser;
         $query = "INSERT INTO process(numProcess,clientName,idCourt,idUser) VALUES('$numproc','$client',$idCourt,$idUser)";
         $result=NULL;
         $result = mysqli_query($conn, $query);
@@ -36,6 +38,7 @@ class ProcessController extends GlobalController{
         
         if(AuthController::getUser()['idRole']==1){
             $conn = $this->connectDB();
+            $id = (int) $id;
             $query = "DELETE FROM process WHERE idProcess=$id";
             $result = mysqli_query($conn, $query);
             $this->disconnectDB($conn);
@@ -54,6 +57,8 @@ class ProcessController extends GlobalController{
         
         $conn = $this->connectDB();
         
+        $idProcess = (int) $idProcess;
+        $idUser = (int) $idUser;
         $query = "UPDATE process SET numProcess='$numproc',clientName='$clientName',idCourt='$idCourt', idUser=$idUser WHERE idProcess=$idProcess";          
         $r = mysqli_query($conn, $query);
         if($r){
@@ -69,6 +74,7 @@ class ProcessController extends GlobalController{
 
     public function getById($idProcess=1){
         $conn = $this->connectDB();
+        $idProcess = (int) $idProcess;
         $query = "SELECT * FROM process WHERE idProcess=$idProcess";
         $result = mysqli_query($conn, $query);
         $r = mysqli_fetch_assoc($result);
@@ -83,6 +89,7 @@ class ProcessController extends GlobalController{
         {
             $query = "SELECT * FROM process";
         }else{
+            $idCourt = (int) $idCourt;
             $query = "SELECT * FROM process WHERE idCourt=$idCourt";
         }
         $result=null;
@@ -169,6 +176,8 @@ class ProcessController extends GlobalController{
         
         $conn = $this->connectDB();
         
+        $idProcess = (int) $idProcess;
+        $idUser = (int) $idUser;
         $query = "UPDATE process SET idUser=$idUser WHERE idProcess=$idProcess";          
         $r = mysqli_query($conn, $query);
         if($r){

@@ -41,6 +41,7 @@ class VaraController extends GlobalController{
 
    public function getById($id=1){
     $conn = $this->connectDB();
+    $id = (int) $id;
     $query = "SELECT * FROM court WHERE idCourt=$id";
     $result = mysqli_query($conn, $query);
     $r = mysqli_fetch_assoc($result);
@@ -54,6 +55,7 @@ class VaraController extends GlobalController{
     }
     $result=false;
     $conn = $this->connectDB();
+    $id = (int) $id;
     $q="SELECT * FROM process p where p.idCourt=$id";
     $command = mysqli_query($conn, $q);
     $result = mysqli_fetch_assoc($command);

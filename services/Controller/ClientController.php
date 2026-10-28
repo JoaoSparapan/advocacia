@@ -69,6 +69,7 @@ class ClientController extends GlobalController{
 
     public function getById($id=1){
         $conn = $this->connectDB();
+        $id = (int) $id;
         $query = "SELECT * FROM client WHERE idClient=$id";
         $result = mysqli_query($conn, $query);
         $r = mysqli_fetch_assoc($result);
@@ -88,6 +89,7 @@ class ClientController extends GlobalController{
         
         if(AuthController::getUser()['idRole']==1 ||AuthController::getUser()['idRole']==2){
             $conn = $this->connectDB();
+            $idClient = (int) $idClient;
             $query = "DELETE FROM client WHERE idClient=$idClient";
             $result = mysqli_query($conn, $query);
             $this->disconnectDB($conn);
@@ -106,6 +108,7 @@ class ClientController extends GlobalController{
         
         $conn = $this->connectDB();
         
+        $idClient = (int) $idClient;
         $query = "UPDATE client SET cpf='$cpf',name='$name', email='$email', phone='$phone' WHERE idClient=$idClient";     
         $r = mysqli_query($conn, $query);
         if($r){

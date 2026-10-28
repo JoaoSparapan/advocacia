@@ -4,6 +4,7 @@ if (PHP_SAPI !== 'cli') {
     exit;
 }
 date_default_timezone_set('America/Sao_Paulo');
+require_once __DIR__ . "/config.php";
 require __DIR__ . "/services/Models/UserMail.php";
 require __DIR__ . "/services/Controller/PetitionController.php";
 include_once "./services/Controller/LogController.php";
@@ -160,13 +161,13 @@ $phpmailer->isSMTP();
 $phpmailer->SMTPAuth = true;
 $phpmailer->SMTPSecure = 'ssl';
 $phpmailer->CharSet="UTF-8";
-$phpmailer->Host = 'smtp.hostinger.com';
-$phpmailer->Port = 465;
-$phpmailer->Username = 'sendemail@advbertoldi.com.br';
-$phpmailer->Password = 'Email@123';
+$phpmailer->Host = Config::$smtpHost;
+$phpmailer->Port = Config::$smtpPort;
+$phpmailer->Username = Config::$smtpUser;
+$phpmailer->Password = Config::$smtpPass;
 
 $orig='Advocacia Bertoldi';
-$phpmailer->setFrom('sendemail@advbertoldi.com.br',$orig); //Origem
+$phpmailer->setFrom(Config::$smtpUser,$orig); //Origem
 $phpmailer->addAddress('sparapan15@hotmail.com');     //Destinatario      
 
 //Conteudo

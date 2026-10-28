@@ -9,6 +9,8 @@ class ProvidenceController extends GlobalController{
 
     public function insertProvidence($idProcess='', $startDate='', $postDate='',$endDate='', $description='', $prazo=0,$state=0,$national=0,$type=0,$done=0, $providenced=0){
         $conn = $this->connectDB();
+        $done = (int) $done;
+        $providenced = (int) $providenced;
         $query = "INSERT INTO providence(idProcess,term,Hstate,Hnational,type,startDate,postDate,endDate,description,done,providenced) VALUES('$idProcess', '$prazo','$state','$national','$type','$startDate','$postDate','$endDate','$description', $done, $providenced)";
 
         $result=NULL;
@@ -26,6 +28,7 @@ class ProvidenceController extends GlobalController{
 
     public function getProvidenceById($id){
         $conn = $this->connectDB();
+        $id = (int) $id;
         $query = "SELECT * FROM providence WHERE idProvidence=$id";
         $result = mysqli_query($conn, $query);
         $r = mysqli_fetch_assoc($result);
@@ -35,6 +38,7 @@ class ProvidenceController extends GlobalController{
 
     public function getProvidenceByClient($idClient=''){
         $conn = $this->connectDB();
+        $idClient = (int) $idClient;
         $query = "SELECT providence.startDate,providence.endDate,process.numProcess,court.sigla,client.name,providence.description,providence.done,providence.providenced FROM providence 
                         INNER JOIN process ON (process.idProcess = providence.idProcess) 
                         INNER JOIN client ON (process.idClient = client.idClient)
@@ -48,6 +52,7 @@ class ProvidenceController extends GlobalController{
     public function getProvidenceByResponsibleUser($name_user="", $providenced=0){
         
         $conn = $this->connectDB();
+        $providenced = (int) $providenced;
         $query = "SELECT *
         from providence
         inner join process on (process.idProcess = providence.idProcess) 
@@ -82,6 +87,7 @@ class ProvidenceController extends GlobalController{
         if($date_end==""){
             return ['error', 'Data final não providenciada'];
         }
+        $providenced = (int) $providenced;
         $query = "SELECT * FROM providence p 
         INNER JOIN process on (process.idProcess = p.idProcess)
         WHERE p.startDate>= '$date_start' AND p.startDate<= '$date_end' AND p.providenced=$providenced ORDER BY endDate ASC";
@@ -109,6 +115,7 @@ class ProvidenceController extends GlobalController{
         }
         if(trim($date_start)=="00:00:00" && trim($date_end)=="23:59:59")
         {
+            $providenced = (int) $providenced;
             $query = "SELECT * FROM providence 
             INNER JOIN process on (process.idProcess = providence.idProcess)
             WHERE providenced=$providenced ORDER BY endDate ASC";
@@ -131,6 +138,7 @@ class ProvidenceController extends GlobalController{
 
     public function getProvidenceInProgress($providenced=0){
         $conn = $this->connectDB();
+        $providenced = (int) $providenced;
         $query = "SELECT * FROM providence 
         INNER JOIN process on (process.idProcess = providence.idProcess)
         WHERE providenced=$providenced ORDER BY endDate ASC";
@@ -181,6 +189,7 @@ class ProvidenceController extends GlobalController{
     public function getProvidenceByNumProcess($numproc=0,$providenced=0){
         
         $conn = $this->connectDB();
+        $providenced = (int) $providenced;
         $query = "SELECT 
         *
         from providence 
@@ -224,6 +233,8 @@ class ProvidenceController extends GlobalController{
     public function getProvidenceByCourt($courtId=0, $providenced=0){
         
         $conn = $this->connectDB();
+        $courtId = (int) $courtId;
+        $providenced = (int) $providenced;
         $query = "SELECT *
         from providence 
         inner join process on (process.idProcess = providence.idProcess) 
@@ -247,6 +258,7 @@ class ProvidenceController extends GlobalController{
     public function getProvidenceByClientName($name="", $providenced=0){
         
         $conn = $this->connectDB();
+        $providenced = (int) $providenced;
         $query = "SELECT *
         from providence 
         inner join process on (process.idProcess = providence.idProcess) 
@@ -292,6 +304,7 @@ class ProvidenceController extends GlobalController{
         
         if(AuthController::getUser()['idRole']==1){
             $conn = $this->connectDB();
+            $id = (int) $id;
             $query = "DELETE FROM providence WHERE idProvidence=$id";
             $result = mysqli_query($conn, $query);
             $this->disconnectDB($conn);
@@ -314,6 +327,7 @@ class ProvidenceController extends GlobalController{
         $vrf=($this->getProvidenceById($idProvidence));
         
         if($vrf){
+            $idProvidence = (int) $idProvidence;
             $query = "UPDATE providence SET idProcess='$idProcess',startDate='$startDate',postDate='$postDate',endDate='$endDate',description='$description',term='$prazo',Hstate='$state',Hnational='$national',type='$type' WHERE idProvidence=$idProvidence";            
             $r = mysqli_query($conn, $query);
             if($r){
@@ -339,6 +353,7 @@ class ProvidenceController extends GlobalController{
         $vrf=($this->getProvidenceById($idProvidence));
         
         if($vrf){
+            $idProvidence = (int) $idProvidence;
             $query = "UPDATE providence SET done='b'.'$done' WHERE idProvidence=$idProvidence";            
             $r = mysqli_query($conn, $query);
             if($r){
@@ -364,6 +379,7 @@ class ProvidenceController extends GlobalController{
         $vrf=($this->getProvidenceById($idProvidence));
         
         if($vrf){
+            $idProvidence = (int) $idProvidence;
             $query = "UPDATE providence SET providenced='b'.'$providenced' WHERE idProvidence=$idProvidence";        
             echo $query;exit;    
             $r = mysqli_query($conn, $query);
@@ -390,6 +406,7 @@ class ProvidenceController extends GlobalController{
         $vrf=($this->getProvidenceById($idProvidence));
         
         if($vrf){
+            $idProvidence = (int) $idProvidence;
             $query = "UPDATE providence SET providenced=b'$providenced', done=b'$done' WHERE idProvidence=$idProvidence";            
             $r = mysqli_query($conn, $query);
             if($r){

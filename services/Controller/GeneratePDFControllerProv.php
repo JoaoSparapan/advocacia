@@ -101,6 +101,9 @@
 	$html .= '</thead>';
 	$html .= '<tbody>';
 	
+	if(!is_array($providences)){
+		$providences = [];
+	}
 	for($i=0;$i<sizeof($providences);$i++){
         $p = $providences[$i];
 		$id = $i+1;

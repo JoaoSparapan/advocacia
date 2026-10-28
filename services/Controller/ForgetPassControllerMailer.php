@@ -38,14 +38,14 @@ if($user==null)
         $phpmailer->isSMTP();
         $phpmailer->SMTPAuth = true;
         $phpmailer->SMTPSecure = 'ssl'; 
-        $phpmailer->Host = 'smtp.hostinger.com';
+        $phpmailer->Host = Config::$smtpHost;
         $phpmailer->CharSet="UTF-8";
-        $phpmailer->Port = "465";
-        $phpmailer->Username = "sendemail@advbertoldi.com.br";
-        $phpmailer->Password = 'Email@123';
+        $phpmailer->Port = Config::$smtpPort;
+        $phpmailer->Username = Config::$smtpUser;
+        $phpmailer->Password = Config::$smtpPass;
 
         $orig='Sistema de Gerenciamento - Advocacia Bertoldi';
-        $phpmailer->setFrom('sendemail@advbertoldi.com.br', $orig); //Origem
+        $phpmailer->setFrom(Config::$smtpUser, $orig); //Origem
         $phpmailer->addAddress($user[0]['email'], $user[0]['name']);     //Destinatario      
 
         //Conteudo

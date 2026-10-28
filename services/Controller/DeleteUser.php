@@ -2,9 +2,6 @@
 session_start();
 require_once $_SERVER['DOCUMENT_ROOT']."/advocacia/services/Controller/RequireLogin.php";
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 require_once './UserController.php';
 require_once '../Models/Exceptions.php';
 

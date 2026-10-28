@@ -15,9 +15,9 @@ $name = addslashes($_POST['nome']);
 $email= addslashes($_POST['email']);
 $password = addslashes($_POST['senha']);
 $cpf=addslashes($_POST['cpf']);
-$idRole= addslashes($_POST['role']);
+$idRole= (int) $_POST['role'];
 
-if(AuthController::getUser()!=null){
+if(AuthController::getUser()!=null && AuthController::getUser()['idRole']!=2){
 
     $url_callback="../../pages/users.php";
        

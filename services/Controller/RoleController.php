@@ -12,6 +12,7 @@ class RoleController extends GlobalController{
         if($conn==NULL){
             $conn = $this->connectDB();
         }
+        $id = (int) $id;
         $query = "SELECT * FROM role WHERE idRole = $id";
         $result = mysqli_query($conn,$query);
         $r=false;
