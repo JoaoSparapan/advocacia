@@ -20,4 +20,3 @@
         $exc = new ExceptionAlert($r[1]);
         echo $exc->alerts('error','Erro');
     }
-

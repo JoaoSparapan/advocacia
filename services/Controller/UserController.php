@@ -119,6 +119,7 @@ class UserController extends GlobalController{
         
         if(AuthController::getUser()['idRole']==1){
             $conn = $this->connectDB();
+            mysqli_query($conn, "DELETE FROM auth_sessions WHERE user_id = $idUser");
             $query = "DELETE FROM user WHERE idUser=$idUser";
             $result = mysqli_query($conn, $query);
             $this->disconnectDB($conn);

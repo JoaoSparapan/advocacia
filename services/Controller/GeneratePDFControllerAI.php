@@ -91,6 +91,7 @@ $html .= '<th><b>Contato Indicação</b></th>';
 $html .= '<th><b>Cadastrado por</b></th>';
 $html .= '<th><b>Atualização</b></th>';
 $html .= '<th><b>Arquivos gerados</b></th>';
+$html .= '<th><b>Palavra-chave</b></th>';
 $html .= '</tr>';
 $html .= '</thead>';
 $html .= '<tbody>';
@@ -172,6 +173,7 @@ for ($i = 0; $i < sizeof($fronts); $i++) {
 	$html .= '<td style="' . $style . '">' . $u["usuario"] . '</td>';
 	$html .= '<td style="' . $style . '">' . date("d-m-Y", strtotime($u["data_cadastro"])) . '</td>';
 	$html .= '<td style="' . $style . '">' . $docsDisplayString . '</td>';
+	$html .= '<td style="' . $style . '">' . $u["palavra_chave"] . '</td>';
 
 }
 $html .= '</tbody>';

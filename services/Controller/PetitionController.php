@@ -54,7 +54,7 @@ class PetitionController extends GlobalController{
             $inner= "INNER JOIN user u on (u.idUser = petition.idUser)";
             $select.=", u.name";
         }
-        $query = "SELECT $select FROM petition $inner WHERE DATEDIFF(now(), petition.startDate)=$days AND petition.distributed=$petition_distributed ORDER BY priority DESC";
+        $query = "SELECT $select FROM petition $inner WHERE DATEDIFF(now(), petition.startDate)=$days AND petition.distributed=$petition_distributed ORDER BY priority DESC,startDate DESC";
         
         $result = mysqli_query($conn, $query);
         $registro = mysqli_fetch_all($result);
@@ -78,7 +78,7 @@ class PetitionController extends GlobalController{
         }else{
             $sf="OR unfounded=1";
         }
-        $query = "SELECT $select FROM petition $inner WHERE clientName LIKE '%$name%'AND (petition.distributed=$petition_distributed $sf) ORDER BY priority DESC,startDate ASC";
+        $query = "SELECT $select FROM petition $inner WHERE clientName LIKE '%$name%'AND (petition.distributed=$petition_distributed $sf) ORDER BY priority DESC,startDate DESC";
         //echo $query;
         $result = mysqli_query($conn, $query);
         $registro = mysqli_fetch_all($result);
@@ -101,7 +101,7 @@ class PetitionController extends GlobalController{
             $inner= "INNER JOIN user u on (u.idUser = petition.idUser)";
             $select.=", u.name";
         }
-        $query = "SELECT $select FROM petition $inner WHERE typeAction LIKE '%$action%' AND (petition.distributed=$petition_distributed $sf) ORDER BY priority DESC";
+        $query = "SELECT $select FROM petition $inner WHERE typeAction LIKE '%$action%' AND (petition.distributed=$petition_distributed $sf) ORDER BY priority DESC,startDate DESC";
         //echo $query;exit;
         $result = mysqli_query($conn, $query);
         $registro = mysqli_fetch_all($result);
@@ -124,7 +124,7 @@ class PetitionController extends GlobalController{
             $inner= "INNER JOIN user u on (u.idUser = petition.idUser)";
             $select.=", u.name";
         }
-        $query = "SELECT $select FROM petition $inner WHERE u.name LIKE '%$username%' AND (petition.distributed=$petition_distributed $sf) ORDER BY priority DESC,startDate ASC";
+        $query = "SELECT $select FROM petition $inner WHERE u.name LIKE '%$username%' AND (petition.distributed=$petition_distributed $sf) ORDER BY priority DESC,startDate DESC";
         // echo $query;
         $result = mysqli_query($conn, $query);
         $registro = mysqli_fetch_all($result);
@@ -147,7 +147,7 @@ class PetitionController extends GlobalController{
             $inner= "INNER JOIN user u on (u.idUser = petition.idUser)";
             $select.=", u.name";
         }
-        $query = "SELECT $select FROM petition $inner WHERE adverse LIKE '%$adverse%' AND (petition.distributed=$petition_distributed $sf) ORDER BY priority DESC,startDate ASC";
+        $query = "SELECT $select FROM petition $inner WHERE adverse LIKE '%$adverse%' AND (petition.distributed=$petition_distributed $sf) ORDER BY priority DESC,startDate DESC";
         //echo $query;exit;
         $result = mysqli_query($conn, $query);
         $registro = mysqli_fetch_all($result);
@@ -176,7 +176,7 @@ class PetitionController extends GlobalController{
         }else{
             $sf="OR unfounded=1";
         }
-        $query = "SELECT $select FROM petition p $inner WHERE p.startDate= '$date_start' AND (p.distributed=$distributed $sf) ORDER BY priority DESC,startDate ASC";
+        $query = "SELECT $select FROM petition p $inner WHERE p.startDate= '$date_start' AND (p.distributed=$distributed $sf) ORDER BY priority DESC,startDate DESC";
         $result=null;
         
         $command = mysqli_query($conn, $query);
@@ -211,7 +211,7 @@ class PetitionController extends GlobalController{
         }else{
             $sf="OR unfounded=1";
         }
-        $query = "SELECT $select FROM petition p $inner WHERE p.startDate>='$date_start' AND p.startDate<='$date_end' AND (p.distributed=$distributed $sf) ORDER BY priority DESC,startDate ASC";
+        $query = "SELECT $select FROM petition p $inner WHERE p.startDate>='$date_start' AND p.startDate<='$date_end' AND (p.distributed=$distributed $sf) ORDER BY priority DESC,startDate DESC";
         //echo $query;exit;
         $result=null;
 
@@ -228,7 +228,7 @@ class PetitionController extends GlobalController{
 
     public function getPetitionInProgress($distributed=0){
         $conn = $this->connectDB();
-        $query = "SELECT p.*, u.name FROM petition p inner join user u on (u.idUser=p.idUser) WHERE distributed=$distributed AND unfounded=0 ORDER BY priority DESC,startDate ASC";
+        $query = "SELECT p.*, u.name FROM petition p inner join user u on (u.idUser=p.idUser) WHERE distributed=$distributed AND unfounded=0 ORDER BY priority DESC,startDate DESC";
         $result=null;
         $command = mysqli_query($conn, $query);
             if($command){
@@ -243,7 +243,7 @@ class PetitionController extends GlobalController{
 
     public function getPetitions(){
         $conn = $this->connectDB();
-        $query = "SELECT p.*, u.name FROM petition p inner join user u on (u.idUser=p.idUser) ORDER BY startDate ASC";
+        $query = "SELECT p.*, u.name FROM petition p inner join user u on (u.idUser=p.idUser) ORDER BY startDate DESC";
         $result=null;
         $command = mysqli_query($conn, $query);
             if($command){
@@ -268,7 +268,7 @@ class PetitionController extends GlobalController{
 
     public function getPetitionDistributed(){
         $conn = $this->connectDB();
-        $query = "SELECT p.*, u.name FROM petition p inner join user u on (u.idUser=p.idUser) WHERE distributed=1 OR unfounded=1 ORDER BY priority DESC,startDate ASC";
+        $query = "SELECT p.*, u.name FROM petition p inner join user u on (u.idUser=p.idUser) WHERE distributed=1 OR unfounded=1 ORDER BY priority DESC,startDate DESC";
         $result=null;
         $command = mysqli_query($conn, $query);
             if($command){
@@ -341,6 +341,7 @@ class PetitionController extends GlobalController{
         
         if($vrf){
             $query = "UPDATE petition SET distributed=$dis, unfounded=$sf WHERE idPetition=$idPetition";
+            // echo $query;exit;
             $r = mysqli_query($conn, $query);
             if($r){
                 $result=['success', 'Sucesso ao alterar informações!'];

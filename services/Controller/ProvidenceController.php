@@ -407,7 +407,6 @@ class ProvidenceController extends GlobalController{
         return $result;
     }
 
-
 }
 
 
