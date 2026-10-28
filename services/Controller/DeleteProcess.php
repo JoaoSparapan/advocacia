@@ -1,5 +1,6 @@
 <?php
     session_start();
+    require_once $_SERVER['DOCUMENT_ROOT']."/advocacia/services/Controller/RequireLogin.php";
     include_once './ProcessController.php';
     include_once '../Models/Exceptions.php';
     

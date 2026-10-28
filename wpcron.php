@@ -1,4 +1,8 @@
-<?php 
+<?php
+if (PHP_SAPI !== 'cli') {
+    http_response_code(403);
+    exit;
+}
 date_default_timezone_set('America/Sao_Paulo');
 require __DIR__ . "/services/Models/UserMail.php";
 require __DIR__ . "/services/Controller/PetitionController.php";
