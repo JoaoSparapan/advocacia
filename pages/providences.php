@@ -311,16 +311,70 @@ $court = $c->getAll();
                 <div class="row computer">
                     <div class="input-field col s3">
                         <i class="fa-regular fa-file-lines prefix"></i>
-                        <input name="providencia" id="providencia" type="text" class="validate" required value="">
+                        <input name="providencia" id="providencia" type="text" list="providencia-options" class="validate" required value="">
+                        <datalist id="providencia-options">
+                            <option value="AGENDAR"></option>
+                            <option value="AGRAVO DE INSTRUMENTO"></option>
+                            <option value="AGRAVO INTERNO"></option>
+                            <option value="ALEGAÇÕES FINAIS"></option>
+                            <option value="APELAÇÃO"></option>
+                            <option value="CIENCIA"></option>
+                            <option value="CONTRAMINUTA"></option>
+                            <option value="CONTRARRAZOES"></option>
+                            <option value="CUMPRIMENTO DE SENTENÇA"></option>
+                            <option value="CUMPRIR"></option>
+                            <option value="DECLARAÇÃO"></option>
+                            <option value="DESISTIR DA AÇÃO"></option>
+                            <option value="EMBARGOS"></option>
+                            <option value="EMBARGOS OU RECURSO"></option>
+                            <option value="EMENDAR"></option>
+                            <option value="ENTREGAR OFÍCIO"></option>
+                            <option value="ESPECIFICAÇÃO DE PROVAS E TESTEMUNHAS"></option>
+                            <option value="HC"></option>
+                            <option value="IMPUGNAR JUSTIÇA GRATUITA"></option>
+                            <option value="INDULTO OU COMUTAÇÃO DE PENA"></option>
+                            <option value="INFORMAR ENDEREÇO"></option>
+                            <option value="JUNTAR DOCUMENTOS"></option>
+                            <option value="LIVRAMENTO CONDICIONAL"></option>
+                            <option value="MANDADO DE SEGURANÇA"></option>
+                            <option value="MANIFESTAÇÃO"></option>
+                            <option value="MEMORIAIS"></option>
+                            <option value="PEDIDO DE DILIGÊNCIAS"></option>
+                            <option value="PEDIDO DE LIBERDADE PROVISÓRIA"></option>
+                            <option value="PEDIDO DE PROGRESSÃO DE REGIME"></option>
+                            <option value="PEDIDO DE SEGREDO DE JUSTIÇA"></option>
+                            <option value="PEDIDO DE TUTELA DE URGENCIA"></option>
+                            <option value="PROCURAÇÃO"></option>
+                            <option value="RAZOES DE APELAÇÃO"></option>
+                            <option value="RECURSO"></option>
+                            <option value="RECURSO INOMINADO"></option>
+                            <option value="REMIÇÃO DE PENA"></option>
+                            <option value="RÉPLICA"></option>
+                            <option value="REsp"></option>
+                            <option value="REsp e RExt"></option>
+                            <option value="RESPOSTA A ACUSAÇÃO"></option>
+                            <option value="RExt"></option>
+                            <option value="ROL DE TESTEMUNHAS"></option>
+                            <option value="TENTAR ACORDO"></option>
+                        </datalist>
                         <label for="providencia">Providência</label>
                         <span class="helper-text" data-error="Campo obrigatório" data-success="Correto!"></span>
 
 
                     </div>
                     <div class="input-field col s3">
-
                         <i class="fa-solid fa-list-ol prefix"></i>
-                        <input name="qte-dias" min="1" id="qte-dias" type="number" class="validate" required value="5">
+                        <input name="qte-dias" id="qte-dias" type="text" inputmode="numeric" pattern="[1-9][0-9]*"
+                            list="qte-dias-options" class="validate" required autocomplete="off">
+                        <datalist id="qte-dias-options">
+                            <option value="2"></option>
+                            <option value="3"></option>
+                            <option value="5"></option>
+                            <option value="10"></option>
+                            <option value="15"></option>
+                            <option value="30"></option>
+                            <option value="360"></option>
+                        </datalist>
                         <label for="qte-dias">Quantidade de dias</label>
                         <span class="helper-text" data-error="Insira o número de dias" data-success="Correto!"></span>
                     </div>
@@ -339,7 +393,7 @@ $court = $c->getAll();
                 <div class="row mobile">
                     <div class="input-field">
                         <i class="fa-regular fa-file-lines prefix"></i>
-                        <input name="providencia" id="providencia_mobile" type="text" class="validate" required
+                        <input name="providencia" id="providencia_mobile" type="text" list="providencia-options" class="validate" required
                             value="">
                         <label for="providencia_mobile">Providência</label>
                         <span class="helper-text" data-error="Campo obrigatório" data-success="Correto!"></span>
@@ -349,10 +403,9 @@ $court = $c->getAll();
                 </div>
                 <div class="row mobile">
                     <div class="input-field col s6">
-
                         <i class="fa-solid fa-list-ol prefix"></i>
-                        <input name="qte-dias" min="1" id="qte-dias_mobile" type="number" class="validate" required
-                            value="1">
+                        <input name="qte-dias" id="qte-dias_mobile" type="text" inputmode="numeric" pattern="[1-9][0-9]*"
+                            list="qte-dias-options" class="validate" required autocomplete="off">
                         <label for="qte-dias_mobile">Quantidade de dias</label>
                         <span class="helper-text" data-error="Insira o número de dias" data-success="Correto!"></span>
                     </div>
