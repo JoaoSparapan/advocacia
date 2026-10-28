@@ -40,13 +40,14 @@ $documentNames = [
 ];
 
 // Caminho da pasta modelos
-$modelosDir = $_SERVER['DOCUMENT_ROOT']."/advocacia/modelos/";
+$modelosDir = $_SERVER['DOCUMENT_ROOT']."/modelos/";
 
 // Cria o ZIP
 $zip = new ZipArchive();
 $tempZip = tempnam(sys_get_temp_dir(), 'zip');
 
-if ($zip->open($tempZip, ZipArchive::CREATE) !== true) {
+// CORREÇÃO 1: Adicionado ZipArchive::OVERWRITE
+if ($zip->open($tempZip, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
     http_response_code(500);
     exit('Não foi possível criar o ZIP');
 }
@@ -100,8 +101,12 @@ foreach ($docsIdsInt as $docId) {
 
     // --- Monta descrição ---
     $descricao = '';
-    $nomeDependente='';
-    if (trim($record['situacao']) === 'pj') {
+    $nomeDependente = '';
+    
+    // CORREÇÃO 2: Variável $situacao definida antes de qualquer IF
+    $situacao = trim($record['situacao'] ?? '');
+
+    if ($situacao === 'pj') {
         $empresa    = trim($record['empresa'] ?? '');
         $cnpj       = trim($record['cnpj'] ?? '');
         $endereco   = trim($record['endereco_pj'] ?? '');
@@ -141,17 +146,16 @@ foreach ($docsIdsInt as $docId) {
         $descricao = implode(', ', $partes);
         $nomeDependente = trim(strtoupper($empresa));
     }
-    else if(trim($record['situacao']) != 'maior')
+    else if($situacao != 'maior' && $situacao != 'litis')
     {
-        $descricao .= ', ' . trim($record['nacionalidadeDependente']) . ', solteiro(a)';
+        $descricao .= ', ' . trim($record['nacionalidadeDependente'] ?? '') . ', solteiro(a)';
 
         $identidade = [];
         if (!empty($record['rgDependente'])) $identidade[] = "portador(a) da cédula de identidade RG nº " . $record['rgDependente'];
         if (!empty($record['cpfDependente'])) $identidade[] = "inscrito(a) no CPF sob nº " . $record['cpfDependente'];
         if (!empty($identidade)) $descricao .= ', ' . implode(', ', $identidade);
 
-        $situacao = trim($record['situacao']) ?? '';
-        $relacao = trim($record['relacaoResponsavel']) ?? '';
+        $relacao = trim($record['relacaoResponsavel'] ?? '');
         if ($situacao === 'menor_pubere') {
             $descricao .= ", menor púbere, neste ato assistido(a) por seu/sua $relacao";
         } elseif ($situacao === 'menor_impubere') {
@@ -161,10 +165,10 @@ foreach ($docsIdsInt as $docId) {
         if ($descricao === ', , solteiro') {
             $descricao = '';
         }
-        $nomeDependente=strtoupper($record['nomeDependente'] ?? '');
+        $nomeDependente = strtoupper($record['nomeDependente'] ?? '');
     }
 
-    if (trim($record['situacao']) === 'litis') {
+    if ($situacao === 'litis') {
 
         $textRun = new TextRun();
 
@@ -218,7 +222,7 @@ foreach ($docsIdsInt as $docId) {
 
        $template->setComplexValue('litis', $textRun);
         $descricao = '';
-        $nomeDependente='';
+        $nomeDependente = '';
 
     } else {
         $template->setValue('litis', '');
@@ -227,7 +231,7 @@ foreach ($docsIdsInt as $docId) {
     $template->setValue('NOMEDEPENDENTE', trim($nomeDependente));
     $template->setValue('descricao', trim($descricao) . ' ');
 
-    $nomePrincipal=trim(strtoupper($record['nome'] ?? ''));
+    $nomePrincipal = trim(strtoupper($record['nome'] ?? ''));
 
     $ASS_LEFT  = '';
     $ASS_RIGHT = '';
@@ -274,6 +278,19 @@ foreach ($docsIdsInt as $docId) {
         $parteAdversa = str_replace(['&','<','>','"',"'" ], ['&amp;','&lt;','&gt;','&quot;','&apos;'], $parteAdversa);
         $template->setValue('PARTEADVERSA', $parteAdversa);
 
+        $cnpjAdversa = trim($record['cpf_cnpj_adversa'] ?? '');
+        $template->setValue('CNPJPARTEADVERSA', $cnpjAdversa !== '' ? 'CNPJ/CPF: ' . $cnpjAdversa : '');
+
+        $enderecoAdversa = trim($record['endereco_adversa'] ?? '');
+        $template->setValue('ENDERECOPARTEADVERSA', $enderecoAdversa !== '' ? 'ENDEREÇO: ' . $enderecoAdversa : '');
+
+        $tel1Adversa = trim($record['telefone1_adversa'] ?? '');
+        $template->setValue('TEL1PARTEADVERSA', $tel1Adversa !== '' ? 'TELEFONE 01: ' . $tel1Adversa : '');
+
+        $tel2Adversa = trim($record['telefone2_adversa'] ?? '');
+        $template->setValue('TEL2PARTEADVERSA', $tel2Adversa !== '' ? 'TELEFONE 02: ' . $tel2Adversa : '');
+        // -----------------------------------------------------------------------------
+
         $fatos = str_replace(['&','<','>','"',"'" ], ['&amp;','&lt;','&gt;','&quot;','&apos;'], $record['fatos'] ?? '');
         $template->setValue('fatos', $fatos);
 
@@ -281,7 +298,7 @@ foreach ($docsIdsInt as $docId) {
         $template->setValue('telefone2', $record['telefone2'] ?? '');
         $template->setValue('email', $record['email'] ?? '');
 
-        $telefones = array_filter([$record['telefone1'], $record['telefone2']]);
+        $telefones = array_filter([$record['telefone1'] ?? null, $record['telefone2'] ?? null]);
         $complementoContato = '';
         if ($telefones && !empty($record['email'])) {
             $complementoContato = 'Telefone(s) ' . implode(' e ', $telefones) . ' e e-mail ' . $record['email'] . '.';
@@ -306,6 +323,14 @@ foreach ($docsIdsInt as $docId) {
         }
 
         $template->setValue('INDICACAO', $textoIndicacao);
+
+        $palavra_secreta = trim($record['palavra_chave'] ?? '');
+        $text_palavra = ''; // CORREÇÃO 3: Inicializada para não causar Undefined variable
+        if ($palavra_secreta !== '') {
+            $text_palavra = "Palavra-chave: {$palavra_secreta}";
+        }
+
+        $template->setValue('PALAVRA_CHAVE', $text_palavra);
     } else {
         $template->setValue('telefone1', '');
         $template->setValue('telefone2', '');

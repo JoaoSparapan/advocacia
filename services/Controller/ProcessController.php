@@ -162,7 +162,7 @@ class ProcessController extends GlobalController{
     public function getAllForTable($table='process'){
         return parent::getAllForTable($table);
     }
-
+    
     public function updateUserResponsible($idProcess='', $idUser=''){
         $result=0;
         

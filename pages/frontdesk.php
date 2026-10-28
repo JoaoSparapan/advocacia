@@ -382,11 +382,39 @@ if ($index . "" == "0") {
                         </div>
 
                     </div>
+                    <br>
+                    <div class="row">
+                        <div class="col s12">
+                            <h6 style="color: #7f8c8d; font-weight: 500; margin-bottom: 15px;">Qualificação parte adversa (opcional)</h6>
+                        </div>
+                    </div>
 
                     <div class="row">
-                        <div class="input-field col s6">
+                        <div class="input-field col s12 m6">
                             <input type="text" id="parteadversa" name="parteadversa">
                             <label for="parteadversa">Parte Adversa</label>
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <input type="text" id="cpf_cnpj_adversa" name="cpf_cnpj_adversa">
+                            <label for="cpf_cnpj_adversa">CPF ou CNPJ</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input type="text" id="endereco_adversa" name="endereco_adversa">
+                            <label for="endereco_adversa">Endereço completo</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12 m6">
+                            <input type="text" id="telefone1_adversa" name="telefone1_adversa">
+                            <label for="telefone1_adversa">Tel. 01</label>
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <input type="text" id="telefone2_adversa" name="telefone2_adversa">
+                            <label for="telefone2_adversa">Tel. 02</label>
                         </div>
                     </div>
 
@@ -395,6 +423,19 @@ if ($index . "" == "0") {
                             <textarea id="fatos" name="fatos" class="materialize-textarea"
                                 style="min-height: 200px;"></textarea>
                             <label for="fatos">Fatos</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="palavra-chave-fields">
+                <div class="form-card">
+                    <div class="form-card-title" id="palavra-chave-title">
+                        Palavra-chave
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" id="palavra_chave" name="palavra_chave" required>
                         </div>
                     </div>
                 </div>
@@ -575,6 +616,7 @@ if ($index . "" == "0") {
                         <th>Cadastrado por</th>
                         <th>Atualização</th>
                         <th>Arquivos gerados</th>
+                        <th>Palavra-chave</th>
                         <th>Operações</th>
                     </tr>
                 </thead>
@@ -682,7 +724,8 @@ if ($index . "" == "0") {
                                 <td>' . $indicacao . '</td>
                                 <td>' . $u["usuario"] . '</td>
                                 <td>' . date('d-m-Y H:i:s', strtotime($u["data_cadastro"])) . '</td>
-                                <td>' . $docsDisplayString . '</td>';
+                                <td>' . $docsDisplayString . '</td>
+                                <td>' . $u["palavra_chave"] . '</td>';
 
                     $button_action = '
                         <a class="btn-floating btn-small green" title="Baixar documentos" href="../services/Controller/DownloadFrontdesk.php?id='.$u['idFrontdesk'].'">
@@ -740,6 +783,7 @@ if ($index . "" == "0") {
                         <th>Cadastrado por</th>
                         <th>Atualização</th>
                         <th>Arquivos gerados</th>
+                        <th>Palavra-chave</th>
                         <th>Operações</th>
                     </tr>
                 </thead>

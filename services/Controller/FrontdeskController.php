@@ -41,6 +41,13 @@ class FrontdeskController extends GlobalController
         $telefone1 = isset($data['telefone1']) ? addslashes($data['telefone1']) : '';
         $telefone2 = isset($data['telefone2']) ? addslashes($data['telefone2']) : '';
         $parteadversa = addslashes($data['parteadversa']);
+        
+        // Novos campos da Parte Adversa
+        $cpf_cnpj_adversa = isset($data['cpf_cnpj_adversa']) ? addslashes($data['cpf_cnpj_adversa']) : '';
+        $endereco_adversa = isset($data['endereco_adversa']) ? addslashes($data['endereco_adversa']) : '';
+        $telefone1_adversa = isset($data['telefone1_adversa']) ? addslashes($data['telefone1_adversa']) : '';
+        $telefone2_adversa = isset($data['telefone2_adversa']) ? addslashes($data['telefone2_adversa']) : '';
+
         $fatos = addslashes($data['fatos']);
         $data_referencia = addslashes($data['dataAtual']);
         $documentos = implode(',', $data['documentos']);
@@ -65,6 +72,7 @@ class FrontdeskController extends GlobalController
         $cidade_litis = isset($data['cidade_litis']) ? addslashes($data['cidade_litis']) : '';
         $cep_litis = isset($data['cep_litis']) ? addslashes($data['cep_litis']) : '';
         $estado_litis = isset($data['estado_litis']) ? addslashes($data['estado_litis']) : '';
+        $palavra_chave = isset($data['palavra_chave']) ? addslashes($data['palavra_chave']) : '';
 
         $query = "INSERT INTO frontdesk 
             (
@@ -72,14 +80,14 @@ class FrontdeskController extends GlobalController
             endereco,cidade,bairro,estado,cep,
             endereco_pj,cidade_pj,bairro_pj,estado_pj,cep_pj,
             email,telefone1,telefone2,
-            documentos,parteadversa,fatos,data_referencia,usuario,
+            documentos,parteadversa,cpf_cnpj_adversa,endereco_adversa,telefone1_adversa,telefone2_adversa,fatos,data_referencia,usuario,
             situacao,nomeDependente,nacionalidadeDependente,
             rgDependente,cpfDependente,relacaoResponsavel,
             pastaHibrida,indicacao,indicacaoNome,
             nome_litis,nacionalidade_litis,estadoCivil_litis,
             rg_litis,cpf_litis,profissao_litis,
             endereco_litis,bairro_litis,cidade_litis,
-            cep_litis,estado_litis
+            cep_litis,estado_litis,palavra_chave
             ) 
             VALUES 
             (
@@ -87,14 +95,14 @@ class FrontdeskController extends GlobalController
             '$endereco','$cidade','$bairro','$estado','$cep',
             '$endereco_pj','$cidade_pj','$bairro_pj','$estado_pj','$cep_pj',
             '$email','$telefone1','$telefone2',
-            '$documentos','$parteadversa','$fatos','$data_referencia','$usuario',
+            '$documentos','$parteadversa','$cpf_cnpj_adversa','$endereco_adversa','$telefone1_adversa','$telefone2_adversa','$fatos','$data_referencia','$usuario',
             '$situacao','$nomeDependente','$nacionalidadeDependente',
             '$rgDependente','$cpfDependente','$relacaoResponsavel',
             '$pastaHibrida','$indicacao','$indicacaoNome',
             '$nome_litis','$nacionalidade_litis','$estadoCivil_litis',
             '$rg_litis','$cpf_litis','$profissao_litis',
             '$endereco_litis','$bairro_litis','$cidade_litis',
-            '$cep_litis','$estado_litis'
+            '$cep_litis','$estado_litis','$palavra_chave'
             )";
 
         $result = mysqli_query($conn, $query);
@@ -277,7 +285,12 @@ class FrontdeskController extends GlobalController
         $bairro_litis = NULL,
         $cidade_litis = NULL,
         $cep_litis = NULL,
-        $estado_litis = NULL
+        $estado_litis = NULL,
+        $palavra_chave = NULL,
+        $cpf_cnpj_adversa = NULL,
+        $endereco_adversa = NULL,
+        $telefone1_adversa = NULL,
+        $telefone2_adversa = NULL
     ) {
         if ($id == NULL) {
             return ['error', 'Erro ao atualizar registro de atendimento'];
@@ -334,11 +347,15 @@ class FrontdeskController extends GlobalController
                 bairro_litis = '$bairro_litis',
                 cidade_litis = '$cidade_litis',
                 cep_litis = '$cep_litis',
-                estado_litis = '$estado_litis'
+                estado_litis = '$estado_litis',
+                palavra_chave = '$palavra_chave',
+                cpf_cnpj_adversa = '$cpf_cnpj_adversa',
+                endereco_adversa = '$endereco_adversa',
+                telefone1_adversa = '$telefone1_adversa',
+                telefone2_adversa = '$telefone2_adversa'
             WHERE idFrontdesk = $id
         ";
 
-        // echo $query;exit;
         $result = mysqli_query($conn, $query);
 
         $result = mysqli_real_escape_string($conn, $endereco);

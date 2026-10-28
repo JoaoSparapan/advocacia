@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 include_once './FrontdeskController.php';
 include_once '../Models/Exceptions.php';
@@ -60,6 +61,11 @@ $bairro_litis = trim($_POST['bairro_litis'] ?? '');
 $cidade_litis = trim($_POST['cidade_litis'] ?? '');
 $cep_litis = trim($_POST['cep_litis'] ?? '');
 $estado_litis = trim($_POST['estado_litis'] ?? '');
+$palavra_chave = trim($_POST['palavra_chave'] ?? '');
+$cpf_cnpj_adversa = trim($_POST['cpf_cnpj_adversa'] ?? '');
+$endereco_adversa = trim($_POST['endereco_adversa'] ?? '');
+$telefone1_adversa = trim($_POST['telefone1_adversa'] ?? '');
+$telefone2_adversa = trim($_POST['telefone2_adversa'] ?? '');
 
 $nomeUsuario = isset($_SESSION['user']['name']) ? $_SESSION['user']['name'] : 'Desconhecido';
 
@@ -118,7 +124,12 @@ $result = $controller->updateFrontdesk(
     $bairro_litis,
     $cidade_litis,
     $cep_litis,
-    $estado_litis
+    $estado_litis,
+    $palavra_chave,
+    $cpf_cnpj_adversa,
+    $endereco_adversa,
+    $telefone1_adversa,
+    $telefone2_adversa
 );
 
 // Mensagem de retorno

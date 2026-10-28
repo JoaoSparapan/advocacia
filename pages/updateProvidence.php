@@ -142,8 +142,53 @@ $d = date('d-m-Y',strtotime($end[0]));
                     <div class="row">
                         <div class="input-field col s3">
                             <i class="fa-regular fa-file-lines prefix"></i>
-                            <input name="providencia" id="providencia" type="text" class="validate" required
+                            <input name="providencia" id="providencia" type="text" list="providencia-options" class="validate" required
                                 value="<?=$provSelected['description']?>" style="background: transparent !important;">
+                            <datalist id="providencia-options">
+                                <option value="AGENDAR"></option>
+                                <option value="AGRAVO DE INSTRUMENTO"></option>
+                                <option value="AGRAVO INTERNO"></option>
+                                <option value="ALEGAÇÕES FINAIS"></option>
+                                <option value="APELAÇÃO"></option>
+                                <option value="CIENCIA"></option>
+                                <option value="CONTRAMINUTA"></option>
+                                <option value="CONTRARRAZOES"></option>
+                                <option value="CUMPRIMENTO DE SENTENÇA"></option>
+                                <option value="CUMPRIR"></option>
+                                <option value="DECLARAÇÃO"></option>
+                                <option value="DESISTIR DA AÇÃO"></option>
+                                <option value="EMBARGOS"></option>
+                                <option value="EMBARGOS OU RECURSO"></option>
+                                <option value="EMENDAR"></option>
+                                <option value="ENTREGAR OFÍCIO"></option>
+                                <option value="ESPECIFICAÇÃO DE PROVAS E TESTEMUNHAS"></option>
+                                <option value="HC"></option>
+                                <option value="IMPUGNAR JUSTIÇA GRATUITA"></option>
+                                <option value="INDULTO OU COMUTAÇÃO DE PENA"></option>
+                                <option value="INFORMAR ENDEREÇO"></option>
+                                <option value="JUNTAR DOCUMENTOS"></option>
+                                <option value="LIVRAMENTO CONDICIONAL"></option>
+                                <option value="MANDADO DE SEGURANÇA"></option>
+                                <option value="MANIFESTAÇÃO"></option>
+                                <option value="MEMORIAIS"></option>
+                                <option value="PEDIDO DE DILIGÊNCIAS"></option>
+                                <option value="PEDIDO DE LIBERDADE PROVISÓRIA"></option>
+                                <option value="PEDIDO DE PROGRESSÃO DE REGIME"></option>
+                                <option value="PEDIDO DE SEGREDO DE JUSTIÇA"></option>
+                                <option value="PEDIDO DE TUTELA DE URGENCIA"></option>
+                                <option value="PROCURAÇÃO"></option>
+                                <option value="RAZOES DE APELAÇÃO"></option>
+                                <option value="RECURSO"></option>
+                                <option value="RECURSO INOMINADO"></option>
+                                <option value="REMIÇÃO DE PENA"></option>
+                                <option value="RÉPLICA"></option>
+                                <option value="REsp"></option>
+                                <option value="REsp e RExt"></option>
+                                <option value="RESPOSTA A ACUSAÇÃO"></option>
+                                <option value="RExt"></option>
+                                <option value="ROL DE TESTEMUNHAS"></option>
+                                <option value="TENTAR ACORDO"></option>
+                            </datalist>
                             <label for="providencia">Providência</label>
                             <span class="helper-text" data-error="Campo obrigatório" data-success="Correto!"></span>
                         </div>

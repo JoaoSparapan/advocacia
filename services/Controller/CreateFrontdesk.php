@@ -1,4 +1,5 @@
 <?php
+ob_start(); // INICIA O BUFFER PARA IMPEDIR CORRUPÇÃO DO ZIP
 session_start();
 date_default_timezone_set('America/Sao_Paulo');
 
@@ -15,16 +16,22 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $controller = new FrontdeskController();
 
-$nome = isset($_POST['nome']) ? trim($_POST['nome']) : '';
-$documentosSelecionados = isset($_POST['documentos']) ? $_POST['documentos'] : [];
-$empresa = $_POST['empresa'] ?? '';
-$cnpj = $_POST['cnpj'] ?? '';
-$cargo = $_POST['cargo'] ?? '';
-$enderecoPJ = $_POST['endereco_pj'] ?? '';
-$cidadePJ = $_POST['cidade_pj'] ?? '';
-$bairroPJ = $_POST['bairro_pj'] ?? '';
-$estadoPJ = $_POST['estado_pj'] ?? '';
-$cepPJ = $_POST['cep_pj'] ?? '';
+$nome = trim($_POST['nome'] ?? '');
+$documentosSelecionados = $_POST['documentos'] ?? [];
+$empresa = trim($_POST['empresa'] ?? '');
+$cnpj = trim($_POST['cnpj'] ?? '');
+$cargo = trim($_POST['cargo'] ?? '');
+$enderecoPJ = trim($_POST['endereco_pj'] ?? '');
+$cidadePJ = trim($_POST['cidade_pj'] ?? '');
+$bairroPJ = trim($_POST['bairro_pj'] ?? '');
+$estadoPJ = trim($_POST['estado_pj'] ?? '');
+$cepPJ = trim($_POST['cep_pj'] ?? '');
+
+// Captura dos novos campos da Parte Adversa
+$cpfCnpjAdversa = trim($_POST['cpf_cnpj_adversa'] ?? '');
+$enderecoAdversa = trim($_POST['endereco_adversa'] ?? '');
+$telefone1Adversa = trim($_POST['telefone1_adversa'] ?? '');
+$telefone2Adversa = trim($_POST['telefone2_adversa'] ?? '');
 
 if ($nome === '' || empty($documentosSelecionados)) {
     http_response_code(400);
@@ -34,32 +41,32 @@ if ($nome === '' || empty($documentosSelecionados)) {
 // --- Prepara dados para o banco ---
 $dataInsert = [
     'nome' => $nome,
-    'nacionalidade' => $_POST['nacionalidade'] ?? '',
-    'estadoCivil' => $_POST['estadoCivil'] ?? '',
-    'profissao' => $_POST['profissao'] ?? '',
-    'rg' => $_POST['rg'] ?? '',
-    'cpf' => $_POST['cpf'] ?? '',
-    'endereco' => $_POST['endereco'] ?? '',
-    'cidade' => $_POST['cidade'] ?? '',
-    'bairro' => $_POST['bairro'] ?? '',
-    'estado' => $_POST['estado'] ?? '',
-    'cep' => $_POST['cep'] ?? '',
-    'email' => $_POST['email'] ?? '',
-    'telefone1' => $_POST['telefone1'] ?? '',
-    'telefone2' => $_POST['telefone2'] ?? '',
+    'nacionalidade' => trim($_POST['nacionalidade'] ?? ''),
+    'estadoCivil' => trim($_POST['estadoCivil'] ?? ''),
+    'profissao' => trim($_POST['profissao'] ?? ''),
+    'rg' => trim($_POST['rg'] ?? ''),
+    'cpf' => trim($_POST['cpf'] ?? ''),
+    'endereco' => trim($_POST['endereco'] ?? ''),
+    'cidade' => trim($_POST['cidade'] ?? ''),
+    'bairro' => trim($_POST['bairro'] ?? ''),
+    'estado' => trim($_POST['estado'] ?? ''),
+    'cep' => trim($_POST['cep'] ?? ''),
+    'email' => trim($_POST['email'] ?? ''),
+    'telefone1' => trim($_POST['telefone1'] ?? ''),
+    'telefone2' => trim($_POST['telefone2'] ?? ''),
     'documentos' => $documentosSelecionados,
-    'parteadversa' => $_POST['parteadversa'] ?? '',
-    'fatos' => $_POST['fatos'] ?? '',
-    'situacao' => $_POST['situacao'] ?? '',
-    'nomeDependente' => $_POST['nomeDependente'] ?? '',
-    'nacionalidadeDependente' => $_POST['nacionalidadeDependente'] ?? '',
-    'rgDependente' => $_POST['rgDependente'] ?? '',
-    'cpfDependente' => $_POST['cpfDependente'] ?? '',
-    'relacaoResponsavel' => $_POST['relacaoResponsavel'] ?? '',
-    'dataAtual' => $_POST['dataReferencia'] ?? '',
-    'pastaHibrida' => $_POST['pastaHibrida'] ?? '',
-    'indicacao' => $_POST['indicacao'] ?? '',
-    'indicacaoNome' => $_POST['indicacaoNome'] ?? '',
+    'parteadversa' => trim($_POST['parteadversa'] ?? ''),
+    'fatos' => trim($_POST['fatos'] ?? ''),
+    'situacao' => trim($_POST['situacao'] ?? ''),
+    'nomeDependente' => trim($_POST['nomeDependente'] ?? ''),
+    'nacionalidadeDependente' => trim($_POST['nacionalidadeDependente'] ?? ''),
+    'rgDependente' => trim($_POST['rgDependente'] ?? ''),
+    'cpfDependente' => trim($_POST['cpfDependente'] ?? ''),
+    'relacaoResponsavel' => trim($_POST['relacaoResponsavel'] ?? ''),
+    'dataAtual' => trim($_POST['dataReferencia'] ?? ''),
+    'pastaHibrida' => trim($_POST['pastaHibrida'] ?? ''),
+    'indicacao' => trim($_POST['indicacao'] ?? ''),
+    'indicacaoNome' => trim($_POST['indicacaoNome'] ?? ''),
     'empresa' => $empresa,
     'cnpj' => $cnpj,
     'cargo' => $cargo,
@@ -68,17 +75,24 @@ $dataInsert = [
     'bairro_pj' => $bairroPJ,
     'estado_pj' => $estadoPJ,
     'cep_pj' => $cepPJ,
-    'nome_litis' => $_POST['nome_litis'] ?? '',
-    'nacionalidade_litis' => $_POST['nacionalidade_litis'] ?? '',
-    'estadoCivil_litis' => $_POST['estadoCivil_litis'] ?? '',
-    'rg_litis' => $_POST['rg_litis'] ?? '',
-    'cpf_litis' => $_POST['cpf_litis'] ?? '',
-    'profissao_litis' => $_POST['profissao_litis'] ?? '',
-    'endereco_litis' => $_POST['endereco_litis'] ?? '',
-    'bairro_litis' => $_POST['bairro_litis'] ?? '',
-    'cidade_litis' => $_POST['cidade_litis'] ?? '',
-    'cep_litis' => $_POST['cep_litis'] ?? '',
-    'estado_litis' => $_POST['estado_litis'] ?? '',
+    'nome_litis' => trim($_POST['nome_litis'] ?? ''),
+    'nacionalidade_litis' => trim($_POST['nacionalidade_litis'] ?? ''),
+    'estadoCivil_litis' => trim($_POST['estadoCivil_litis'] ?? ''),
+    'rg_litis' => trim($_POST['rg_litis'] ?? ''),
+    'cpf_litis' => trim($_POST['cpf_litis'] ?? ''),
+    'profissao_litis' => trim($_POST['profissao_litis'] ?? ''),
+    'endereco_litis' => trim($_POST['endereco_litis'] ?? ''),
+    'bairro_litis' => trim($_POST['bairro_litis'] ?? ''),
+    'cidade_litis' => trim($_POST['cidade_litis'] ?? ''),
+    'cep_litis' => trim($_POST['cep_litis'] ?? ''),
+    'estado_litis' => trim($_POST['estado_litis'] ?? ''),
+    'palavra_chave' => trim($_POST['palavra_chave'] ?? ''),
+    
+    // Novos campos adicionados para o banco
+    'cpf_cnpj_adversa' => $cpfCnpjAdversa,
+    'endereco_adversa' => $enderecoAdversa,
+    'telefone1_adversa' => $telefone1Adversa,
+    'telefone2_adversa' => $telefone2Adversa,
 ];
 
 $resultInsert = $controller->insertFrontdesk($dataInsert);
@@ -97,12 +111,14 @@ $documentNames = [
     6 => "06 - TERMO DE REVOGAÇÃO DE PROCURAÇÃO AD JUDICIA.docx"
 ];
 
-$modelosDir = $_SERVER['DOCUMENT_ROOT']."/advocacia/modelos/";
+$modelosDir = $_SERVER['DOCUMENT_ROOT']."/modelos/";
 
 // --- Cria o ZIP ---
 $zip = new ZipArchive();
 $tempZip = tempnam(sys_get_temp_dir(), 'zip');
-if ($zip->open($tempZip, ZipArchive::CREATE) !== true) {
+
+// CORREÇÃO: Adicionado o ZipArchive::OVERWRITE para não gerar aviso
+if ($zip->open($tempZip, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
     http_response_code(500);
     exit('Não foi possível criar o ZIP');
 }
@@ -154,54 +170,43 @@ foreach ($documentosSelecionados as $docId) {
     // --- Descrição e assinatura ---
     $descricao = '';
     $nomeDependente = '';
-    $situacao = trim($_POST['situacao']) ?? '';
-    $relacao = trim($_POST['relacaoResponsavel']) ?? '';
+    
+    // CORREÇÃO: Resgatada a variável no começo
+    $situacao = trim($_POST['situacao'] ?? '');
+    $relacao = trim($_POST['relacaoResponsavel'] ?? '');
+    
     if ($situacao === 'pj') {
-        $empresa = trim($_POST['empresa'] ?? '');
-        $cnpj = trim($_POST['cnpj'] ?? '');
-        $endereco = trim($_POST['endereco_pj'] ?? '');
-        $cidade = trim($_POST['cidade_pj'] ?? '');
-        $estado = trim($_POST['estado_pj'] ?? '');
-        $cep = trim($_POST['cep_pj'] ?? '');
-        $cargo = trim($_POST['cargo'] ?? '');
+        $empresaStr = trim($_POST['empresa'] ?? '');
+        $cnpjStr = trim($_POST['cnpj'] ?? '');
+        $enderecoStr = trim($_POST['endereco_pj'] ?? '');
+        $cidadeStr = trim($_POST['cidade_pj'] ?? '');
+        $estadoStr = trim($_POST['estado_pj'] ?? '');
+        $cepStr = trim($_POST['cep_pj'] ?? '');
+        $cargoStr = trim($_POST['cargo'] ?? '');
 
         $partes = [];
 
-        if ($empresa !== '') {
-            $partes[] = ", pessoa jurídica de direito privado";
-        }
+        if ($empresaStr !== '') $partes[] = ", pessoa jurídica de direito privado";
+        if ($cnpjStr !== '') $partes[] = "inscrita no CNPJ sob nº {$cnpjStr}";
 
-        if ($cnpj !== '') {
-            $partes[] = "inscrita no CNPJ sob nº {$cnpj}";
-        }
-
-        if ($endereco !== '') {
-            $local = $endereco;
-
-            if ($cidade !== '' && $estado !== '') {
-                $local .= ", {$cidade}/{$estado}";
-            }
-
-            if ($cep !== '') {
-                $local .= ", CEP: {$cep}";
-            }
-
+        if ($enderecoStr !== '') {
+            $local = $enderecoStr;
+            if ($cidadeStr !== '' && $estadoStr !== '') $local .= ", {$cidadeStr}/{$estadoStr}";
+            if ($cepStr !== '') $local .= ", CEP: {$cepStr}";
             $partes[] = "situada na {$local}";
         }
 
-        if ($cargo !== '') {
-            $partes[] = "neste ato representada por seu/sua {$cargo}";
-        }
+        if ($cargoStr !== '') $partes[] = "neste ato representada por seu/sua {$cargoStr}";
 
         $descricao = implode(', ', $partes);
         $nomeDependente = trim(strtoupper($_POST['empresa'] ?? ''));
     }
-    else if ($situacao !== 'maior') {
-        $descricao .= ', ' . (trim($_POST['nacionalidadeDependente']) ?? '') . ', solteiro(a)';
+    else if ($situacao !== 'maior' && $situacao !== 'litis') {
+        $descricao .= ', ' . trim($_POST['nacionalidadeDependente'] ?? '') . ', solteiro(a)';
 
         $identidade = [];
-        if (!empty($_POST['rgDependente'])) $identidade[] = "portador(a) da cédula de identidade RG nº " . $_POST['rgDependente'];
-        if (!empty($_POST['cpfDependente'])) $identidade[] = "inscrito(a) no CPF sob nº " . $_POST['cpfDependente'];
+        if (!empty($_POST['rgDependente'])) $identidade[] = "portador(a) da cédula de identidade RG nº " . trim($_POST['rgDependente']);
+        if (!empty($_POST['cpfDependente'])) $identidade[] = "inscrito(a) no CPF sob nº " . trim($_POST['cpfDependente']);
         if (!empty($identidade)) $descricao .= ', ' . implode(', ', $identidade);
 
         if ($situacao === 'menor_pubere') {
@@ -217,20 +222,11 @@ foreach ($documentosSelecionados as $docId) {
         $nomeDependente = trim(strtoupper($_POST['nomeDependente'] ?? ''));
     }
     
-    if (trim($_POST['situacao']) === 'litis') {
-
+    // CORREÇÃO: Bloco litis padronizado usando TextRun igual ao Script 1
+    if ($situacao === 'litis') {
         $textRun = new TextRun();
-
-        $fontNormal = [
-            'name' => 'Bookman Old Style',
-            'size' => 12
-        ];
-
-        $fontBold = [
-            'name' =>'Bookman Old Style',
-            'size' => 12,
-            'bold' => true
-        ];
+        $fontNormal = ['name' => 'Bookman Old Style', 'size' => 12];
+        $fontBold = ['name' =>'Bookman Old Style', 'size' => 12, 'bold' => true];
 
         $nomeLitis = mb_strtoupper(trim($_POST['nome_litis'] ?? ''), 'UTF-8');
         $nacionalidadeLitis = trim($_POST['nacionalidade_litis'] ?? '');
@@ -250,7 +246,6 @@ foreach ($documentosSelecionados as $docId) {
         }
 
         $resto = [];
-
         if ($nacionalidadeLitis !== '') $resto[] = $nacionalidadeLitis;
         if ($estadoCivilLitis !== '') $resto[] = $estadoCivilLitis;
         if ($profissaoLitis !== '') $resto[] = $profissaoLitis;
@@ -269,10 +264,9 @@ foreach ($documentosSelecionados as $docId) {
             $textRun->addText(', ' . implode(', ', $resto) . '.', $fontNormal);
         }
 
-       $template->setComplexValue('litis', $textRun);
+        $template->setComplexValue('litis', $textRun);
         $descricao = '';
-        $nomeDependente='';
-
+        $nomeDependente = '';
     } else {
         $template->setValue('litis', '');
     }
@@ -286,18 +280,17 @@ foreach ($documentosSelecionados as $docId) {
     $ASS_RIGHT = '';
     $ASS_CENTER = '';
 
+    // CORREÇÃO: Assinaturas padronizadas
     if ($situacao === 'menor_pubere') {
-        $ASS_LEFT = $nomeDependente;
-        $ASS_RIGHT = $nomePrincipal;
+        $ASS_LEFT = strtoupper($nomeDependente);
+        $ASS_RIGHT = strtoupper($nomePrincipal);
         $ASS_CENTER = "\xc2\xa0";
     } elseif ($situacao === 'menor_impubere') {
         $ASS_LEFT = "\xc2\xa0";
         $ASS_RIGHT = "\xc2\xa0";
         $ASS_CENTER = $nomePrincipal ?: "\xc2\xa0";
     } elseif ($situacao === 'litis') {
-
         $nomeLitisAssinatura = mb_strtoupper(trim($_POST['nome_litis'] ?? ''), 'UTF-8');
-
         $ASS_LEFT = mb_strtoupper($nomePrincipal, 'UTF-8');
         $ASS_RIGHT = $nomeLitisAssinatura !== '' ? $nomeLitisAssinatura : "\xc2\xa0";
         $ASS_CENTER = "\xc2\xa0";
@@ -317,106 +310,59 @@ foreach ($documentosSelecionados as $docId) {
         $parteAdversa = str_replace(['&','<','>','"',"'" ], ['&amp;','&lt;','&gt;','&quot;','&apos;'], $parteAdversa);
         $template->setValue('PARTEADVERSA', $parteAdversa);
 
+        // CORREÇÃO: Formatação dos NOVOS CAMPOS igual ao script 1
+        $cnpjAdversaPost = trim($_POST['cpf_cnpj_adversa'] ?? '');
+        $template->setValue('CNPJPARTEADVERSA', $cnpjAdversaPost !== '' ? 'CNPJ/CPF: ' . $cnpjAdversaPost : '');
+
+        $enderecoAdversaPost = trim($_POST['endereco_adversa'] ?? '');
+        $template->setValue('ENDERECOPARTEADVERSA', $enderecoAdversaPost !== '' ? 'ENDEREÇO: ' . $enderecoAdversaPost : '');
+
+        $tel1AdversaPost = trim($_POST['telefone1_adversa'] ?? '');
+        $template->setValue('TEL1PARTEADVERSA', $tel1AdversaPost !== '' ? 'TELEFONE 01: ' . $tel1AdversaPost : '');
+
+        $tel2AdversaPost = trim($_POST['telefone2_adversa'] ?? '');
+        $template->setValue('TEL2PARTEADVERSA', $tel2AdversaPost !== '' ? 'TELEFONE 02: ' . $tel2AdversaPost : '');
+        // -----------------------------------------------------
+
         $fatos = str_replace(['&','<','>','"',"'" ], ['&amp;','&lt;','&gt;','&quot;','&apos;'], $_POST['fatos'] ?? '');
         $template->setValue('fatos', $fatos);
 
-        $template->setValue('telefone1', $_POST['telefone1'] ?? '');
-        $template->setValue('telefone2', $_POST['telefone2'] ?? '');
-        $template->setValue('email', $_POST['email'] ?? '');
+        $template->setValue('telefone1', trim($_POST['telefone1'] ?? ''));
+        $template->setValue('telefone2', trim($_POST['telefone2'] ?? ''));
+        $template->setValue('email', trim($_POST['email'] ?? ''));
 
-        $telefones = array_filter([$_POST['telefone1'] ?? '', $_POST['telefone2'] ?? '']);
+        $telefones = array_filter([trim($_POST['telefone1'] ?? ''), trim($_POST['telefone2'] ?? '')]);
         $complementoContato = '';
         if ($telefones && !empty($_POST['email'])) {
-            $complementoContato = 'Telefone(s) ' . implode(' e ', $telefones) . ' e e-mail ' . $_POST['email'] . '.';
+            $complementoContato = 'Telefone(s) ' . implode(' e ', $telefones) . ' e e-mail ' . trim($_POST['email']) . '.';
         } elseif ($telefones) {
             $complementoContato = 'Telefone(s) ' . implode(' e ', $telefones) . '.';
         } elseif (!empty($_POST['email'])) {
-            $complementoContato = 'E-mail ' . $_POST['email'] . '.';
+            $complementoContato = 'E-mail ' . trim($_POST['email']) . '.';
         }
         $template->setValue('complementoContato', $complementoContato);
-
-        $litisTexto = '';
-
-        if ($situacao === 'litis') {
-
-            $nomeLitis = trim($_POST['nome_litis'] ?? '');
-            $nacionalidadeLitis = trim($_POST['nacionalidade_litis'] ?? '');
-            $estadoCivilLitis = trim($_POST['estadoCivil_litis'] ?? '');
-            $profissaoLitis = trim($_POST['profissao_litis'] ?? '');
-            $rgLitis = trim($_POST['rg_litis'] ?? '');
-            $cpfLitis = trim($_POST['cpf_litis'] ?? '');
-            $enderecoLitis = trim($_POST['endereco_litis'] ?? '');
-            $bairroLitis = trim($_POST['bairro_litis'] ?? '');
-            $cidadeLitis = trim($_POST['cidade_litis'] ?? '');
-            $estadoLitis = trim($_POST['estado_litis'] ?? '');
-            $cepLitis = trim($_POST['cep_litis'] ?? '');
-
-            $partes = [];
-
-            if ($nomeLitis !== '') {
-                $partes[] = strtoupper($nomeLitis);
-            }
-
-            if ($nacionalidadeLitis !== '') {
-                $partes[] = $nacionalidadeLitis;
-            }
-
-            if ($estadoCivilLitis !== '') {
-                $partes[] = $estadoCivilLitis;
-            }
-
-            if ($profissaoLitis !== '') {
-                $partes[] = $profissaoLitis;
-            }
-
-            if ($rgLitis !== '') {
-                $partes[] = "portador(a) da cédula de identidade RG nº {$rgLitis}";
-            }
-
-            if ($cpfLitis !== '') {
-                $partes[] = "inscrito(a) no CPF sob nº {$cpfLitis}";
-            }
-
-            if ($enderecoLitis !== '') {
-
-                $enderecoCompleto = "residente e domiciliado(a) à {$enderecoLitis}";
-
-                if ($bairroLitis !== '') {
-                    $enderecoCompleto .= ", Bairro {$bairroLitis}";
-                }
-
-                if ($cidadeLitis !== '' && $estadoLitis !== '') {
-                    $enderecoCompleto .= ", {$cidadeLitis}/{$estadoLitis}";
-                }
-
-                if ($cepLitis !== '') {
-                    $enderecoCompleto .= ", CEP: {$cepLitis}";
-                }
-
-                $partes[] = $enderecoCompleto;
-            }
-
-            if (!empty($partes)) {
-                $litisTexto = ' Em conjunto com ' . implode(', ', $partes) . '.';
-            }
-        }
-
-        $template->setValue('litis', $litisTexto);
 
         $indicacao = trim($_POST['indicacao'] ?? '');
         $indicacaoNome = trim($_POST['indicacaoNome'] ?? '');
 
         $textoIndicacao = '';
-
         if ($indicacao !== '' && $indicacaoNome !== '') {
-            $textoIndicacao = "Indicação: {$indicacao} - Contato: {$indicacaoNome}.";
+            $textoIndicacao = "Indicação: {$indicacaoNome} - Contato: {$indicacao}.";
         } elseif ($indicacao !== '') {
             $textoIndicacao = "Contato Indicação: {$indicacao}.";
         } elseif ($indicacaoNome !== '') {
             $textoIndicacao = "Indicação: {$indicacaoNome}.";
         }
-
         $template->setValue('INDICACAO', $textoIndicacao);
+
+        // Prevenção de Bug: Declarar $text_palavra sempre, mesmo vazia
+        $text_palavra = ''; 
+        $palavra_secreta = trim($_POST['palavra_chave'] ?? '');
+        if ($palavra_secreta !== '') {
+            $text_palavra = "Palavra-chave: {$palavra_secreta}";
+        }
+        $template->setValue('PALAVRA_CHAVE', $text_palavra);
+        
     } else {
         $template->setValue('telefone1', '');
         $template->setValue('telefone2', '');
@@ -443,7 +389,10 @@ $nomeCliente = preg_replace('/[^A-Za-z0-9_\-]/', '_', $nome);
 $dataGerada = date('Ymd_His');
 $zipFileName = "documentos_{$nomeCliente}_{$dataGerada}.zip";
 
-if (ob_get_length()) ob_end_clean();
+// O ob_end_clean() joga fora qualquer texto (avisos, espaços) que tenha escapado no buffer
+if (ob_get_length()) {
+    ob_end_clean();
+}
 
 header('Content-Type: application/zip');
 header("Content-Disposition: attachment; filename=\"$zipFileName\"");
